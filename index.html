@@ -396,6 +396,7 @@ ul { list-style:none; }
 
 <!-- Modals -->
 <div id="pkgFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;"><div style="background:#fff; max-width:600px; margin:auto; padding:30px; border-radius:12px; position:relative;"><button onclick="document.getElementById('pkgFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button><h3 style="margin-bottom:20px;" id="pkg_modal_title">Add Package</h3><input type="hidden" id="m_pkg_id"><div class="form-sec"><label>Title</label><input type="text" id="m_pkg_title"></div><div class="form-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;"><div class="form-sec"><label>Price (INR ₹)</label><input type="number" id="m_pkg_price"></div><div class="form-sec"><label>Category</label><input type="text" id="m_pkg_cat"></div></div><div class="form-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;"><div class="form-sec"><label>Duration</label><input type="text" id="m_pkg_duration" placeholder="5 Days / 4 Nights"></div><div class="form-sec"><label>Destination (Grouped by Country)</label><select id="m_pkg_dest"></select></div></div><div class="form-sec"><label>Short Description</label><input type="text" id="m_pkg_short_desc"></div><div class="form-sec"><label>Full Description</label><textarea id="m_pkg_desc" rows="4"></textarea></div><div class="form-sec"><label>Featured Image Upload</label><input type="file" id="m_pkg_img" accept="image/*"></div><div class="form-sec"><label>Gallery Images (Multiple)</label><input type="file" id="m_pkg_gallery" multiple accept="image/*"></div><div class="form-sec"><label>Itinerary</label><div id="itin_editor"></div><button type="button" class="btn btn-outline" style="margin-top:10px;" onclick="addItinDay()"><i class="fas fa-plus"></i> Add Day</button></div><div class="form-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;"><div class="form-sec"><label>Inclusions (One per line)</label><textarea id="m_pkg_inc" rows="4"></textarea></div><div class="form-sec"><label>Exclusions (One per line)</label><textarea id="m_pkg_exc" rows="4"></textarea></div></div><div class="form-sec"><label>Important Information (One per line)</label><textarea id="m_pkg_imp" rows="4"></textarea></div><div class="form-sec"><label>Published?</label><select id="m_pkg_pub"><option value="true">Yes</option><option value="false">No</option></select></div><button class="btn btn-blue" onclick="savePackage()" style="width:100%; margin-top:15px;">Save Package</button></div></div>
+<div id="gallery_preview" class="gallery-grid" style="margin-top: 10px; display: none;"></div>
 <div id="destFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;"><div style="background:#fff; max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;"><button onclick="document.getElementById('destFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button><h3 style="margin-bottom:20px;" id="dest_modal_title">Add Destination</h3><input type="hidden" id="m_dest_id"><div class="form-sec"><label>Name</label><input type="text" id="m_dest_name"></div><div class="form-sec"><label>Country</label><input type="text" id="m_dest_country"></div><div class="form-sec"><label>Region</label><input type="text" id="m_dest_region"></div><div class="form-sec"><label>Cover Image Upload</label><input type="file" id="m_dest_img" accept="image/*"></div><div class="form-sec"><label>Description</label><textarea id="m_dest_desc" rows="3"></textarea></div><div class="form-sec"><label>Best Time to Visit</label><input type="text" id="m_dest_time"></div><div class="form-sec"><label>Popular Attractions (Comma separated)</label><input type="text" id="m_dest_attr"></div><div class="form-sec"><label>Travel Tips (Comma separated)</label><input type="text" id="m_dest_tips"></div><div class="form-sec"><label>Published?</label><select id="m_dest_pub"><option value="true">Yes</option><option value="false">No</option></select></div><button class="btn btn-blue" onclick="saveDestination()" style="width:100%; margin-top:15px;">Save</button></div></div>
 <div id="bookFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;"><div style="background:#fff; max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;"><button onclick="document.getElementById('bookFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button><h3 style="margin-bottom:20px;">Add Booking</h3><div class="form-sec"><label>Customer</label><select id="m_book_cust"></select></div><div class="form-sec"><label>Package</label><select id="m_book_pkg"></select></div><div class="form-sec"><label>Travel Date</label><input type="date" id="m_book_date"></div><div class="form-sec"><label>Total Amount (₹)</label><input type="number" id="m_book_total"></div><div class="form-sec"><label>Amount Paid (₹)</label><input type="number" id="m_book_paid"></div><div class="form-sec"><label>Booking Status</label><select id="m_book_status"><option>Pending</option><option>Confirmed</option><option>Completed</option><option>Cancelled</option></select></div><button class="btn btn-blue" onclick="saveBooking()" style="width:100%; margin-top:15px;">Save Booking</button></div></div>
 <div id="testFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;"><div style="background:#fff; max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;"><button onclick="document.getElementById('testFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button><h3 style="margin-bottom:20px;">Add Testimonial</h3><div class="form-sec"><label>Customer Name</label><input type="text" id="m_test_name"></div><div class="form-sec"><label>Location</label><input type="text" id="m_test_loc"></div><div class="form-sec"><label>Image URL</label><input type="text" id="m_test_img"></div><div class="form-sec"><label>Message</label><textarea id="m_test_msg" rows="4"></textarea></div><button class="btn btn-blue" onclick="saveTestimonial()" style="width:100%; margin-top:15px;">Save</button></div></div>
@@ -409,6 +410,7 @@ const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let appSettings = { whatsapp: '919876543210' };
 let currentItinerary = [];
 let activeDestFilter = null;
+let currentGallery = [];
 
 function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
 function toggleChat() { document.getElementById('chatWindow').classList.toggle('active'); }
@@ -765,9 +767,9 @@ function openPkgModal() {
     document.getElementById('m_pkg_id').value = ''; 
     document.getElementById('pkg_modal_title').innerText = 'Add Package'; 
     document.querySelectorAll('#pkgFormModal input, #pkgFormModal textarea').forEach(i => { if(i.type !== 'hidden' && i.type !== 'file') i.value = ''; }); 
-    // Reset existing image data
     document.getElementById('m_pkg_img').dataset.existing = '';
-    document.getElementById('m_pkg_gallery').dataset.existing = '[]';
+    currentGallery = []; 
+    renderGalleryPreview();
     currentItinerary = []; 
     renderItinEditor(); 
     loadDestDropdown(); 
@@ -792,27 +794,46 @@ async function editPackage(id) {
     currentItinerary = p.itinerary || []; 
     renderItinEditor(); 
     
-    // Preserve existing images when editing
     document.getElementById('m_pkg_img').dataset.existing = p.image_url || '';
-    document.getElementById('m_pkg_gallery').dataset.existing = JSON.stringify(p.gallery_images || []);
+    currentGallery = p.gallery_images || [];
+    renderGalleryPreview();
+}
+
+function renderGalleryPreview() {
+    const previewDiv = document.getElementById('gallery_preview');
+    if (currentGallery.length === 0) {
+        previewDiv.style.display = 'none';
+        previewDiv.innerHTML = '';
+        return;
+    }
+    previewDiv.style.display = 'grid';
+    previewDiv.innerHTML = currentGallery.map((url, index) => 
+        '<div style="position:relative;">' +
+            '<img src="' + url + '" style="width:100%; height:80px; object-fit:cover; border-radius:8px;">' +
+            '<button type="button" onclick="removeGalleryImage(' + index + ')" style="position:absolute; top:2px; right:2px; background:rgba(0,0,0,0.7); color:#fff; border:none; border-radius:50%; width:20px; height:20px; font-size:12px; cursor:pointer; display:flex; align-items:center; justify-content:center;">&times;</button>' +
+        '</div>'
+    ).join('');
+}
+
+function removeGalleryImage(index) {
+    currentGallery.splice(index, 1);
+    renderGalleryPreview();
 }
 async function savePackage() {
     const id = document.getElementById('m_pkg_id').value; 
-    
-    // Get existing images
     let imageUrl = document.getElementById('m_pkg_img').dataset.existing || ''; 
-    let galleryUrls = JSON.parse(document.getElementById('m_pkg_gallery').dataset.existing || '[]');
     
-    // Upload new featured image if selected
+    // Start with the remaining existing gallery images
+    let galleryUrls = [...currentGallery];
+    
     const imgFile = document.getElementById('m_pkg_img').files[0]; 
     if (imgFile) imageUrl = await uploadImage(imgFile);
     
-    // Upload new gallery images if selected, ADD them to existing ones
     const galleryFiles = document.getElementById('m_pkg_gallery').files; 
     if (galleryFiles.length > 0) { 
         for (let i = 0; i < galleryFiles.length; i++) { 
             const url = await uploadImage(galleryFiles[i]); 
-            if (url) galleryUrls.push(url); // Push to existing array instead of overwriting
+            if (url) galleryUrls.push(url); 
         } 
     }
     
