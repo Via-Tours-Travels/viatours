@@ -720,7 +720,8 @@ async function loadAdminStats() {
 }
 
 async function uploadImage(file) { 
-    const fileName = Date.now() + '_' + file.name; 
+    // Added Math.random() so two files never have the exact same name
+    const fileName = Date.now() + '_' + Math.floor(Math.random() * 1000) + '_' + file.name; 
     const { data, error } = await sb.storage.from('package-images').upload(fileName, file); 
     if (error) return null; 
     return SUPABASE_URL + '/storage/v1/object/public/package-images/' + fileName; 
@@ -764,6 +765,9 @@ function openPkgModal() {
     document.getElementById('m_pkg_id').value = ''; 
     document.getElementById('pkg_modal_title').innerText = 'Add Package'; 
     document.querySelectorAll('#pkgFormModal input, #pkgFormModal textarea').forEach(i => { if(i.type !== 'hidden' && i.type !== 'file') i.value = ''; }); 
+    // Reset existing image data
+    document.getElementById('m_pkg_img').dataset.existing = '';
+    document.getElementById('m_pkg_gallery').dataset.existing = '[]';
     currentItinerary = []; 
     renderItinEditor(); 
     loadDestDropdown(); 
@@ -787,21 +791,31 @@ async function editPackage(id) {
     document.getElementById('m_pkg_pub').value = p.is_published ? 'true' : 'false'; 
     currentItinerary = p.itinerary || []; 
     renderItinEditor(); 
+    
+    // Preserve existing images when editing
+    document.getElementById('m_pkg_img').dataset.existing = p.image_url || '';
+    document.getElementById('m_pkg_gallery').dataset.existing = JSON.stringify(p.gallery_images || []);
 }
 async function savePackage() {
     const id = document.getElementById('m_pkg_id').value; 
+    
+    // Get existing images
     let imageUrl = document.getElementById('m_pkg_img').dataset.existing || ''; 
     let galleryUrls = JSON.parse(document.getElementById('m_pkg_gallery').dataset.existing || '[]');
+    
+    // Upload new featured image if selected
     const imgFile = document.getElementById('m_pkg_img').files[0]; 
     if (imgFile) imageUrl = await uploadImage(imgFile);
+    
+    // Upload new gallery images if selected, ADD them to existing ones
     const galleryFiles = document.getElementById('m_pkg_gallery').files; 
     if (galleryFiles.length > 0) { 
-        galleryUrls = []; 
         for (let i = 0; i < galleryFiles.length; i++) { 
             const url = await uploadImage(galleryFiles[i]); 
-            if (url) galleryUrls.push(url); 
+            if (url) galleryUrls.push(url); // Push to existing array instead of overwriting
         } 
     }
+    
     const payload = { 
         title: m_pkg_title.value, 
         price: parseFloat(m_pkg_price.value || 0), 
@@ -818,8 +832,10 @@ async function savePackage() {
         gallery_images: galleryUrls, 
         is_published: m_pkg_pub.value === 'true' 
     };
+    
     if (id) await sb.from('packages').update(payload).eq('id', id); 
     else await sb.from('packages').insert([payload]);
+    
     document.getElementById('pkgFormModal').style.display = 'none'; 
     loadAdminPackages(); 
     loadAdminStats();
