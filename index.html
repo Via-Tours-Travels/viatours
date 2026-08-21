@@ -274,7 +274,16 @@ ul { list-style:none; }
         <div class="grid-3" id="list_packages"></div>
     </div>
 </div>
-        
+        <!-- FAQ SECTION -->
+<div class="container section-pad" style="background:var(--bg-light);">
+    <div class="text-center" style="margin-bottom:40px;">
+        <h2>Frequently Asked Questions</h2>
+        <p>Everything you need to know about traveling with Via Tours & Travels.</p>
+    </div>
+    <div id="home_faqs" style="max-width: 800px; margin: 0 auto;">
+        <p class="text-center">Loading...</p>
+    </div>
+</div>
         <div id="page-package" class="page-view container"><div id="pkg_details_container">Loading...</div></div>
         <div id="page-blog" class="page-view container"><h2 class="text-center">Travel Blog & Guides</h2><p class="text-center" style="margin-bottom:30px;">Tips, stories, and inspiration for your next journey.</p><div class="grid-3" id="list_blog"><p class="text-center" style="grid-column:1/-1;">Loading...</p></div></div>
         <div id="page-blog-post" class="page-view container" style="max-width:800px;"><div id="blog_details_container">Loading...</div></div>
@@ -428,6 +437,7 @@ ul { list-style:none; }
                 <li onclick="showAdminTab('bookings', event)"><i class="fas fa-calendar-check"></i> Bookings</li>
                 <li onclick="showAdminTab('blog', event)"><i class="fas fa-blog"></i> Blog Posts</li>
                 <li onclick="showAdminTab('testimonials', event)"><i class="fas fa-comment-dots"></i> Testimonials</li>
+                <li onclick="showAdminTab('faqs', event)"><i class="fas fa-question-circle"></i> FAQs</li>
                 <li onclick="showAdminTab('settings', event)"><i class="fas fa-cog"></i> Website Settings</li>
                 <li onclick="logout()" style="margin-top:50px; color:#ef4444;"><i class="fas fa-sign-out-alt"></i> Logout</li>
             </ul>
@@ -449,6 +459,19 @@ ul { list-style:none; }
                     </div>
                 </div>
                 
+                <div id="tab-faqs" class="admin-tab" style="display:none;">
+    <div class="admin-header">
+        <h2>Manage FAQs</h2>
+        <button class="btn btn-primary" onclick="openFaqModal()">Add FAQ</button>
+    </div>
+    <div class="admin-table">
+        <table>
+            <thead><tr><th>Question</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="table_faqs"></tbody>
+        </table>
+    </div>
+</div>
+
                 <div id="tab-packages" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Manage Packages</h2><button class="btn btn-primary" onclick="openPkgModal()">Add Package</button></div><div class="admin-table"><table><thead><tr><th>Image</th><th>Title</th><th>Price (₹)</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_packages"></tbody></table></div></div>
                 <div id="tab-destinations" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Manage Destinations</h2><button class="btn btn-primary" onclick="openDestModal()">Add Destination</button></div><div class="admin-table"><table><thead><tr><th>Name</th><th>Country</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_destinations"></tbody></table></div></div>
                 <div id="tab-enquiries" class="admin-tab" style="display:none;"><h2>Enquiries</h2><div class="admin-table" style="margin-top:20px;"><table><thead><tr><th>Customer</th><th>Details</th><th>Status & Notes</th></tr></thead><tbody id="table_enquiries"></tbody></table></div></div>
@@ -495,6 +518,18 @@ ul { list-style:none; }
     </div>
 </div>
 
+<div id="faqFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;">
+    <div style="background:#fff; max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;">
+        <button onclick="document.getElementById('faqFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button>
+        <h3 style="margin-bottom:20px;" id="faq_modal_title">Add FAQ</h3>
+        <input type="hidden" id="m_faq_id">
+        <div class="form-sec"><label>Question</label><input type="text" id="m_faq_question"></div>
+        <div class="form-sec"><label>Answer</label><textarea id="m_faq_answer" rows="4"></textarea></div>
+        <div class="form-sec"><label>Published?</label><select id="m_faq_pub"><option value="true">Yes</option><option value="false">No</option></select></div>
+        <button class="btn btn-blue" onclick="saveFaq()" style="width:100%; margin-top:15px;">Save FAQ</button>
+    </div>
+</div>
+
 <div id="destFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;"><div style="background:#fff; max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;"><button onclick="document.getElementById('destFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button><h3 style="margin-bottom:20px;" id="dest_modal_title">Add Destination</h3><input type="hidden" id="m_dest_id"><div class="form-sec"><label>Name</label><input type="text" id="m_dest_name"></div><div class="form-sec"><label>Country</label><input type="text" id="m_dest_country"></div><div class="form-sec"><label>Region</label><input type="text" id="m_dest_region"></div><div class="form-sec"><label>Cover Image Upload</label><input type="file" id="m_dest_img" accept="image/*"></div><div class="form-sec"><label>Description</label><textarea id="m_dest_desc" rows="3"></textarea></div><div class="form-sec"><label>Best Time to Visit</label><input type="text" id="m_dest_time"></div><div class="form-sec"><label>Popular Attractions (Comma separated)</label><input type="text" id="m_dest_attr"></div><div class="form-sec"><label>Travel Tips (Comma separated)</label><input type="text" id="m_dest_tips"></div><div class="form-sec"><label>Published?</label><select id="m_dest_pub"><option value="true">Yes</option><option value="false">No</option></select></div><button class="btn btn-blue" onclick="saveDestination()" style="width:100%; margin-top:15px;">Save</button></div></div>
 <div id="bookFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;"><div style="background:#fff; max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;"><button onclick="document.getElementById('bookFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button><h3 style="margin-bottom:20px;">Add Booking</h3><div class="form-sec"><label>Customer</label><select id="m_book_cust"></select></div><div class="form-sec"><label>Package</label><select id="m_book_pkg"></select></div><div class="form-sec"><label>Travel Date</label><input type="date" id="m_book_date"></div><div class="form-sec"><label>Total Amount (₹)</label><input type="number" id="m_book_total"></div><div class="form-sec"><label>Amount Paid (₹)</label><input type="number" id="m_book_paid"></div><div class="form-sec"><label>Booking Status</label><select id="m_book_status"><option>Pending</option><option>Confirmed</option><option>Completed</option><option>Cancelled</option></select></div><button class="btn btn-blue" onclick="saveBooking()" style="width:100%; margin-top:15px;">Save Booking</button></div></div>
 <div id="testFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;"><div style="background:#fff; max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;"><button onclick="document.getElementById('testFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button><h3 style="margin-bottom:20px;">Add Testimonial</h3><div class="form-sec"><label>Customer Name</label><input type="text" id="m_test_name"></div><div class="form-sec"><label>Location</label><input type="text" id="m_test_loc"></div><div class="form-sec"><label>Image URL</label><input type="text" id="m_test_img"></div><div class="form-sec"><label>Message</label><textarea id="m_test_msg" rows="4"></textarea></div><button class="btn btn-blue" onclick="saveTestimonial()" style="width:100%; margin-top:15px;">Save</button></div></div>
@@ -524,6 +559,85 @@ window.addEventListener('scroll', () => {
     const progress = (scrollTop / docHeight) * 100;
     document.getElementById('scrollProgress').style.width = progress + '%';
 });
+// ===== FAQ LOGIC =====
+async function loadHomeFaqs() {
+    const { data, error } = await sb.from('faqs').select('*').eq('is_published', true).order('created_at', { ascending: true });
+    const faqContainer = document.getElementById('home_faqs');
+    if (error || !data || data.length === 0) {
+        faqContainer.innerHTML = '<p class="text-center">No FAQs available right now.</p>';
+        return;
+    }
+    faqContainer.innerHTML = data.map((f, i) => `
+        <div style="margin-bottom: 15px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: #fff;">
+            <div onclick="toggleFaq(${i})" style="padding: 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--text-dark);">
+                ${f.question}
+                <i class="fas fa-chevron-down" id="faq-icon-${i}" style="transition: transform 0.3s ease;"></i>
+            </div>
+            <div id="faq-answer-${i}" style="display: none; padding: 0 20px 20px; color: var(--text-body); border-top: 1px solid var(--border);">
+                <p style="margin-top:15px; white-space: pre-wrap;">${f.answer || ''}</p>
+            </div>
+        </div>
+    `).join('');
+}
+
+function toggleFaq(index) {
+    const answer = document.getElementById('faq-answer-' + index);
+    const icon = document.getElementById('faq-icon-' + index);
+    if (answer.style.display === 'none' || answer.style.display === '') {
+        answer.style.display = 'block';
+        icon.style.transform = 'rotate(180deg)';
+    } else {
+        answer.style.display = 'none';
+        icon.style.transform = 'rotate(0deg)';
+    }
+}
+
+// ===== ADMIN FAQ LOGIC =====
+async function loadAdminFaqs() {
+    const { data } = await sb.from('faqs').select('*').order('created_at', { ascending: false });
+    document.getElementById('table_faqs').innerHTML = (data||[]).map(f => `
+        <tr>
+            <td>${f.question}</td>
+            <td>${f.is_published ? 'Live' : 'Hidden'}</td>
+            <td>
+                <button class="btn-blue" style="background:var(--brand-blue); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;" onclick="editFaq('${f.id}')">Edit</button>
+                <button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem('faqs', '${f.id}')">Delete</button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function openFaqModal() {
+    document.getElementById('faqFormModal').style.display = 'block';
+    document.getElementById('m_faq_id').value = '';
+    document.getElementById('faq_modal_title').innerText = 'Add FAQ';
+    document.querySelectorAll('#faqFormModal input, #faqFormModal textarea').forEach(i => { if(i.type !== 'hidden') i.value = ''; });
+}
+
+async function editFaq(id) {
+    const { data: f } = await sb.from('faqs').select('*').eq('id', id).single();
+    if (!f) return;
+    document.getElementById('faqFormModal').style.display = 'block';
+    document.getElementById('faq_modal_title').innerText = 'Edit FAQ';
+    document.getElementById('m_faq_id').value = f.id;
+    document.getElementById('m_faq_question').value = f.question;
+    document.getElementById('m_faq_answer').value = f.answer;
+    document.getElementById('m_faq_pub').value = f.is_published ? 'true' : 'false';
+}
+
+async function saveFaq() {
+    const payload = {
+        question: document.getElementById('m_faq_question').value,
+        answer: document.getElementById('m_faq_answer').value,
+        is_published: document.getElementById('m_faq_pub').value === 'true'
+    };
+    const id = document.getElementById('m_faq_id').value;
+    if (id) await sb.from('faqs').update(payload).eq('id', id);
+    else await sb.from('faqs').insert([payload]);
+    document.getElementById('faqFormModal').style.display = 'none';
+    loadAdminFaqs();
+}
+
 function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
 function toggleChat() { document.getElementById('chatWindow').classList.toggle('active'); }
 function handleChat(e) { 
@@ -886,7 +1000,7 @@ async function logout() { await sb.auth.signOut(); window.location.hash = '#/hom
 async function initAdminDashboard() { 
     document.getElementById('admin-login').style.display = 'none'; 
     document.getElementById('admin-dashboard').style.display = 'block'; 
-    loadAdminStats(); loadAdminPackages(); loadAdminDestinations(); loadAdminEnquiries(); loadAdminCustomers(); loadAdminBookings(); loadAdminBlog(); loadAdminTestimonials(); loadAdminSettings(); loadDestDropdown(); 
+    loadAdminStats(); loadAdminPackages(); loadAdminDestinations(); loadAdminEnquiries(); loadAdminCustomers(); loadAdminBookings(); loadAdminBlog(); loadAdminFaqs(); loadAdminTestimonials(); loadAdminSettings(); loadDestDropdown(); 
 }
 
 function showAdminTab(tab, ev) { 
@@ -899,6 +1013,7 @@ function showAdminTab(tab, ev) {
     if (tab === 'enquiries') loadAdminEnquiries();
     if (tab === 'customers') loadAdminCustomers();
     if (tab === 'bookings') loadAdminBookings();
+    if (tab === 'faqs') loadAdminFaqs();
 }
 
 async function loadAdminStats() { 
@@ -1186,6 +1301,7 @@ async function delItem(table, id) {
     if(table==='packages') loadAdminPackages(); 
     if(table==='destinations') loadAdminDestinations(); 
     if(table==='blog_posts') loadAdminBlog(); 
+    if(table==='faqs') loadAdminFaqs();
     if(table==='testimonials') loadAdminTestimonials(); 
     loadAdminStats(); 
 }
@@ -1207,10 +1323,10 @@ async function saveTestimonial() {
     loadAdminTestimonials(); 
 }
 
-async function loadAdminBlog() { 
-    const { data } = await sb.from('blog_posts').select('*').order('created_at', { ascending: false }); 
-    document.getElementById('table_blog').innerHTML = (data||[]).map(b => 
-        '<tr><td>' + b.title + '</td><td>' + (b.is_published ? 'Live' : 'Hidden') + '</td><td><button class="btn-blue" style="background:var(--brand-blue); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;" onclick="editBlog(\'' + b.id + '\')">Edit</button><button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem(\'blog_posts\', \'' + b.id + '\')">Delete</button></td></tr>'
+async function loadAdminFaqs() { 
+    const { data } = await sb.from('faqs').select('*').order('created_at', { ascending: false }); 
+    document.getElementById('table_faqs').innerHTML = (data||[]).map(f => 
+        '<tr><td>' + f.question + '</td><td>' + (f.answer ? f.answer.substring(0, 50) + '...' : '') + '</td><td><button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem(\'faqs\', \'' + f.id + '\')">Delete</button></td></tr>'
     ).join(''); 
 }
 function openBlogModal() { 
