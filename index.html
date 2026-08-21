@@ -24,9 +24,11 @@ ul { list-style:none; }
 .btn-green { background:var(--green); color:var(--white); }
 .btn-outline { background:transparent; border:2px solid var(--border); color:var(--text-dark); }
 .btn-outline:hover { border-color:var(--brand-blue); color:var(--brand-blue); }
+.btn-danger { background:#ef4444; color:#fff; }
 .form-sec { margin-bottom:15px; }
 .form-sec label { display:block; margin-bottom:5px; font-weight:500; font-size:14px; }
 .form-sec input, .form-sec select, .form-sec textarea { width:100%; padding:12px; border:1px solid var(--border); border-radius:8px; font-family:'Inter',sans-serif; resize:vertical; background:#fff; }
+.form-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
 
 .header { background:var(--white); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; box-shadow:0 2px 10px rgba(0,0,0,0.02); }
 .header-in { display:flex; justify-content:space-between; align-items:center; height:80px; position:relative; }
@@ -49,7 +51,7 @@ ul { list-style:none; }
 .hero-overlay { position:absolute; inset:0; background:linear-gradient(rgba(15,23,42,0.6), rgba(37,99,235,0.4)); z-index:-1; }
 .hero h1 { font-size:4rem; color:#fff; margin-bottom:15px; }
 .hero p { font-size:1.2rem; margin-bottom:30px; opacity:.9; padding:0 20px; }
-.search-box { background:#fff; padding:20px; border-radius:12px; box-shadow:0 15px 40px rgba(0,0,0,0.2); display:grid; grid-template-columns:1.5fr 1fr 1fr auto; gap:15px; text-align:left; color:var(--text-dark); max-width: 900px; margin: 0 auto; }
+.search-box { background:#fff; padding:20px; border-radius:12px; box-shadow:0 15px 40px rgba(0,0,0,0.2); display:grid; grid-template-columns:1.5fr 1fr 1fr auto; gap:15px; text-align:left; color:var(--text-dark); max-width:900px; margin:0 auto; }
 
 .card { background:#fff; border:1px solid var(--border); border-radius:12px; overflow:hidden; transition:.3s; cursor:pointer; }
 .card:hover { transform:translateY(-5px); box-shadow:0 15px 30px rgba(0,0,0,0.1); }
@@ -65,12 +67,11 @@ ul { list-style:none; }
 .admin-side h3 { padding:0 20px 20px; color:#fff; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:20px; }
 .admin-menu li { padding:15px 20px; cursor:pointer; display:flex; align-items:center; gap:10px; transition:.2s; white-space:nowrap; }
 .admin-menu li:hover, .admin-menu li.active { background:rgba(255,255,255,0.1); }
-.admin-menu li .nav-text { margin-left:10px; }
 .admin-main { flex:1; padding:40px; overflow-y:auto; margin-left:250px; transition:margin-left 0.3s; }
 .admin-main.expanded { margin-left:60px; }
 .admin-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; flex-wrap:wrap; gap:15px; }
 .admin-table { width:100%; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.05); overflow-x:auto; }
-.admin-table table { width:100%; border-collapse:collapse; min-width: 600px; }
+.admin-table table { width:100%; border-collapse:collapse; min-width:600px; }
 .admin-table th, .admin-table td { padding:15px; text-align:left; border-bottom:1px solid var(--border); font-size:14px; }
 .admin-table th { background:var(--bg-light); text-transform:uppercase; font-size:12px; color:var(--text-muted); }
 .admin-table td img { width:50px; height:50px; border-radius:6px; object-fit:cover; }
@@ -78,13 +79,14 @@ ul { list-style:none; }
 .stat-card h2 { font-size:2.5rem; color:var(--brand-blue); margin-bottom:5px; }
 
 .mobile-toggle { display:none; background:none; border:none; font-size:1.8rem; color:var(--text-dark); cursor:pointer; position:absolute; right:24px; top:50%; transform:translateY(-50%); }
-.chat-bubble { position:fixed; bottom:24px; right:24px; width:60px; height:60px; background:var(--brand-blue); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,0.3); z-index:998; transition: transform 0.2s; }
+.chat-bubble { position:fixed; bottom:24px; right:24px; width:60px; height:60px; background:var(--brand-blue); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,0.3); z-index:998; }
 .chat-window { position:fixed; bottom:100px; right:24px; width:350px; max-width:calc(100% - 48px); height:450px; background:white; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.2); z-index:998; display:none; flex-direction:column; overflow:hidden; }
+.chat-window.active { display:flex; }
 .chat-header { background:var(--brand-blue); color:white; padding:15px; font-weight:600; display:flex; justify-content:space-between; align-items:center; }
 .chat-body { flex:1; padding:15px; overflow-y:auto; background:var(--bg-light); }
 .chat-msg { margin-bottom:10px; padding:10px 15px; border-radius:18px; max-width:80%; word-wrap:break-word; }
-.chat-msg.bot { background:#e2e8f0; align-self:flex-start; }
-.chat-msg.user { background:var(--brand-blue); color:white; align-self:flex-end; }
+.chat-msg.bot { background:#e2e8f0; align-self:flex-start; margin-right:auto; }
+.chat-msg.user { background:var(--brand-blue); color:white; align-self:flex-end; margin-left:auto; }
 .chat-input-area { display:flex; padding:10px; border-top:1px solid var(--border); background:white; }
 .chat-input-area input { flex:1; padding:10px; border:1px solid var(--border); border-radius:20px; }
 .chat-send-btn { background:var(--brand-blue); color:white; border:none; border-radius:50%; width:40px; height:40px; margin-left:10px; cursor:pointer; }
@@ -92,51 +94,30 @@ ul { list-style:none; }
 .gallery-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(100px, 1fr)); gap:10px; margin-top:15px; }
 .gallery-grid img { width:100%; height:80px; object-fit:cover; border-radius:8px; }
 .status-dropdown { padding:5px; border-radius:4px; border:1px solid var(--border); font-size:12px; cursor:pointer; }
-
 .itin-day { border:1px solid var(--border); padding:15px; border-radius:8px; margin-bottom:10px; background:var(--bg-light); }
-.itin-day input { margin-bottom:10px; }
+.itin-day input { margin-bottom:10px; width:100%; padding:8px; border:1px solid var(--border); border-radius:4px; }
+.itin-day textarea { width:100%; padding:8px; border:1px solid var(--border); border-radius:4px; }
+.country-group { margin-bottom:40px; }
+.country-group h3 { font-size:1.5rem; color:var(--brand-blue); border-bottom:2px solid var(--border); padding-bottom:10px; margin-bottom:20px; }
 
-.country-group { margin-bottom: 40px; }
-.country-group h3 { font-size: 1.5rem; color: var(--brand-blue); border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 20px; }
+.skeleton { background:linear-gradient(to right, #e2e8f0 8%, #f1f5f9 18%, #e2e8f0 33%); background-size:1000px 100%; animation:shimmer 1.5s infinite linear; border-radius:8px; }
+@keyframes shimmer { 0% { background-position:-1000px 0; } 100% { background-position:1000px 0; } }
+.skel-card { border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+.skel-img { height:220px; }
+.skel-body { padding:20px; }
+.skel-line { height:16px; margin-bottom:10px; }
 
-/* Skeleton Shimmer Effect */
-.skeleton { background: linear-gradient(to right, #e2e8f0 8%, #f1f5f9 18%, #e2e8f0 33%); background-size: 1000px 100%; animation: shimmer 1.5s infinite linear; border-radius: 8px; }
-@keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
-.skel-card { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-.skel-img { height: 220px; }
-.skel-body { padding: 20px; }
-.skel-line { height: 16px; margin-bottom: 10px; }
+.toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(100px); background:var(--text-dark); color:#fff; padding:15px 25px; border-radius:8px; box-shadow:0 10px 20px rgba(0,0,0,0.2); z-index:9999; opacity:0; transition:all 0.3s ease; font-weight:500; }
+.toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+.toast.success { background:var(--green); }
+.toast.error { background:#ef4444; }
 
-/* Toast Notifications */
-.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text-dark); color: #fff; padding: 15px 25px; border-radius: 8px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 9999; opacity: 0; transition: all 0.3s ease; font-weight: 500; }
-.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-.toast.success { background: var(--green); }
-.toast.error { background: #ef4444; }
+.scroll-top { position:fixed; bottom:100px; left:24px; width:45px; height:45px; background:var(--brand-blue); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:0; transition:0.3s; z-index:998; }
+.scroll-top.show { opacity:1; }
 
-/* Scroll to Top */
-.scroll-top { position: fixed; bottom: 100px; left: 24px; width: 45px; height: 45px; background: var(--brand-blue); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transition: 0.3s; z-index: 998; }
-.scroll-top.show { opacity: 1; }
-
-/* Advanced Packages Layout */
-.pkg-layout { display:grid; grid-template-columns: 250px 1fr; gap:30px; margin-top:20px; }
-.filter-sidebar { background:#fff; padding:20px; border-radius:12px; border:1px solid var(--border); height:fit-content; }
-@media (max-width: 768px) { .pkg-layout { grid-template-columns: 1fr; } }
-
-/* Scroll Progress Bar */
-#scrollProgress { position: fixed; top: 0; left: 0; height: 4px; background: linear-gradient(90deg, var(--brand-blue), var(--brand-orange)); width: 0%; z-index: 10000; transition: width 0.1s linear; }
-
-/* Flying Plane Preloader */
-#preloader { position: fixed; inset: 0; background: #ffffff; display: flex; align-items: center; justify-content: center; z-index: 99999; transition: opacity 0.6s ease, visibility 0.6s ease; }
-#preloader.hidden { opacity: 0; visibility: hidden; }
-.loader-plane { font-size: 64px; animation: flyPlane 1.2s ease-in-out infinite; }
-@keyframes flyPlane { 0%, 100% { transform: translateX(-20px) translateY(0) rotate(-10deg); } 50% { transform: translateX(20px) translateY(-15px) rotate(10deg); } }
-.loader-text { font-family: 'Poppins', sans-serif; font-size: 1.4rem; font-weight: 800; margin-top: 16px; color: var(--brand-blue); letter-spacing: 2px; }
-
-/* Filter Bar */
 .filter-bar { background:var(--white); padding:15px; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,0.05); margin-bottom:20px; display:flex; gap:15px; flex-wrap:wrap; align-items:center; }
 .filter-bar select, .filter-bar input { padding:10px; border:1px solid var(--border); border-radius:8px; flex:1; min-width:120px; }
 
-/* Package Detail Gallery & Tabs */
 .pkg-gallery { display:grid; grid-template-columns:2fr 1fr; gap:40px; margin-top:20px; }
 .main-image { width:100%; height:400px; object-fit:cover; border-radius:12px; margin-bottom:15px; }
 .thumbnail-container { display:grid; grid-template-columns:repeat(auto-fill, minmax(80px, 1fr)); gap:10px; margin-bottom:20px; }
@@ -146,15 +127,20 @@ ul { list-style:none; }
 .tab-btn { padding:10px 20px; background:none; border:none; font-family:'Poppins',sans-serif; font-weight:600; color:var(--text-muted); cursor:pointer; border-bottom:3px solid transparent; margin-bottom:-2px; }
 .tab-btn.active { color:var(--brand-blue); border-bottom:3px solid var(--brand-blue); }
 
-/* Dark Mode */
+#scrollProgress { position:fixed; top:0; left:0; height:4px; background:linear-gradient(90deg, var(--brand-blue), var(--brand-orange)); width:0%; z-index:10000; transition:width 0.1s linear; }
+#preloader { position:fixed; inset:0; background:#ffffff; display:flex; align-items:center; justify-content:center; z-index:99999; transition:opacity 0.6s ease, visibility 0.6s ease; }
+#preloader.hidden { opacity:0; visibility:hidden; }
+.loader-plane { font-size:64px; animation:flyPlane 1.2s ease-in-out infinite; }
+@keyframes flyPlane { 0%,100% { transform:translateX(-20px) translateY(0) rotate(-10deg); } 50% { transform:translateX(20px) translateY(-15px) rotate(10deg); } }
+.loader-text { font-family:'Poppins',sans-serif; font-size:1.4rem; font-weight:800; margin-top:16px; color:var(--brand-blue); letter-spacing:2px; }
+
 body.dark-mode { background:#0f172a; color:#e2e8f0; }
-body.dark-mode .card, body.dark-mode .admin-table, body.dark-mode .stat-card, body.dark-mode .filter-bar, body.dark-mode .modal-content { background:#1e293b; color:#e2e8f0; }
+body.dark-mode .card, body.dark-mode .admin-table, body.dark-mode .stat-card, body.dark-mode .filter-bar { background:#1e293b; color:#e2e8f0; }
 body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4 { color:#f1f5f9; }
 body.dark-mode .admin-side { background:#0b1120; }
 body.dark-mode .admin-table th { background:#1e293b; color:#94a3b8; }
 body.dark-mode .nav-menu a { color:#cbd5e1; }
 body.dark-mode .header { background:#0f172a; border-bottom:1px solid #1e293b; }
-body.dark-mode .page-view { background:#0f172a; }
 body.dark-mode .card-body { background:#1e293b; }
 body.dark-mode .tag { background:#334155; color:#cbd5e1; }
 body.dark-mode .price-tag { color:#f1f5f9; }
@@ -164,14 +150,11 @@ body.dark-mode .chat-input-area { background:#1e293b; }
 body.dark-mode .chat-input-area input { background:#0f172a; color:#fff; border-color:#334155; }
 body.dark-mode .chat-msg.bot { background:#334155; color:#fff; }
 body.dark-mode .btn-outline { border-color:#334155; color:#e2e8f0; }
-body.dark-mode .btn-outline:hover { border-color:var(--brand-blue); }
 body.dark-mode .form-sec input, body.dark-mode .form-sec select, body.dark-mode .form-sec textarea { background:#0f172a; color:#fff; border-color:#334155; }
-body.dark-mode .skeleton { background: linear-gradient(to right, #1e293b 8%, #334155 18%, #1e293b 33%); }
-
-/* Bulk Action Bar */
+body.dark-mode .skeleton { background:linear-gradient(to right, #1e293b 8%, #334155 18%, #1e293b 33%); }
 .bulk-actions { display:flex; gap:10px; margin-bottom:15px; align-items:center; }
 
-@media (max-width: 768px) {
+@media (max-width:768px) {
   .mobile-toggle { display:block; }
   .nav-menu { display:none; flex-direction:column; position:absolute; top:80px; left:0; right:0; background:#fff; padding:20px; box-shadow:0 10px 15px rgba(0,0,0,0.1); gap:15px; align-items:flex-start; border-top:1px solid var(--border); }
   .nav-menu.active { display:flex; }
@@ -180,17 +163,14 @@ body.dark-mode .skeleton { background: linear-gradient(to right, #1e293b 8%, #33
   .grid-3, .grid-4 { grid-template-columns:1fr; }
   .admin-side { position:relative; width:100%; height:auto; }
   .admin-main { margin-left:0; }
-  .pkg-details-grid { grid-template-columns:1fr !important; }
-  .form-grid-2 { grid-template-columns:1fr !important; }
+  .pkg-gallery { grid-template-columns:1fr; }
+  .form-grid-2 { grid-template-columns:1fr; }
 }
 </style>
 </head>
 <body>
 
-<!-- Scroll Progress -->
 <div id="scrollProgress"></div>
-
-<!-- Preloader -->
 <div id="preloader">
     <div style="text-align:center;">
         <div class="loader-plane">✈️</div>
@@ -219,7 +199,6 @@ body.dark-mode .skeleton { background: linear-gradient(to right, #1e293b 8%, #33
     </header>
 
     <main id="app-main">
-        <!-- Home Page -->
         <div id="page-home" class="page-view" style="padding:0;">
             <div class="hero">
                 <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1" alt="Travel">
@@ -274,6 +253,11 @@ body.dark-mode .skeleton { background: linear-gradient(to right, #1e293b 8%, #33
                 <div class="grid-3" id="home_testimonials"><p class="text-center" style="grid-column:1/-1;">Loading...</p></div>
             </div>
 
+            <div class="container section-pad" style="background:var(--bg-light);">
+                <div class="text-center" style="margin-bottom:40px;"><h2>Frequently Asked Questions</h2></div>
+                <div id="home_faqs" style="max-width:800px; margin:0 auto;"><p class="text-center">Loading...</p></div>
+            </div>
+
             <div class="hero" style="height:40vh; min-height:300px;">
                 <img src="https://images.unsplash.com/photo-1528127269322-539801943592" alt="CTA">
                 <div class="hero-overlay"></div>
@@ -285,14 +269,11 @@ body.dark-mode .skeleton { background: linear-gradient(to right, #1e293b 8%, #33
             </div>
         </div>
 
-        <!-- Destinations Page -->
         <div id="page-destinations" class="page-view container">
             <h2>Explore Destinations</h2>
             <div class="filter-bar" style="margin-top:20px;">
                 <input type="text" id="dest-search" placeholder="Search destinations..." oninput="debounceDestSearch()">
-                <select id="dest-country-filter" onchange="loadDestinations()">
-                    <option value="">All Countries</option>
-                </select>
+                <select id="dest-country-filter" onchange="loadDestinations()"><option value="">All Countries</option></select>
                 <select id="dest-sort" onchange="loadDestinations()">
                     <option value="name_asc">Name A-Z</option>
                     <option value="name_desc">Name Z-A</option>
@@ -303,24 +284,23 @@ body.dark-mode .skeleton { background: linear-gradient(to right, #1e293b 8%, #33
             <div id="list_destinations" style="margin-top:30px;"><p class="text-center">Loading...</p></div>
         </div>
 
-        <!-- Packages Page -->
         <div id="page-packages" class="page-view container">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:15px;">
-                <h2 id="pkg_header_title">Travel Packages</h2>
+                <h2>Travel Packages</h2>
                 <input type="text" id="pkg_search" placeholder="Search packages..." oninput="debounceSearch()" style="padding:10px; border:1px solid var(--border); border-radius:8px; width:300px; max-width:100%;">
             </div>
             <div class="filter-bar">
-                <select id="filter-destination" onchange="loadPackages()" style="flex:1; min-width:150px;"></select>
-                <select id="filter-category" onchange="loadPackages()" style="flex:1; min-width:150px;">
+                <select id="filter-destination" onchange="loadPackages()"><option value="">All Destinations</option></select>
+                <select id="filter-category" onchange="loadPackages()">
                     <option value="">All Categories</option>
                     <option value="Adventure">Adventure</option>
                     <option value="Family">Family</option>
                     <option value="Honeymoon">Honeymoon</option>
                     <option value="Luxury">Luxury</option>
                 </select>
-                <input type="number" id="filter-min-price" placeholder="Min ₹" oninput="debounceSearch()" style="width:100px;">
-                <input type="number" id="filter-max-price" placeholder="Max ₹" oninput="debounceSearch()" style="width:100px;">
-                <select id="pkg_sort" onchange="loadPackages()" style="flex:1; min-width:150px;">
+                <input type="number" id="filter-min-price" placeholder="Min ₹" oninput="debounceSearch()">
+                <input type="number" id="filter-max-price" placeholder="Max ₹" oninput="debounceSearch()">
+                <select id="pkg_sort" onchange="loadPackages()">
                     <option value="new">Newest First</option>
                     <option value="price_asc">Price: Low to High</option>
                     <option value="price_desc">Price: High to Low</option>
@@ -330,37 +310,16 @@ body.dark-mode .skeleton { background: linear-gradient(to right, #1e293b 8%, #33
             <div class="grid-3" id="list_packages"></div>
         </div>
 
-        <!-- FAQ Section -->
-        <div class="container section-pad" style="background:var(--bg-light);">
-            <div class="text-center" style="margin-bottom:40px;">
-                <h2>Frequently Asked Questions</h2>
-                <p>Everything you need to know about traveling with Via Tours & Travels.</p>
-            </div>
-            <div id="home_faqs" style="max-width: 800px; margin: 0 auto;">
-                <p class="text-center">Loading...</p>
-            </div>
-        </div>
-
-        <!-- Package Detail Page -->
         <div id="page-package" class="page-view container"><div id="pkg_details_container">Loading...</div></div>
-
-        <!-- Blog Page -->
-        <div id="page-blog" class="page-view container">
-            <h2 class="text-center">Travel Blog & Guides</h2>
-            <p class="text-center" style="margin-bottom:30px;">Tips, stories, and inspiration for your next journey.</p>
-            <div class="grid-3" id="list_blog"><p class="text-center" style="grid-column:1/-1;">Loading...</p></div>
-        </div>
-
-        <!-- Blog Post Page -->
+        <div id="page-blog" class="page-view container"><h2 class="text-center">Travel Blog & Guides</h2><p class="text-center" style="margin-bottom:30px;">Tips, stories, and inspiration for your next journey.</p><div class="grid-3" id="list_blog"><p class="text-center" style="grid-column:1/-1;">Loading...</p></div></div>
         <div id="page-blog-post" class="page-view container" style="max-width:800px;"><div id="blog_details_container">Loading...</div></div>
 
-        <!-- Plan Trip Page -->
         <div id="page-plan-trip" class="page-view container" style="max-width:800px;">
             <h2 class="text-center">Plan My Trip</h2>
             <p class="text-center" style="margin-bottom:30px;">Tell us your dream vacation, and we will make it happen.</p>
             <form id="planTripForm" style="background:var(--bg-light); padding:30px; border-radius:12px;">
                 <input type="hidden" id="pt_pkg_id">
-                <div class="form-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                <div class="form-grid-2">
                     <div class="form-sec"><label>Full Name</label><input type="text" id="pt_name" required></div>
                     <div class="form-sec"><label>Email</label><input type="email" id="pt_email" required></div>
                     <div class="form-sec"><label>Phone</label><input type="text" id="pt_phone" required></div>
@@ -375,74 +334,39 @@ body.dark-mode .skeleton { background: linear-gradient(to right, #1e293b 8%, #33
             </form>
         </div>
 
-        <!-- About Page -->
-        <div id="page-about" class="page-view container" style="max-width:800px; text-align:center;">
-            <h2>About Via Tours & Travels</h2>
-            <p style="margin-top:20px;">We are a premium travel agency dedicated to creating unforgettable experiences. Since 2009, we have helped thousands of travelers explore the globe.</p>
-        </div>
-
-        <!-- Contact Page -->
-        <div id="page-contact" class="page-view container" style="max-width:800px; text-align:center;">
-            <h2>Contact Us</h2>
-            <p style="margin-top:20px;" id="contact_info">Loading...</p>
-        </div>
-
-        <!-- Terms Page -->
-        <div id="page-terms" class="page-view container" style="max-width: 800px;">
+        <div id="page-about" class="page-view container" style="max-width:800px; text-align:center;"><h2>About Via Tours & Travels</h2><p style="margin-top:20px;">We are a premium travel agency dedicated to creating unforgettable experiences. Since 2009, we have helped thousands of travelers explore the globe.</p></div>
+        <div id="page-contact" class="page-view container" style="max-width:800px; text-align:center;"><h2>Contact Us</h2><p style="margin-top:20px;" id="contact_info">Loading...</p></div>
+        <div id="page-terms" class="page-view container" style="max-width:800px;">
             <h2>Terms & Conditions</h2>
-            <p style="margin-bottom: 15px;"><strong>Last Updated: February 2025</strong></p>
+            <p style="margin-bottom:15px;"><strong>Last Updated: February 2025</strong></p>
             <p>Welcome to Via Tours & Travels. By using our website and submitting enquiries, you agree to the following terms and conditions:</p>
-            <br>
-            <h4>1. Services Provided</h4>
-            <p>Via Tours & Travels provides travel consultation, itinerary planning, and booking assistance for domestic and international tours. We act as a facilitator between you and various travel service providers (hotels, airlines, transport companies). We do not process online payments directly on our website at this time. All financial transactions will be handled directly between the client and our agency via verified bank transfers or payment links.</p>
-            <br>
-            <h4>2. Bookings & Enquiries</h4>
+            <br><h4>1. Services Provided</h4>
+            <p>Via Tours & Travels provides travel consultation, itinerary planning, and booking assistance for domestic and international tours. We act as a facilitator between you and various travel service providers. We do not process online payments directly on our website at this time. All financial transactions will be handled directly between the client and our agency via verified bank transfers or payment links.</p>
+            <br><h4>2. Bookings & Enquiries</h4>
             <p>When you submit a "Plan My Trip" enquiry, our team will contact you to discuss your requirements, provide a quotation, and finalize the itinerary. A booking is only considered confirmed after an advance payment is received and acknowledged by Via Tours & Travels.</p>
-            <br>
-            <h4>3. Pricing & Taxes</h4>
-            <p>All package prices are listed in Indian Rupees (INR ₹). Prices are subject to change based on hotel availability, flight fares, and seasonal surcharges. Applicable taxes (including GST) and government levies will be included in your final quotation.</p>
-            <br>
-            <h4>4. Travel Documents</h4>
-            <p>It is the sole responsibility of the traveler to possess valid identification, passports, and required visas. While Via Tours & Travels provides documentation assistance, we are not liable for the rejection of visas or delays caused by government authorities.</p>
-            <br>
-            <h4>5. Cancellations & Refunds</h4>
-            <p>Cancellation policies vary depending on the specific hotels, airlines, and third-party vendors involved in your itinerary. The exact cancellation terms will be shared with you at the time of booking confirmation. Advance payments are generally non-refundable for hotel and flight bookings during peak seasons.</p>
-            <br>
-            <h4>6. Limitation of Liability</h4>
+            <br><h4>3. Pricing & Taxes</h4>
+            <p>All package prices are listed in Indian Rupees (INR ₹). Prices are subject to change based on hotel availability, flight fares, and seasonal surcharges. Applicable taxes will be included in your final quotation.</p>
+            <br><h4>4. Travel Documents</h4>
+            <p>It is the sole responsibility of the traveler to possess valid identification, passports, and required visas. Via Tours & Travels provides documentation assistance but is not liable for the rejection of visas or delays caused by government authorities.</p>
+            <br><h4>5. Cancellations & Refunds</h4>
+            <p>Cancellation policies vary depending on the specific hotels, airlines, and third-party vendors involved in your itinerary. The exact cancellation terms will be shared with you at the time of booking confirmation.</p>
+            <br><h4>6. Limitation of Liability</h4>
             <p>Via Tours & Travels shall not be liable for any delays, injuries, losses, or damages resulting from third-party service providers, natural disasters, political unrest, or personal negligence during the trip. Travel insurance is highly recommended for all travelers.</p>
         </div>
-
-        <!-- Privacy Page -->
-        <div id="page-privacy" class="page-view container" style="max-width: 800px;">
+        <div id="page-privacy" class="page-view container" style="max-width:800px;">
             <h2>Privacy Policy</h2>
-            <p style="margin-bottom: 15px;"><strong>Last Updated: February 2025</strong></p>
+            <p style="margin-bottom:15px;"><strong>Last Updated: February 2025</strong></p>
             <p>Via Tours & Travels respects your privacy. This policy explains how we collect, use, and protect your personal information.</p>
-            <br>
-            <h4>1. Information We Collect</h4>
-            <p>When you use our "Plan My Trip" enquiry form or interact with our chatbot, we collect the following details:</p>
-            <ul style="list-style: disc; margin-left: 20px; margin-bottom: 15px;">
-                <li>Full Name</li>
-                <li>Email Address & Phone Number</li>
-                <li>Destination preferences, travel dates, budget, and hotel preferences</li>
-            </ul>
-            <p>We do not collect sensitive financial data (like credit card numbers) on this website, as payments are not processed here.</p>
-            <br>
-            <h4>2. How We Use Your Information</h4>
-            <p>The information you provide is used strictly to:</p>
-            <ul style="list-style: disc; margin-left: 20px; margin-bottom: 15px;">
-                <li>Contact you regarding your travel enquiry and provide customized quotations.</li>
-                <li>Create and manage your travel bookings.</li>
-                <li>Provide customer support during your trip.</li>
-            </ul>
-            <br>
-            <h4>3. Data Security</h4>
-            <p>Your data is securely stored using Supabase (a secure database provider) with strict Row-Level Security (RLS) protocols. Only authorized administrators at Via Tours & Travels have access to your personal contact details and enquiry history. We do not sell, rent, or trade your personal information to third parties.</p>
-            <br>
-            <h4>4. Third-Party Service Providers</h4>
-            <p>To fulfill your travel plans, we may need to share specific details (like names and contact info) with trusted third-party service providers such as hotels, airlines, and ground transport companies. These providers are strictly prohibited from using your data for any other purpose.</p>
-            <br>
-            <h4>5. Your Rights</h4>
-            <p>You have the right to request access to the personal data we hold about you, or ask for it to be corrected or deleted. To make such a request, please contact us directly at <strong>hello@viatours.com</strong>.</p>
+            <br><h4>1. Information We Collect</h4>
+            <p>When you use our "Plan My Trip" enquiry form or interact with our chatbot, we collect: Full Name, Email Address & Phone Number, Destination preferences, travel dates, budget, and hotel preferences.</p>
+            <br><h4>2. How We Use Your Information</h4>
+            <p>The information you provide is used strictly to contact you regarding your travel enquiry, create and manage your travel bookings, and provide customer support during your trip.</p>
+            <br><h4>3. Data Security</h4>
+            <p>Your data is securely stored using Supabase with strict Row-Level Security protocols. Only authorized administrators have access to your personal contact details. We do not sell, rent, or trade your personal information.</p>
+            <br><h4>4. Third-Party Service Providers</h4>
+            <p>To fulfill your travel plans, we may need to share specific details with trusted third-party service providers such as hotels, airlines, and ground transport companies.</p>
+            <br><h4>5. Your Rights</h4>
+            <p>You have the right to request access to the personal data we hold about you, or ask for it to be corrected or deleted. Contact us at <strong>hello@viatours.com</strong>.</p>
         </div>
     </main>
 
@@ -452,10 +376,7 @@ body.dark-mode .skeleton { background: linear-gradient(to right, #1e293b 8%, #33
                 <div>
                     <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
                         <img src="https://goqwtovltftehautxekh.supabase.co/storage/v1/object/public/package-images/Via%20tours%20&%20travels.png" alt="Logo" style="height:50px; border-radius:4px;">
-                        <div>
-                            <strong style="display:block; font-family:'Poppins',sans-serif; font-size:1.2rem; color:#fff; line-height:1;">Via</strong>
-                            <span style="font-size:0.65rem; color:#f97316; text-transform:uppercase; letter-spacing:1px;">Tours & Travels</span>
-                        </div>
+                        <div><strong style="display:block; font-family:'Poppins',sans-serif; font-size:1.2rem; color:#fff; line-height:1;">Via</strong><span style="font-size:0.65rem; color:#f97316; text-transform:uppercase; letter-spacing:1px;">Tours & Travels</span></div>
                     </div>
                     <p style="font-size:0.9rem; color:#94a3b8; max-width:300px;">Your trusted partner for unforgettable journeys. We make the world accessible, one destination at a time.</p>
                 </div>
@@ -490,11 +411,10 @@ body.dark-mode .skeleton { background: linear-gradient(to right, #1e293b 8%, #33
     </footer>
 </div>
 
-<!-- Scroll Top & Chat -->
 <div class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})"><i class="fas fa-arrow-up"></i></div>
 <div class="chat-bubble" onclick="toggleChat()"><i class="fas fa-robot"></i></div>
 <div class="chat-window" id="chatWindow">
-    <div class="chat-header">Via AI Assistant <button class="chat-close" onclick="toggleChat()" style="background:none;border:none;color:white;font-size:20px;cursor:pointer;">&times;</button></div>
+    <div class="chat-header">Via AI Assistant <button onclick="toggleChat()" style="background:none;border:none;color:white;font-size:20px;cursor:pointer;">&times;</button></div>
     <div class="chat-body" id="chatBody"><div class="chat-msg bot">Hello! I'm the Via Tours AI assistant. How can I help you plan your trip today?</div></div>
     <div class="chat-input-area">
         <input type="text" id="chatInput" placeholder="Ask a question..." onkeypress="handleChat(event)">
@@ -502,12 +422,11 @@ body.dark-mode .skeleton { background: linear-gradient(to right, #1e293b 8%, #33
     </div>
 </div>
 
-<!-- Admin Wrapper -->
 <div id="admin-wrapper" style="display:none;">
     <div class="admin-layout">
         <div class="admin-side" id="adminSide">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:0 20px 20px;">
-                <h3 style="margin:0;">Via Admin Panel</h3>
+                <h3 style="margin:0;">Admin Panel</h3>
                 <button onclick="toggleSidebar()" style="background:none;border:none;color:white;font-size:20px;cursor:pointer;"><i class="fas fa-bars"></i></button>
             </div>
             <ul class="admin-menu">
@@ -533,7 +452,6 @@ body.dark-mode .skeleton { background: linear-gradient(to right, #1e293b 8%, #33
                 <button class="btn btn-blue" style="width:100%;" onclick="adminLogin()">Login</button>
             </div>
             <div id="admin-dashboard" style="display:none;">
-                <!-- Dashboard Tab -->
                 <div id="tab-dashboard" class="admin-tab">
                     <h2>Dashboard</h2>
                     <div class="grid-4" id="stats_grid">
@@ -543,133 +461,61 @@ body.dark-mode .skeleton { background: linear-gradient(to right, #1e293b 8%, #33
                         <div class="stat-card"><h2 id="stat_cust">0</h2><p>Customers</p></div>
                     </div>
                     <div class="grid-3" style="margin-top:40px;">
-                        <div style="grid-column: 1 / span 2;"><h3>Recent Enquiries</h3><div class="admin-table" style="margin-top:15px;"><table><thead><tr><th>Name</th><th>Destination</th><th>Status</th></tr></thead><tbody id="table_recent_enq"></tbody></table></div></div>
+                        <div style="grid-column:1 / span 2;"><h3>Recent Enquiries</h3><div class="admin-table" style="margin-top:15px;"><table><thead><tr><th>Name</th><th>Destination</th><th>Status</th></tr></thead><tbody id="table_recent_enq"></tbody></table></div></div>
                         <div><h3>Upcoming Bookings</h3><div class="admin-table" style="margin-top:15px;"><table><thead><tr><th>Customer</th><th>Date</th></tr></thead><tbody id="table_upcoming_book"></tbody></table></div></div>
                     </div>
                 </div>
-
-                <!-- Packages Tab -->
                 <div id="tab-packages" class="admin-tab" style="display:none;">
-                    <div class="admin-header">
-                        <h2>Manage Packages</h2>
-                        <button class="btn btn-primary" onclick="openPkgModal()">Add Package</button>
-                    </div>
+                    <div class="admin-header"><h2>Manage Packages</h2><button class="btn btn-primary" onclick="openPkgModal()">Add Package</button></div>
                     <div class="bulk-actions" id="pkg-bulk-actions" style="display:none;">
                         <select id="pkg-bulk-action"><option value="">Bulk Actions</option><option value="delete">Delete Selected</option><option value="publish">Publish</option><option value="unpublish">Unpublish</option></select>
                         <button class="btn btn-blue" onclick="applyBulkAction('packages')">Apply</button>
                     </div>
-                    <div class="admin-table">
-                        <table>
-                            <thead><tr><th><input type="checkbox" id="select-all-packages" onchange="toggleAllCheckboxes('package', this)"></th><th>Image</th><th>Title</th><th>Price (₹)</th><th>Status</th><th>Actions</th></tr></thead>
-                            <tbody id="table_packages"></tbody>
-                        </table>
-                    </div>
+                    <div class="admin-table"><table><thead><tr><th><input type="checkbox" id="select-all-packages" onchange="toggleAllCheckboxes('package', this)"></th><th>Image</th><th>Title</th><th>Price (₹)</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_packages"></tbody></table></div>
                 </div>
-
-                <!-- Destinations Tab -->
                 <div id="tab-destinations" class="admin-tab" style="display:none;">
-                    <div class="admin-header">
-                        <h2>Manage Destinations</h2>
-                        <button class="btn btn-primary" onclick="openDestModal()">Add Destination</button>
-                    </div>
+                    <div class="admin-header"><h2>Manage Destinations</h2><button class="btn btn-primary" onclick="openDestModal()">Add Destination</button></div>
                     <div class="bulk-actions" id="dest-bulk-actions" style="display:none;">
                         <select id="dest-bulk-action"><option value="">Bulk Actions</option><option value="delete">Delete Selected</option><option value="publish">Publish</option><option value="unpublish">Unpublish</option></select>
                         <button class="btn btn-blue" onclick="applyBulkAction('destinations')">Apply</button>
                     </div>
-                    <div class="admin-table">
-                        <table>
-                            <thead><tr><th><input type="checkbox" id="select-all-destinations" onchange="toggleAllCheckboxes('destination', this)"></th><th>Name</th><th>Country</th><th>Status</th><th>Actions</th></tr></thead>
-                            <tbody id="table_destinations"></tbody>
-                        </table>
-                    </div>
+                    <div class="admin-table"><table><thead><tr><th><input type="checkbox" id="select-all-destinations" onchange="toggleAllCheckboxes('destination', this)"></th><th>Name</th><th>Country</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_destinations"></tbody></table></div>
                 </div>
-
-                <!-- Enquiries Tab -->
                 <div id="tab-enquiries" class="admin-tab" style="display:none;">
-                    <div class="admin-header">
-                        <h2>Enquiries</h2>
-                        <button class="btn btn-green" onclick="exportEnquiries()"><i class="fas fa-file-csv"></i> Export CSV</button>
-                    </div>
-                    <div class="admin-table" style="margin-top:20px;">
-                        <table>
-                            <thead><tr><th>Customer</th><th>Details</th><th>Status & Notes</th><th>Actions</th></tr></thead>
-                            <tbody id="table_enquiries"></tbody>
-                        </table>
-                    </div>
+                    <div class="admin-header"><h2>Enquiries</h2><button class="btn btn-green" onclick="exportEnquiries()"><i class="fas fa-file-csv"></i> Export CSV</button></div>
+                    <div class="admin-table" style="margin-top:20px;"><table><thead><tr><th>Customer</th><th>Details</th><th>Status & Notes</th><th>Actions</th></tr></thead><tbody id="table_enquiries"></tbody></table></div>
                 </div>
-
-                <!-- Customers Tab -->
-                <div id="tab-customers" class="admin-tab" style="display:none;">
-                    <h2>Customers</h2>
-                    <div class="admin-table" style="margin-top:20px;"><table><thead><tr><th>Name</th><th>Contact</th><th>Notes</th></tr></thead><tbody id="table_customers"></tbody></table></div>
-                </div>
-
-                <!-- Bookings Tab -->
-                <div id="tab-bookings" class="admin-tab" style="display:none;">
-                    <div class="admin-header"><h2>Bookings</h2><button class="btn btn-primary" onclick="openBookModal()">Add Booking</button></div>
-                    <div class="admin-table"><table><thead><tr><th>Customer</th><th>Travel Date</th><th>Amount</th><th>Status</th></tr></thead><tbody id="table_bookings"></tbody></table></div>
-                </div>
-
-                <!-- Blog Tab -->
-                <div id="tab-blog" class="admin-tab" style="display:none;">
-                    <div class="admin-header"><h2>Manage Blog</h2><button class="btn btn-primary" onclick="openBlogModal()">Add Post</button></div>
-                    <div class="admin-table"><table><thead><tr><th>Title</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_blog"></tbody></table></div>
-                </div>
-
-                <!-- Testimonials Tab -->
-                <div id="tab-testimonials" class="admin-tab" style="display:none;">
-                    <div class="admin-header"><h2>Manage Testimonials</h2><button class="btn btn-primary" onclick="openTestModal()">Add Testimonial</button></div>
-                    <div class="admin-table"><table><thead><tr><th>Customer Name</th><th>Message</th><th>Actions</th></tr></thead><tbody id="table_testimonials"></tbody></table></div>
-                </div>
-
-                <!-- FAQs Tab -->
-                <div id="tab-faqs" class="admin-tab" style="display:none;">
-                    <div class="admin-header"><h2>Manage FAQs</h2><button class="btn btn-primary" onclick="openFaqModal()">Add FAQ</button></div>
-                    <div class="admin-table"><table><thead><tr><th>Question</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_faqs"></tbody></table></div>
-                </div>
-
-                <!-- Settings Tab -->
-                <div id="tab-settings" class="admin-tab" style="display:none;">
-                    <h2>Website Settings</h2>
-                    <div style="background:#fff; padding:30px; border-radius:8px; max-width:600px; margin-top:20px;">
-                        <div class="form-sec"><label>Business Name</label><input type="text" id="set_name"></div>
-                        <div class="form-sec"><label>Contact Email</label><input type="email" id="set_email"></div>
-                        <div class="form-sec"><label>Contact Phone</label><input type="text" id="set_phone"></div>
-                        <div class="form-sec"><label>WhatsApp Number</label><input type="text" id="set_whatsapp"></div>
-                        <div class="form-sec"><label>Address</label><input type="text" id="set_address"></div>
-                        <button class="btn btn-blue" onclick="saveSettings()">Save Settings</button>
-                    </div>
-                </div>
+                <div id="tab-customers" class="admin-tab" style="display:none;"><h2>Customers</h2><div class="admin-table" style="margin-top:20px;"><table><thead><tr><th>Name</th><th>Contact</th><th>Notes</th></tr></thead><tbody id="table_customers"></tbody></table></div></div>
+                <div id="tab-bookings" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Bookings</h2><button class="btn btn-primary" onclick="openBookModal()">Add Booking</button></div><div class="admin-table"><table><thead><tr><th>Customer</th><th>Package</th><th>Travel Date</th><th>Amount</th><th>Status</th></tr></thead><tbody id="table_bookings"></tbody></table></div></div>
+                <div id="tab-blog" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Manage Blog</h2><button class="btn btn-primary" onclick="openBlogModal()">Add Post</button></div><div class="admin-table"><table><thead><tr><th>Title</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_blog"></tbody></table></div></div>
+                <div id="tab-testimonials" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Manage Testimonials</h2><button class="btn btn-primary" onclick="openTestModal()">Add Testimonial</button></div><div class="admin-table"><table><thead><tr><th>Customer Name</th><th>Message</th><th>Actions</th></tr></thead><tbody id="table_testimonials"></tbody></table></div></div>
+                <div id="tab-faqs" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Manage FAQs</h2><button class="btn btn-primary" onclick="openFaqModal()">Add FAQ</button></div><div class="admin-table"><table><thead><tr><th>Question</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_faqs"></tbody></table></div></div>
+                <div id="tab-settings" class="admin-tab" style="display:none;"><h2>Website Settings</h2><div style="background:#fff; padding:30px; border-radius:8px; max-width:600px; margin-top:20px;"><div class="form-sec"><label>Business Name</label><input type="text" id="set_name"></div><div class="form-sec"><label>Contact Email</label><input type="email" id="set_email"></div><div class="form-sec"><label>Contact Phone</label><input type="text" id="set_phone"></div><div class="form-sec"><label>WhatsApp Number</label><input type="text" id="set_whatsapp"></div><div class="form-sec"><label>Address</label><input type="text" id="set_address"></div><button class="btn btn-blue" onclick="saveSettings()">Save Settings</button></div></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modals -->
 <div id="pkgFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;">
     <div style="background:#fff; max-width:600px; margin:auto; padding:30px; border-radius:12px; position:relative;">
         <button onclick="document.getElementById('pkgFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button>
         <h3 style="margin-bottom:20px;" id="pkg_modal_title">Add Package</h3>
         <input type="hidden" id="m_pkg_id">
         <div class="form-sec"><label>Title</label><input type="text" id="m_pkg_title"></div>
-        <div class="form-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+        <div class="form-grid-2">
             <div class="form-sec"><label>Price (INR ₹)</label><input type="number" id="m_pkg_price"></div>
             <div class="form-sec"><label>Category</label><input type="text" id="m_pkg_cat"></div>
         </div>
-        <div class="form-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+        <div class="form-grid-2">
             <div class="form-sec"><label>Duration</label><input type="text" id="m_pkg_duration" placeholder="5 Days / 4 Nights"></div>
             <div class="form-sec"><label>Destination</label><select id="m_pkg_dest"></select></div>
         </div>
         <div class="form-sec"><label>Short Description</label><input type="text" id="m_pkg_short_desc"></div>
         <div class="form-sec"><label>Full Description</label><textarea id="m_pkg_desc" rows="4"></textarea></div>
         <div class="form-sec"><label>Featured Image Upload</label><input type="file" id="m_pkg_img" accept="image/*"></div>
-        <div class="form-sec">
-            <label>Gallery Images (Multiple)</label>
-            <input type="file" id="m_pkg_gallery" multiple accept="image/*">
-            <div id="gallery_preview" class="gallery-grid" style="margin-top: 10px; display: none;"></div>
-        </div>
+        <div class="form-sec"><label>Gallery Images (Multiple)</label><input type="file" id="m_pkg_gallery" multiple accept="image/*"><div id="gallery_preview" class="gallery-grid" style="margin-top:10px; display:none;"></div></div>
         <div class="form-sec"><label>Itinerary</label><div id="itin_editor"></div><button type="button" class="btn btn-outline" style="margin-top:10px;" onclick="addItinDay()"><i class="fas fa-plus"></i> Add Day</button></div>
-        <div class="form-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+        <div class="form-grid-2">
             <div class="form-sec"><label>Inclusions (One per line)</label><textarea id="m_pkg_inc" rows="4"></textarea></div>
             <div class="form-sec"><label>Exclusions (One per line)</label><textarea id="m_pkg_exc" rows="4"></textarea></div>
         </div>
@@ -694,7 +540,7 @@ body.dark-mode .skeleton { background: linear-gradient(to right, #1e293b 8%, #33
 <div id="destFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;">
     <div style="background:#fff; max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;">
         <button onclick="document.getElementById('destFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button>
-        <h3 style="margin-bottom:20px;" id="dest_modal_title">Add Destination</h3>
+        <h3 style="margin-bottom:20px;">Add Destination</h3>
         <input type="hidden" id="m_dest_id">
         <div class="form-sec"><label>Name</label><input type="text" id="m_dest_name"></div>
         <div class="form-sec"><label>Country</label><input type="text" id="m_dest_country"></div>
@@ -713,9 +559,10 @@ body.dark-mode .skeleton { background: linear-gradient(to right, #1e293b 8%, #33
     <div style="background:#fff; max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;">
         <button onclick="document.getElementById('bookFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button>
         <h3 style="margin-bottom:20px;">Add Booking</h3>
-        <div class="form-sec"><label>Customer</label><select id="m_book_cust"></select></div>
-        <div class="form-sec"><label>Package</label><select id="m_book_pkg"></select></div>
+        <div class="form-sec"><label>Customer Name</label><input type="text" id="m_book_customer_name"></div>
+        <div class="form-sec"><label>Package Name</label><input type="text" id="m_book_package_name"></div>
         <div class="form-sec"><label>Travel Date</label><input type="date" id="m_book_date"></div>
+        <div class="form-sec"><label>Travelers</label><input type="number" id="m_book_travelers" value="1" min="1"></div>
         <div class="form-sec"><label>Total Amount (₹)</label><input type="number" id="m_book_total"></div>
         <div class="form-sec"><label>Amount Paid (₹)</label><input type="number" id="m_book_paid"></div>
         <div class="form-sec"><label>Booking Status</label><select id="m_book_status"><option>Pending</option><option>Confirmed</option><option>Completed</option><option>Cancelled</option></select></div>
@@ -729,6 +576,7 @@ body.dark-mode .skeleton { background: linear-gradient(to right, #1e293b 8%, #33
         <h3 style="margin-bottom:20px;">Add Testimonial</h3>
         <div class="form-sec"><label>Customer Name</label><input type="text" id="m_test_name"></div>
         <div class="form-sec"><label>Location</label><input type="text" id="m_test_loc"></div>
+        <div class="form-sec"><label>Rating (1-5)</label><input type="number" id="m_test_rating" min="1" max="5" value="5"></div>
         <div class="form-sec"><label>Image URL</label><input type="text" id="m_test_img"></div>
         <div class="form-sec"><label>Message</label><textarea id="m_test_msg" rows="4"></textarea></div>
         <button class="btn btn-blue" onclick="saveTestimonial()" style="width:100%; margin-top:15px;">Save</button>
@@ -752,13 +600,12 @@ body.dark-mode .skeleton { background: linear-gradient(to right, #1e293b 8%, #33
     </div>
 </div>
 
-<!-- Confirmation Modal -->
 <div id="confirmModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:10000; align-items:center; justify-content:center;">
     <div style="background:#fff; max-width:400px; margin:auto; padding:30px; border-radius:12px; text-align:center;">
         <h3>Are you sure?</h3>
         <p id="confirmMessage"></p>
         <div style="display:flex; gap:10px; justify-content:center; margin-top:20px;">
-            <button class="btn btn-danger" id="confirmYes" style="background:#ef4444; color:#fff;">Yes</button>
+            <button class="btn btn-danger" id="confirmYes">Yes</button>
             <button class="btn btn-outline" id="confirmNo">Cancel</button>
         </div>
     </div>
@@ -766,37 +613,26 @@ body.dark-mode .skeleton { background: linear-gradient(to right, #1e293b 8%, #33
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// ===== SUPABASE INIT =====
 const SUPABASE_URL = 'https://goqwtovltftehautxekh.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_bQXp8x_2x4ymx4_oxcOFUA_UTGsqF-5';
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ===== GLOBALS =====
 let appSettings = { whatsapp: '919876543210' };
 let currentItinerary = [];
 let activeDestFilter = null;
 let currentGallery = [];
-let currentPackage = null; // cache for package details
+let currentPackage = null;
 let isDarkMode = localStorage.getItem('darkMode') === 'true';
 let isSidebarCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
 
-// ===== UTILITY FUNCTIONS =====
 function escapeHTML(str) {
     if (!str) return '';
-    return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
 }
 
 function debounce(fn, delay = 400) {
     let timer;
-    return (...args) => {
-        clearTimeout(timer);
-        timer = setTimeout(() => fn(...args), delay);
-    };
+    return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), delay); };
 }
 
 function showToast(msg, type = 'success') {
@@ -805,28 +641,18 @@ function showToast(msg, type = 'success') {
     toast.textContent = msg;
     document.body.appendChild(toast);
     setTimeout(() => toast.classList.add('show'), 10);
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
+    setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3000);
 }
 
 function showConfirm(message, onConfirm) {
     const modal = document.getElementById('confirmModal');
     document.getElementById('confirmMessage').textContent = message;
     modal.style.display = 'flex';
-    document.getElementById('confirmYes').onclick = () => {
-        modal.style.display = 'none';
-        onConfirm();
-    };
-    document.getElementById('confirmNo').onclick = () => {
-        modal.style.display = 'none';
-    };
+    document.getElementById('confirmYes').onclick = () => { modal.style.display = 'none'; onConfirm(); };
+    document.getElementById('confirmNo').onclick = () => { modal.style.display = 'none'; };
 }
 
 function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode', isDarkMode);
-    localStorage.setItem('darkMode', isDarkMode);
     isDarkMode = !isDarkMode;
     document.body.classList.toggle('dark-mode', isDarkMode);
     localStorage.setItem('darkMode', isDarkMode);
@@ -841,25 +667,15 @@ function toggleSidebar() {
     localStorage.setItem('sidebarCollapsed', isSidebarCollapsed);
 }
 
-// Apply initial dark mode and sidebar state
 if (isDarkMode) document.body.classList.add('dark-mode');
-if (isSidebarCollapsed) {
-    document.getElementById('adminSide')?.classList.add('collapsed');
-    document.getElementById('adminMain')?.classList.add('expanded');
-}
 
-// ===== ROUTING =====
 function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
 function toggleChat() { document.getElementById('chatWindow').classList.toggle('active'); }
 
 function updateSEO(title, desc) {
     document.title = title;
     let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-        metaDesc = document.createElement('meta');
-        metaDesc.name = 'description';
-        document.head.appendChild(metaDesc);
-    }
+    if (!metaDesc) { metaDesc = document.createElement('meta'); metaDesc.name = 'description'; document.head.appendChild(metaDesc); }
     metaDesc.content = desc;
 }
 
@@ -890,7 +706,7 @@ async function router() {
     document.querySelectorAll('.page-view').forEach(p => p.style.display = 'none');
     const view = document.getElementById('page-' + page) || document.getElementById('page-home');
     view.style.display = 'block';
-    if (view.id === 'page-home' && page !== 'home') loadHomeData(); // fallback
+    if (view.id === 'page-home' && page !== 'home') loadHomeData();
     window.scrollTo(0, 0);
 
     switch(page) {
@@ -903,14 +719,13 @@ async function router() {
         case 'blog-post': if (id) loadBlogPost(id); break;
         case 'about': updateSEO('About Us - Via Tours', 'Learn about Via Tours & Travels.'); break;
         case 'contact': updateSEO('Contact Us - Via Tours', 'Get in touch with Via Tours.'); break;
-        case 'terms': updateSEO('Terms & Conditions - Via Tours', 'Terms and conditions for Via Tours & Travels.'); break;
-        case 'privacy': updateSEO('Privacy Policy - Via Tours', 'Privacy policy for Via Tours & Travels.'); break;
+        case 'terms': updateSEO('Terms & Conditions - Via Tours', 'Terms and conditions.'); break;
+        case 'privacy': updateSEO('Privacy Policy - Via Tours', 'Privacy policy.'); break;
     }
 }
 window.addEventListener('hashchange', router);
 window.addEventListener('load', router);
 
-// ===== SETTINGS =====
 async function loadSettings() {
     const { data } = await sb.from('website_settings').select('*').eq('id', 1).single();
     if (data) {
@@ -919,76 +734,36 @@ async function loadSettings() {
         contactDiv.textContent = '';
         contactDiv.appendChild(document.createTextNode('Email: ' + data.email + ' | Phone: ' + data.phone));
         contactDiv.appendChild(document.createElement('br'));
-        contactDiv.appendChild(document.createTextNode('Address: ' + data.address));
+        contactDiv.appendChild(document.createTextNode('Address: ' + (data.address || 'MG Road, Bengaluru, India')));
     }
 }
-loadSettings();
 
-// ===== HOME DATA =====
 async function loadHomeData() {
-    // Destinations
-    const { data: dests } = await sb.from('destinations')
-        .select('id, name, country, image_url')
-        .eq('is_published', true)
-        .limit(4);
-    document.getElementById('home_destinations').innerHTML = (dests||[]).length ? dests.map(d => `
-        <div class="card" onclick="navTo('packages', '${escapeHTML(d.id)}')">
-            <img src="${escapeHTML(d.image_url || '')}" alt="${escapeHTML(d.name)}">
-            <div class="card-body"><h3>${escapeHTML(d.name)}</h3><p>${escapeHTML(d.country || '')}</p></div>
-        </div>`).join('') : '<p>No destinations yet.</p>';
+    const { data: dests } = await sb.from('destinations').select('id, name, country, image_url').eq('is_published', true).limit(4);
+    document.getElementById('home_destinations').innerHTML = (dests||[]).length ? dests.map(d => `<div class="card" onclick="navTo('packages', '${escapeHTML(d.id)}')"><img src="${escapeHTML(d.image_url || '')}" alt="${escapeHTML(d.name)}"><div class="card-body"><h3>${escapeHTML(d.name)}</h3><p>${escapeHTML(d.country || '')}</p></div></div>`).join('') : '<p>No destinations yet.</p>';
 
-    // Packages
-    const { data: packs } = await sb.from('packages')
-        .select('id, title, price, duration, category, image_url, destination_id, destinations(name)')
-        .eq('is_published', true)
-        .limit(3);
-    document.getElementById('home_packages').innerHTML = (packs||[]).length ? packs.map(p => `
-        <div class="card" onclick="navTo('package', '${escapeHTML(p.id)}')">
-            <img src="${escapeHTML(p.image_url || '')}" alt="${escapeHTML(p.title)}">
-            <div class="card-body">
-                <span class="tag">${escapeHTML(p.category || 'Travel')}</span>
-                <h3>${escapeHTML(p.title)}</h3>
-                <p>${escapeHTML(p.duration || '')} | ${escapeHTML(p.destinations?.name || '')}</p>
-                <span class="price-tag">₹${Number(p.price).toLocaleString('en-IN')}</span>
-            </div>
-        </div>`).join('') : '<p>No packages yet.</p>';
+    const { data: packs } = await sb.from('packages').select('id, title, price, duration, category, image_url, destination_id, destinations(name)').eq('is_published', true).limit(3);
+    document.getElementById('home_packages').innerHTML = (packs||[]).length ? packs.map(p => `<div class="card" onclick="navTo('package', '${escapeHTML(p.id)}')"><img src="${escapeHTML(p.image_url || '')}" alt="${escapeHTML(p.title)}"><div class="card-body"><span class="tag">${escapeHTML(p.category || 'Travel')}</span><h3>${escapeHTML(p.title)}</h3><p>${escapeHTML(p.duration || '')} | ${escapeHTML(p.destinations?.name || '')}</p><span class="price-tag">₹${Number(p.price).toLocaleString('en-IN')}</span></div></div>`).join('') : '<p>No packages yet.</p>';
 
-    // Blog
-    const { data: blogs } = await sb.from('blog_posts')
-        .select('id, slug, title, excerpt, image_url, created_at')
-        .eq('is_published', true)
-        .limit(3);
-    document.getElementById('home_blog').innerHTML = (blogs||[]).length ? blogs.map(b => `
-        <div class="card" onclick="navTo('blog-post', '${escapeHTML(b.slug || b.id)}')">
-            <img src="${escapeHTML(b.image_url || '')}" alt="${escapeHTML(b.title)}">
-            <div class="card-body"><h3>${escapeHTML(b.title)}</h3><p>${escapeHTML(b.excerpt || '')}</p></div>
-        </div>`).join('') : '<p>No blogs yet.</p>';
+    const { data: blogs } = await sb.from('blog_posts').select('id, slug, title, excerpt, image_url, created_at').eq('is_published', true).limit(3);
+    document.getElementById('home_blog').innerHTML = (blogs||[]).length ? blogs.map(b => `<div class="card" onclick="navTo('blog-post', '${escapeHTML(b.slug || b.id)}')"><img src="${escapeHTML(b.image_url || '')}" alt="${escapeHTML(b.title)}"><div class="card-body"><h3>${escapeHTML(b.title)}</h3><p>${escapeHTML(b.excerpt || '')}</p></div></div>`).join('') : '<p>No blogs yet.</p>';
 
-    // Testimonials
-    const { data: tests } = await sb.from('testimonials')
-        .select('name, message, image_url')
-        .limit(3);
-    document.getElementById('home_testimonials').innerHTML = (tests||[]).length ? tests.map(t => `
-        <div class="card"><div class="card-body"><p>"${escapeHTML(t.message)}"</p><h4>${escapeHTML(t.name)}</h4></div></div>`
-    ).join('') : '<p>No testimonials yet.</p>';
+    const { data: tests } = await sb.from('testimonials').select('name, message, image_url').limit(3);
+    document.getElementById('home_testimonials').innerHTML = (tests||[]).length ? tests.map(t => `<div class="card"><div class="card-body"><p>"${escapeHTML(t.message)}"</p><h4>${escapeHTML(t.name)}</h4></div></div>`).join('') : '<p>No testimonials yet.</p>';
+
+    loadHomeFaqs();
 }
 
-// ===== HERO SEARCH =====
 function searchFromHero() {
-    const dest = document.getElementById('hero_dest').value;
-    // Could filter packages by destination name, but for now just navigate to packages
     navTo('packages');
 }
 
-// ===== DESTINATIONS PAGE =====
 async function loadDestinations() {
     const searchTerm = (document.getElementById('dest-search')?.value || '').toLowerCase();
     const countryFilter = document.getElementById('dest-country-filter')?.value || '';
     const sortVal = document.getElementById('dest-sort')?.value || 'name_asc';
 
-    let query = sb.from('destinations')
-        .select('id, name, country, region, image_url')
-        .eq('is_published', true);
+    let query = sb.from('destinations').select('id, name, country, region, image_url').eq('is_published', true);
     if (countryFilter) query = query.eq('country', countryFilter);
     const { data, error } = await query;
 
@@ -999,55 +774,36 @@ async function loadDestinations() {
 
     let filtered = data.filter(d => {
         if (!searchTerm) return true;
-        return (d.name?.toLowerCase().includes(searchTerm) ||
-                d.country?.toLowerCase().includes(searchTerm) ||
-                d.region?.toLowerCase().includes(searchTerm));
+        return (d.name?.toLowerCase().includes(searchTerm) || d.country?.toLowerCase().includes(searchTerm) || d.region?.toLowerCase().includes(searchTerm));
     });
 
-    // Sort
     switch(sortVal) {
         case 'name_desc': filtered.sort((a,b) => b.name.localeCompare(a.name)); break;
         case 'country_asc': filtered.sort((a,b) => a.country.localeCompare(b.country) || a.name.localeCompare(b.name)); break;
-        default: filtered.sort((a,b) => a.name.localeCompare(b.name)); // name_asc
+        default: filtered.sort((a,b) => a.name.localeCompare(b.name));
     }
 
-    // Group by country
     const grouped = {};
-    filtered.forEach(d => {
-        const c = d.country || 'Other';
-        if (!grouped[c]) grouped[c] = [];
-        grouped[c].push(d);
-    });
+    filtered.forEach(d => { const c = d.country || 'Other'; if (!grouped[c]) grouped[c] = []; grouped[c].push(d); });
 
     let html = '';
     for (const country in grouped) {
         html += `<div class="country-group"><h3>${escapeHTML(country)}</h3><div class="grid-4">`;
-        grouped[country].forEach(d => {
-            html += `<div class="card" onclick="navTo('packages', '${escapeHTML(d.id)}')">
-                <img src="${escapeHTML(d.image_url || 'https://via.placeholder.com/400x300')}" alt="${escapeHTML(d.name)}">
-                <div class="card-body"><h4>${escapeHTML(d.name)}</h4></div>
-            </div>`;
-        });
+        grouped[country].forEach(d => { html += `<div class="card" onclick="navTo('packages', '${escapeHTML(d.id)}')"><img src="${escapeHTML(d.image_url || 'https://via.placeholder.com/400x300')}" alt="${escapeHTML(d.name)}"><div class="card-body"><h4>${escapeHTML(d.name)}</h4></div></div>`; });
         html += '</div></div>';
     }
     document.getElementById('list_destinations').innerHTML = html || '<p class="text-center">No destinations found.</p>';
 }
 
-// Populate country filter dropdown
 async function populateCountryFilter() {
-    const { data, error } = await sb.from('destinations')
-        .select('country')
-        .eq('is_published', true);
+    const { data, error } = await sb.from('destinations').select('country').eq('is_published', true);
     if (error) return;
     const countries = [...new Set(data.map(d => d.country).filter(Boolean))].sort();
     const select = document.getElementById('dest-country-filter');
-    select.innerHTML = '<option value="">All Countries</option>' + countries.map(c => `<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');
+    if (select) select.innerHTML = '<option value="">All Countries</option>' + countries.map(c => `<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');
 }
 
-function debounceDestSearch() {
-    clearTimeout(window.destSearchTimer);
-    window.destSearchTimer = setTimeout(loadDestinations, 400);
-}
+const debounceDestSearch = debounce(loadDestinations, 400);
 
 function resetDestFilters() {
     document.getElementById('dest-search').value = '';
@@ -1056,7 +812,6 @@ function resetDestFilters() {
     loadDestinations();
 }
 
-// ===== PACKAGES PAGE =====
 function clearFilter() {
     activeDestFilter = null;
     document.getElementById('pkg_search').value = '';
@@ -1066,21 +821,14 @@ function clearFilter() {
     document.getElementById('filter-max-price').value = '';
     document.getElementById('pkg_sort').value = 'new';
     window.location.hash = '#/packages';
-    // router will handle loadPackages
 }
 
-function debounceSearch() {
-    clearTimeout(window.searchTimer);
-    window.searchTimer = setTimeout(loadPackages, 400);
-}
+const debounceSearch = debounce(loadPackages, 400);
 
 async function initPackageFilters() {
     const destSelect = document.getElementById('filter-destination');
     if (destSelect && !destSelect.options.length) {
-        const { data } = await sb.from('destinations')
-            .select('id, name')
-            .eq('is_published', true)
-            .order('name');
+        const { data } = await sb.from('destinations').select('id, name').eq('is_published', true).order('name');
         destSelect.innerHTML = '<option value="">All Destinations</option>' + (data||[]).map(d => `<option value="${escapeHTML(d.id)}">${escapeHTML(d.name)}</option>`).join('');
     }
 }
@@ -1088,15 +836,12 @@ async function initPackageFilters() {
 function renderSkeletons(containerId = 'list_packages', count = 6) {
     const container = document.getElementById(containerId);
     let html = '';
-    for (let i = 0; i < count; i++) {
-        html += `<div class="skel-card"><div class="skeleton skel-img"></div><div class="skel-body"><div class="skeleton skel-line" style="width:60%"></div><div class="skeleton skel-line" style="width:40%"></div><div class="skeleton skel-line" style="width:30%; height:24px; margin-top:15px;"></div></div></div>`;
-    }
+    for (let i = 0; i < count; i++) { html += `<div class="skel-card"><div class="skeleton skel-img"></div><div class="skel-body"><div class="skeleton skel-line" style="width:60%"></div><div class="skeleton skel-line" style="width:40%"></div><div class="skeleton skel-line" style="width:30%; height:24px; margin-top:15px;"></div></div></div>`; }
     container.innerHTML = html;
 }
 
 async function loadPackages() {
     renderSkeletons('list_packages', 6);
-
     const term = (document.getElementById('pkg_search')?.value || '').toLowerCase();
     const sortVal = document.getElementById('pkg_sort')?.value || 'new';
     const filterDest = document.getElementById('filter-destination')?.value || activeDestFilter || '';
@@ -1104,90 +849,34 @@ async function loadPackages() {
     const minPrice = document.getElementById('filter-min-price')?.value;
     const maxPrice = document.getElementById('filter-max-price')?.value;
 
-    let query = sb.from('packages')
-        .select('id, title, price, duration, category, image_url, destination_id, destinations(name, country)')
-        .eq('is_published', true);
+    let query = sb.from('packages').select('id, title, price, duration, category, image_url, destination_id, destinations(name, country)').eq('is_published', true);
     if (filterDest) query = query.eq('destination_id', filterDest);
     if (filterCat) query = query.eq('category', filterCat);
     if (minPrice) query = query.gte('price', Number(minPrice));
     if (maxPrice) query = query.lte('price', Number(maxPrice));
 
     const { data, error } = await query;
-    if (error) {
-        document.getElementById('list_packages').innerHTML = '<p class="text-center">Error loading packages.</p>';
-        return;
-    }
+    if (error) { document.getElementById('list_packages').innerHTML = '<p class="text-center">Error loading packages.</p>'; return; }
 
-    let filtered = (data || []).filter(p =>
-        p.title?.toLowerCase().includes(term) ||
-        (p.duration || '').toLowerCase().includes(term)
-    );
-
-    // Sort
-    if (sortVal === 'price_asc') filtered.sort((a, b) => a.price - b.price);
-    else if (sortVal === 'price_desc') filtered.sort((a, b) => b.price - a.price);
-    else {
-        // Newest first – approximate by created_at not available, so keep original order (Supabase returns by insertion desc likely)
-        // We'll assume newest first as default.
-    }
+    let filtered = (data || []).filter(p => p.title?.toLowerCase().includes(term) || (p.duration || '').toLowerCase().includes(term));
+    if (sortVal === 'price_asc') filtered.sort((a,b) => a.price - b.price);
+    else if (sortVal === 'price_desc') filtered.sort((a,b) => b.price - a.price);
 
     let emptyText = filterDest ? 'No packages found for this destination.' : 'No packages match your filters.';
-    document.getElementById('list_packages').innerHTML = filtered.length ? filtered.map(p => `
-        <div class="card" onclick="navTo('package', '${escapeHTML(p.id)}')">
-            <img src="${escapeHTML(p.image_url || '')}" alt="${escapeHTML(p.title)}">
-            <div class="card-body">
-                <span class="tag">${escapeHTML(p.category || 'Travel')}</span>
-                <h3>${escapeHTML(p.title)}</h3>
-                <p style="color:var(--text-muted); font-size:14px;">${escapeHTML(p.duration || '')} | ${escapeHTML(p.destinations?.name || '')}</p>
-                <span class="price-tag">₹${Number(p.price).toLocaleString('en-IN')}</span>
-            </div>
-        </div>`).join('') : `<p class="text-center" style="grid-column:1/-1;">${escapeHTML(emptyText)}</p>`;
+    document.getElementById('list_packages').innerHTML = filtered.length ? filtered.map(p => `<div class="card" onclick="navTo('package', '${escapeHTML(p.id)}')"><img src="${escapeHTML(p.image_url || '')}" alt="${escapeHTML(p.title)}"><div class="card-body"><span class="tag">${escapeHTML(p.category || 'Travel')}</span><h3>${escapeHTML(p.title)}</h3><p style="color:var(--text-muted); font-size:14px;">${escapeHTML(p.duration || '')} | ${escapeHTML(p.destinations?.name || '')}</p><span class="price-tag">₹${Number(p.price).toLocaleString('en-IN')}</span></div></div>`).join('') : `<p class="text-center" style="grid-column:1/-1;">${escapeHTML(emptyText)}</p>`;
 }
 
-// ===== PACKAGE DETAILS =====
 async function loadPackageDetails(id) {
     document.getElementById('pkg_details_container').innerHTML = '<p>Loading...</p>';
-    const { data: p, error } = await sb.from('packages')
-        .select('*, destinations(name)')
-        .eq('id', id)
-        .maybeSingle();
-    if (error || !p) {
-        document.getElementById('pkg_details_container').innerHTML = '<p>Package not found.</p>';
-        return;
-    }
-    currentPackage = p; // cache for tab switching
+    const { data: p, error } = await sb.from('packages').select('*, destinations(name)').eq('id', id).maybeSingle();
+    if (error || !p) { document.getElementById('pkg_details_container').innerHTML = '<p>Package not found.</p>'; return; }
+    currentPackage = p;
     updateSEO(p.title + ' - Via Tours', p.short_description || p.description);
 
     const allImages = [p.image_url, ...(p.gallery_images || [])].filter(Boolean);
-    const galleryHTML = allImages.length > 0 ?
-        `<img src="${escapeHTML(allImages[0])}" id="main-image" class="main-image" alt="${escapeHTML(p.title)}">
-        <div class="thumbnail-container">${allImages.map((img, i) => `<img src="${escapeHTML(img)}" class="thumbnail ${i===0?'active':''}" onclick="changeMainImage(this, '${escapeHTML(img)}')" alt="Thumbnail">`).join('')}</div>` : '';
+    const galleryHTML = allImages.length > 0 ? `<img src="${escapeHTML(allImages[0])}" id="main-image" class="main-image" alt="${escapeHTML(p.title)}"><div class="thumbnail-container">${allImages.map((img, i) => `<img src="${escapeHTML(img)}" class="thumbnail ${i===0?'active':''}" onclick="changeMainImage(this, '${escapeHTML(img)}')" alt="Thumbnail">`).join('')}</div>` : '';
 
-    document.getElementById('pkg_details_container').innerHTML = `
-        <div class="pkg-gallery">
-            <div>
-                ${galleryHTML}
-                <h1>${escapeHTML(p.title)}</h1>
-                <p style="color:var(--text-muted); margin-bottom:20px;">
-                    <i class="fas fa-clock"></i> ${escapeHTML(p.duration || 'N/A')} | <i class="fas fa-map-marker-alt"></i> ${escapeHTML(p.destinations?.name || 'Various')}
-                </p>
-                <div class="info-tabs">
-                    <button class="tab-btn active" onclick="switchTab(event, 'itinerary')">Itinerary</button>
-                    <button class="tab-btn" onclick="switchTab(event, 'inclusions')">Inclusions</button>
-                    <button class="tab-btn" onclick="switchTab(event, 'exclusions')">Exclusions</button>
-                    ${p.important_info && p.important_info.length ? '<button class="tab-btn" onclick="switchTab(event, \'important\')">Important Info</button>' : ''}
-                </div>
-                <div id="tab-content"></div>
-            </div>
-            <div>
-                <div style="background:var(--bg-light); padding:30px; border-radius:12px; position:sticky; top:100px; text-align:center;">
-                    <h2 class="price-tag" style="font-size:2.5rem; margin-bottom:0;">₹${Number(p.price).toLocaleString('en-IN')}</h2>
-                    <p style="margin-bottom:20px; color:var(--text-muted);">Per person</p>
-                    <a href="https://wa.me/${escapeHTML(appSettings.whatsapp)}?text=${encodeURIComponent('I am interested in ' + p.title)}" target="_blank" class="btn btn-green" style="width:100%; margin-bottom:10px;">WhatsApp</a>
-                    <button class="btn btn-primary" style="width:100%;" onclick="navTo('plan-trip', '${escapeHTML(p.id)}')">Enquire Now</button>
-                </div>
-            </div>
-        </div>`;
+    document.getElementById('pkg_details_container').innerHTML = `<div class="pkg-gallery"><div>${galleryHTML}<h1>${escapeHTML(p.title)}</h1><p style="color:var(--text-muted); margin-bottom:20px;"><i class="fas fa-clock"></i> ${escapeHTML(p.duration || 'N/A')} | <i class="fas fa-map-marker-alt"></i> ${escapeHTML(p.destinations?.name || 'Various')}</p><div class="info-tabs"><button class="tab-btn active" onclick="switchTab(event, 'itinerary')">Itinerary</button><button class="tab-btn" onclick="switchTab(event, 'inclusions')">Inclusions</button><button class="tab-btn" onclick="switchTab(event, 'exclusions')">Exclusions</button>${p.important_info && p.important_info.length ? '<button class="tab-btn" onclick="switchTab(event, \'important\')">Important Info</button>' : ''}</div><div id="tab-content"></div></div><div><div style="background:var(--bg-light); padding:30px; border-radius:12px; position:sticky; top:100px; text-align:center;"><h2 class="price-tag" style="font-size:2.5rem; margin-bottom:0;">₹${Number(p.price).toLocaleString('en-IN')}</h2><p style="margin-bottom:20px; color:var(--text-muted);">Per person</p><a href="https://wa.me/${escapeHTML(appSettings.whatsapp)}?text=${encodeURIComponent('I am interested in ' + p.title)}" target="_blank" class="btn btn-green" style="width:100%; margin-bottom:10px;">WhatsApp</a><button class="btn btn-primary" style="width:100%;" onclick="navTo('plan-trip', '${escapeHTML(p.id)}')">Enquire Now</button></div></div></div>`;
     renderTabContent(p, 'itinerary');
 }
 
@@ -1206,11 +895,7 @@ function switchTab(evt, tab) {
 function renderTabContent(pkg, tab) {
     const c = document.getElementById('tab-content');
     if (tab === 'itinerary') {
-        c.innerHTML = pkg.itinerary && pkg.itinerary.length ? pkg.itinerary.map(d => `
-            <div style="margin-bottom:15px; padding:15px; background:var(--bg-light); border-radius:8px; border-left:4px solid var(--brand-blue);">
-                <strong>${escapeHTML(d.title)}</strong>
-                <p style="white-space: pre-wrap; margin-top:5px; margin-bottom:0;">${escapeHTML(d.desc || d.description || '')}</p>
-            </div>`).join('') : '<p>No itinerary available.</p>';
+        c.innerHTML = pkg.itinerary && pkg.itinerary.length ? pkg.itinerary.map(d => `<div style="margin-bottom:15px; padding:15px; background:var(--bg-light); border-radius:8px; border-left:4px solid var(--brand-blue);"><strong>${escapeHTML(d.title)}</strong><p style="white-space: pre-wrap; margin-top:5px; margin-bottom:0;">${escapeHTML(d.desc || d.description || '')}</p></div>`).join('') : '<p>No itinerary available.</p>';
     } else if (tab === 'inclusions') {
         c.innerHTML = '<ul style="list-style: disc; padding-left: 20px; margin: 0;">' + (pkg.inclusions && pkg.inclusions.length ? pkg.inclusions.map(i => `<li style="margin-bottom:5px;">${escapeHTML(i)}</li>`).join('') : '<li>N/A</li>') + '</ul>';
     } else if (tab === 'exclusions') {
@@ -1220,19 +905,12 @@ function renderTabContent(pkg, tab) {
     }
 }
 
-// ===== PLAN TRIP FORM =====
 async function setupPlanForm(pkgId) {
     document.getElementById('pt_pkg_id').value = '';
     document.getElementById('pt_dest').value = '';
     if (pkgId) {
-        const { data: p } = await sb.from('packages')
-            .select('id, title, destination_id, destinations(name)')
-            .eq('id', pkgId)
-            .maybeSingle();
-        if (p) {
-            document.getElementById('pt_pkg_id').value = p.id;
-            document.getElementById('pt_dest').value = p.destinations?.name || p.title;
-        }
+        const { data: p } = await sb.from('packages').select('id, title, destination_id, destinations(name)').eq('id', pkgId).maybeSingle();
+        if (p) { document.getElementById('pt_pkg_id').value = p.id; document.getElementById('pt_dest').value = p.destinations?.name || p.title; }
     }
 }
 
@@ -1244,83 +922,46 @@ document.getElementById('planTripForm').addEventListener('submit', async (e) => 
         phone: document.getElementById('pt_phone').value,
         destination: document.getElementById('pt_dest').value,
         travel_dates: document.getElementById('pt_dates').value,
-        travelers: parseInt(document.getElementById('pt_travelers').value) || 0,
+        travelers: document.getElementById('pt_travelers').value,
         budget: document.getElementById('pt_budget').value,
         hotel_pref: document.getElementById('pt_hotel').value,
         requirements: document.getElementById('pt_req').value,
         package_id: document.getElementById('pt_pkg_id').value || null,
+        status: 'New'
     };
     const { error } = await sb.from('enquiries').insert([payload]);
-    if (error) {
-        showToast('Error submitting request. Please try again.', 'error');
-        return;
-    }
-    // Upsert customer
-    const { data: cust } = await sb.from('customers')
-        .select('id')
-        .eq('email', payload.email)
-        .maybeSingle();
-    if (!cust) {
-        await sb.from('customers').insert([{
-            name: payload.name,
-            email: payload.email,
-            phone: payload.phone,
-            whatsapp: payload.phone,
-        }]);
-    }
+    if (error) { showToast('Error submitting request. Please try again.', 'error'); return; }
+    const { data: cust } = await sb.from('customers').select('id').eq('email', payload.email).maybeSingle();
+    if (!cust) { await sb.from('customers').insert([{ name: payload.name, email: payload.email, phone: payload.phone, whatsapp: payload.phone }]); }
     showToast('Trip request submitted! We will contact you soon.', 'success');
     navTo('home');
 });
 
-// ===== BLOG =====
 async function loadBlog() {
-    const { data, error } = await sb.from('blog_posts')
-        .select('id, slug, title, excerpt, image_url, created_at')
-        .eq('is_published', true)
-        .order('created_at', { ascending: false });
-    if (error) {
-        document.getElementById('list_blog').innerHTML = '<p class="text-center" style="grid-column:1/-1;">Error loading blogs.</p>';
-        return;
-    }
-    document.getElementById('list_blog').innerHTML = (data||[]).length ? data.map(b => `
-        <div class="card" onclick="navTo('blog-post', '${escapeHTML(b.slug || b.id)}')">
-            <img src="${escapeHTML(b.image_url || 'https://via.placeholder.com/400x300')}" alt="${escapeHTML(b.title)}">
-            <div class="card-body">
-                <span class="tag">${new Date(b.created_at).toLocaleDateString()}</span>
-                <h3>${escapeHTML(b.title)}</h3>
-                <p class="blog-excerpt">${escapeHTML(b.excerpt || '')}</p>
-                <span style="color:var(--brand-blue); font-weight:600;">Read More <i class="fas fa-arrow-right"></i></span>
-            </div>
-        </div>`).join('') : '<p class="text-center" style="grid-column:1/-1;">No blog posts yet.</p>';
+    const { data, error } = await sb.from('blog_posts').select('id, slug, title, excerpt, image_url, created_at').eq('is_published', true).order('created_at', { ascending: false });
+    if (error) { document.getElementById('list_blog').innerHTML = '<p class="text-center" style="grid-column:1/-1;">Error loading blogs.</p>'; return; }
+    document.getElementById('list_blog').innerHTML = (data||[]).length ? data.map(b => `<div class="card" onclick="navTo('blog-post', '${escapeHTML(b.slug || b.id)}')"><img src="${escapeHTML(b.image_url || 'https://via.placeholder.com/400x300')}" alt="${escapeHTML(b.title)}"><div class="card-body"><span class="tag">${new Date(b.created_at).toLocaleDateString()}</span><h3>${escapeHTML(b.title)}</h3><p class="blog-excerpt">${escapeHTML(b.excerpt || '')}</p><span style="color:var(--brand-blue); font-weight:600;">Read More <i class="fas fa-arrow-right"></i></span></div></div>`).join('') : '<p class="text-center" style="grid-column:1/-1;">No blog posts yet.</p>';
 }
 
 async function loadBlogPost(slugOrId) {
     document.getElementById('blog_details_container').innerHTML = '<p>Loading...</p>';
     const isUUID = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(slugOrId);
     let query = sb.from('blog_posts').select('*').eq('is_published', true);
-    if (isUUID) query = query.eq('id', slugOrId);
-    else query = query.eq('slug', slugOrId);
+    if (isUUID) query = query.eq('id', slugOrId); else query = query.eq('slug', slugOrId);
     const { data: b, error } = await query.maybeSingle();
 
-    if (error || !b) {
-        document.getElementById('blog_details_container').innerHTML = '<p>Blog post not found. <a onclick="navTo(\'blog\')" style="color:var(--brand-blue); cursor:pointer;">Back to Blog</a></p>';
-        return;
-    }
+    if (error || !b) { document.getElementById('blog_details_container').innerHTML = '<p>Blog post not found. <a onclick="navTo(\'blog\')" style="color:var(--brand-blue); cursor:pointer;">Back to Blog</a></p>'; return; }
 
     if (b.meta_title) updateSEO(b.meta_title, b.meta_description || b.excerpt);
     else updateSEO(b.title + ' - Via Tours Blog', b.excerpt || 'Read our latest blog post.');
 
-    // Use textContent for content to prevent XSS (but if admin needs HTML, sanitize server-side)
     const contentDiv = document.createElement('div');
     contentDiv.className = 'blog-content';
     contentDiv.style.marginTop = '20px';
-    contentDiv.textContent = b.content || ''; // safe rendering
+    contentDiv.style.whiteSpace = 'pre-wrap';
+    contentDiv.textContent = b.content || '';
 
-    document.getElementById('blog_details_container').innerHTML = `
-        <img src="${escapeHTML(b.image_url || 'https://via.placeholder.com/800x400')}" style="width:100%; height:400px; object-fit:cover; border-radius:12px; margin-bottom:30px;">
-        <span class="tag">${new Date(b.created_at).toLocaleDateString()}</span>
-        <h1>${escapeHTML(b.title)}</h1>
-    `;
+    document.getElementById('blog_details_container').innerHTML = `<img src="${escapeHTML(b.image_url || 'https://via.placeholder.com/800x400')}" style="width:100%; height:400px; object-fit:cover; border-radius:12px; margin-bottom:30px;"><span class="tag">${new Date(b.created_at).toLocaleDateString()}</span><h1>${escapeHTML(b.title)}</h1>`;
     document.getElementById('blog_details_container').appendChild(contentDiv);
     const backBtn = document.createElement('button');
     backBtn.className = 'btn btn-outline';
@@ -1330,49 +971,25 @@ async function loadBlogPost(slugOrId) {
     document.getElementById('blog_details_container').appendChild(backBtn);
 }
 
-// ===== FAQ =====
 async function loadHomeFaqs() {
-    const { data, error } = await sb.from('faqs')
-        .select('id, question, answer')
-        .eq('is_published', true)
-        .order('created_at', { ascending: true });
+    const { data, error } = await sb.from('faqs').select('id, question, answer').eq('is_published', true).order('created_at', { ascending: true });
     const faqContainer = document.getElementById('home_faqs');
-    if (error || !data || data.length === 0) {
-        faqContainer.innerHTML = '<p class="text-center">No FAQs available right now.</p>';
-        return;
-    }
-    faqContainer.innerHTML = data.map((f, i) => `
-        <div style="margin-bottom: 15px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: #fff;">
-            <div onclick="toggleFaq(${i})" style="padding: 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--text-dark);">
-                ${escapeHTML(f.question)}
-                <i class="fas fa-chevron-down" id="faq-icon-${i}" style="transition: transform 0.3s ease;"></i>
-            </div>
-            <div id="faq-answer-${i}" style="display: none; padding: 0 20px 20px; color: var(--text-body); border-top: 1px solid var(--border);">
-                <p style="margin-top:15px; white-space: pre-wrap;">${escapeHTML(f.answer || '')}</p>
-            </div>
-        </div>
-    `).join('');
+    if (error || !data || data.length === 0) { faqContainer.innerHTML = '<p class="text-center">No FAQs available right now.</p>'; return; }
+    faqContainer.innerHTML = data.map((f, i) => `<div style="margin-bottom:15px; border:1px solid var(--border); border-radius:12px; overflow:hidden; background:#fff;"><div onclick="toggleFaq(${i})" style="padding:20px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600; color:var(--text-dark);">${escapeHTML(f.question)}<i class="fas fa-chevron-down" id="faq-icon-${i}" style="transition:transform 0.3s ease;"></i></div><div id="faq-answer-${i}" style="display:none; padding:0 20px 20px; color:var(--text-body); border-top:1px solid var(--border);"><p style="margin-top:15px; white-space:pre-wrap;">${escapeHTML(f.answer || '')}</p></div></div>`).join('');
 }
 
 function toggleFaq(index) {
     const answer = document.getElementById('faq-answer-' + index);
     const icon = document.getElementById('faq-icon-' + index);
-    if (answer.style.display === 'none' || answer.style.display === '') {
-        answer.style.display = 'block';
-        icon.style.transform = 'rotate(180deg)';
-    } else {
-        answer.style.display = 'none';
-        icon.style.transform = 'rotate(0deg)';
-    }
+    if (answer.style.display === 'none' || answer.style.display === '') { answer.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; }
+    else { answer.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; }
 }
 
-// ===== CHATBOT =====
 function handleChat(e) {
     if (e.type === 'keypress' && e.key !== 'Enter') return;
     const input = document.getElementById('chatInput');
     const msg = input.value.trim();
     if (!msg) return;
-
     const chatBody = document.getElementById('chatBody');
     const userDiv = document.createElement('div');
     userDiv.className = 'chat-msg user';
@@ -1382,23 +999,15 @@ function handleChat(e) {
     chatBody.scrollTop = chatBody.scrollHeight;
 
     setTimeout(() => {
-        let res = "I can help with packages, destinations, and bookings! You can ask me about our tours, pricing, or how to plan a trip.";
+        let res = "I can help with packages, destinations, and bookings!";
         const m = msg.toLowerCase();
-        if (m.includes('book') || m.includes('plan') || m.includes('enquiry')) {
-            res = "You can easily plan your trip by clicking the 'Plan My Trip' button in the menu! Just fill out the form and our team will create a custom itinerary for you.";
-        } else if (m.includes('package') || m.includes('tour') || m.includes('deal')) {
-            res = "We have amazing travel packages! You can view them all by clicking on 'Packages' in the menu above. Each package includes detailed itineraries and pricing.";
-        } else if (m.includes('destination') || m.includes('place') || m.includes('where')) {
-            res = "We offer trips to beautiful destinations worldwide. Click 'Destinations' in the menu to see our featured spots!";
-        } else if (m.includes('contact') || m.includes('phone') || m.includes('email') || m.includes('whatsapp')) {
-            res = "You can reach us at " + (appSettings.phone || 'our contact number') + " or email " + (appSettings.email || 'us') + ". We are available 24/7!";
-        } else if (m.includes('visa') || m.includes('passport')) {
-            res = "We provide full visa assistance for 80+ countries! Just mention it in the 'Plan My Trip' form and we'll handle the paperwork.";
-        } else if (m.includes('price') || m.includes('cost') || m.includes('budget')) {
-            res = "Package prices vary depending on the destination and duration. Please check the 'Packages' page for starting prices, or fill out the 'Plan My Trip' form for a custom quote!";
-        } else if (m.includes('hi') || m.includes('hello') || m.includes('hey')) {
-            res = "Hello there! How can I assist you with your travel plans today?";
-        }
+        if (m.includes('book') || m.includes('plan') || m.includes('enquiry')) res = "You can plan your trip by clicking 'Plan My Trip' in the menu!";
+        else if (m.includes('package') || m.includes('tour')) res = "Check our 'Packages' page for detailed itineraries and pricing!";
+        else if (m.includes('destination') || m.includes('place')) res = "Click 'Destinations' to see featured spots!";
+        else if (m.includes('contact') || m.includes('phone') || m.includes('email')) res = "Reach us at " + (appSettings.phone || 'our contact number') + " or email " + (appSettings.email || 'us') + ".";
+        else if (m.includes('visa') || m.includes('passport')) res = "We provide visa assistance for 80+ countries!";
+        else if (m.includes('price') || m.includes('cost') || m.includes('budget')) res = "Prices vary by destination. Check 'Packages' or fill 'Plan My Trip' for a custom quote!";
+        else if (m.includes('hi') || m.includes('hello')) res = "Hello! How can I assist you today?";
         const botDiv = document.createElement('div');
         botDiv.className = 'chat-msg bot';
         botDiv.textContent = res;
@@ -1407,23 +1016,16 @@ function handleChat(e) {
     }, 600);
 }
 
-// ===== ADMIN =====
+// ===== ADMIN FUNCTIONS =====
 async function adminLogin() {
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPass').value;
     const { data, error } = await sb.auth.signInWithPassword({ email, password });
-    if (error) {
-        showToast('Login failed: ' + error.message, 'error');
-        return;
-    }
+    if (error) { showToast('Login failed: ' + error.message, 'error'); return; }
     initAdminDashboard();
 }
 
-async function logout() {
-    await sb.auth.signOut();
-    window.location.hash = '#/home';
-    router();
-}
+async function logout() { await sb.auth.signOut(); window.location.hash = '#/home'; router(); }
 
 async function initAdminDashboard() {
     document.getElementById('admin-login').style.display = 'none';
@@ -1439,8 +1041,7 @@ async function initAdminDashboard() {
     loadAdminTestimonials();
     loadAdminSettings();
     loadDestDropdown();
-    populateCountryFilter(); // for public page as well, but okay
-    loadHomeFaqs(); // update public FAQ if admin changes
+    populateCountryFilter();
 }
 
 function showAdminTab(tab, ev) {
@@ -1449,7 +1050,6 @@ function showAdminTab(tab, ev) {
     if (target) target.style.display = 'block';
     document.querySelectorAll('.admin-menu li').forEach(li => li.classList.remove('active'));
     if (ev && ev.currentTarget) ev.currentTarget.classList.add('active');
-    // Load data for specific tabs if needed
     switch(tab) {
         case 'packages': loadAdminPackages(); break;
         case 'destinations': loadAdminDestinations(); break;
@@ -1463,10 +1063,9 @@ function showAdminTab(tab, ev) {
     }
 }
 
-// ===== ADMIN STATS =====
 async function loadAdminStats() {
     const [e, p, b, c] = await Promise.all([
-        sb.from('enquiries').select('id, status, created_at'),
+        sb.from('enquiries').select('id, name, status, created_at, destination').order('created_at', { ascending: false }).limit(10),
         sb.from('packages').select('id', { count: 'exact', head: true }).eq('is_published', true),
         sb.from('bookings').select('amount_paid, balance, booking_status, travel_date, customer_name'),
         sb.from('customers').select('id', { count: 'exact', head: true })
@@ -1484,25 +1083,15 @@ async function loadAdminStats() {
     document.getElementById('stat_pkg').textContent = totalPkg;
     document.getElementById('stat_cust').textContent = totalCust;
 
-    // Recent enquiries
     const recentEnq = e.data?.slice(0, 5) || [];
-    document.getElementById('table_recent_enq').innerHTML = recentEnq.map(x => `
-        <tr><td>${escapeHTML(x.name)}</td><td>${escapeHTML(x.destination || 'N/A')}</td><td>${escapeHTML(x.status || 'New')}</td></tr>`
-    ).join('');
+    document.getElementById('table_recent_enq').innerHTML = recentEnq.map(x => `<tr><td>${escapeHTML(x.name)}</td><td>${escapeHTML(x.destination || 'N/A')}</td><td>${escapeHTML(x.status || 'New')}</td></tr>`).join('');
 
-    // Upcoming bookings (next 30 days)
     const now = new Date();
     const future = new Date();
     future.setDate(now.getDate() + 30);
-    const upcoming = (b.data || []).filter(x => {
-        const d = new Date(x.travel_date);
-        return d >= now && d <= future && x.booking_status !== 'Cancelled';
-    }).slice(0, 5);
-    document.getElementById('table_upcoming_book').innerHTML = upcoming.map(x => `
-        <tr><td>${escapeHTML(x.customer_name || 'N/A')}</td><td>${new Date(x.travel_date).toLocaleDateString()}</td></tr>`
-    ).join('');
+    const upcoming = (b.data || []).filter(x => { const d = new Date(x.travel_date); return d >= now && d <= future && x.booking_status !== 'Cancelled'; }).slice(0, 5);
+    document.getElementById('table_upcoming_book').innerHTML = upcoming.map(x => `<tr><td>${escapeHTML(x.customer_name || 'N/A')}</td><td>${new Date(x.travel_date).toLocaleDateString()}</td></tr>`).join('');
 
-    // Chart: Bookings by status
     const statuses = ['Pending', 'Confirmed', 'Completed', 'Cancelled'];
     const counts = statuses.map(s => (b.data || []).filter(x => x.booking_status === s).length);
     const max = Math.max(...counts, 1);
@@ -1517,82 +1106,37 @@ async function loadAdminStats() {
         chartContainer.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)';
         document.querySelector('#tab-dashboard').appendChild(chartContainer);
     }
-    chartContainer.innerHTML = `
-        <h3>Bookings by Status</h3>
-        <div style="display:flex; align-items:flex-end; gap:15px; height:200px; padding-top:20px; padding-bottom:30px;">
-            ${statuses.map((s, i) => `
-                <div style="flex:1; background:var(--brand-blue); text-align:center; color:#fff; border-radius:8px 8px 0 0; position:relative; min-height:5px; height:${(counts[i] / max) * 100}%">
-                    ${counts[i]}
-                    <span style="position:absolute; bottom:-25px; left:0; right:0; font-size:12px; color:var(--text-muted);">${s}</span>
-                </div>`).join('')}
-        </div>`;
+    chartContainer.innerHTML = `<h3>Bookings by Status</h3><div style="display:flex; align-items:flex-end; gap:15px; height:200px; padding-top:20px; padding-bottom:30px;">${statuses.map((s, i) => `<div style="flex:1; background:var(--brand-blue); text-align:center; color:#fff; border-radius:8px 8px 0 0; position:relative; min-height:5px; height:${(counts[i] / max) * 100}%">${counts[i]}<span style="position:absolute; bottom:-25px; left:0; right:0; font-size:12px; color:var(--text-muted);">${s}</span></div>`).join('')}</div>`;
 }
 
-// ===== IMAGE UPLOAD =====
 async function uploadImage(file) {
     const fileName = Date.now() + '_' + Math.floor(Math.random() * 1000) + '_' + file.name;
     const { data, error } = await sb.storage.from('package-images').upload(fileName, file);
-    if (error) {
-        showToast('Image upload failed: ' + error.message, 'error');
-        return null;
-    }
+    if (error) { showToast('Image upload failed: ' + error.message, 'error'); return null; }
     return SUPABASE_URL + '/storage/v1/object/public/package-images/' + fileName;
 }
 
-// ===== ITINERARY EDITOR =====
 function addItinDay(day = null) {
     currentItinerary.push(day || { title: 'Day ' + (currentItinerary.length + 1), desc: '' });
     renderItinEditor();
 }
 function renderItinEditor() {
     const editor = document.getElementById('itin_editor');
-    editor.innerHTML = currentItinerary.map((d, i) => `
-        <div class="itin-day">
-            <input value="${escapeHTML(d.title)}" oninput="currentItinerary[${i}].title = this.value" placeholder="Day title">
-            <textarea placeholder="Day description" oninput="currentItinerary[${i}].desc = this.value">${escapeHTML(d.desc)}</textarea>
-            <button type="button" onclick="currentItinerary.splice(${i},1); renderItinEditor();" style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-top:5px;">Remove</button>
-        </div>`).join('');
+    editor.innerHTML = currentItinerary.map((d, i) => `<div class="itin-day"><input value="${escapeHTML(d.title)}" oninput="currentItinerary[${i}].title = this.value" placeholder="Day title"><textarea placeholder="Day description" oninput="currentItinerary[${i}].desc = this.value">${escapeHTML(d.desc)}</textarea><button type="button" onclick="currentItinerary.splice(${i},1); renderItinEditor();" style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-top:5px;">Remove</button></div>`).join('');
 }
 
-// ===== PACKAGE GALLERY =====
 function renderGalleryPreview() {
     const previewDiv = document.getElementById('gallery_preview');
     if (!previewDiv) return;
-    if (!currentGallery || currentGallery.length === 0) {
-        previewDiv.style.display = 'none';
-        previewDiv.innerHTML = '';
-        return;
-    }
+    if (!currentGallery || currentGallery.length === 0) { previewDiv.style.display = 'none'; previewDiv.innerHTML = ''; return; }
     previewDiv.style.display = 'grid';
-    previewDiv.innerHTML = currentGallery.map((url, index) => `
-        <div style="position:relative; border:1px solid var(--border); border-radius:8px; overflow:hidden;">
-            <img src="${escapeHTML(url)}" style="width:100%; height:80px; object-fit:cover;">
-            <button type="button" onclick="removeGalleryImage(${index})" style="position:absolute; top:2px; right:2px; background:rgba(239,68,68,0.9); color:#fff; border:none; border-radius:50%; width:20px; height:20px; font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1;">&times;</button>
-        </div>`).join('');
+    previewDiv.innerHTML = currentGallery.map((url, index) => `<div style="position:relative; border:1px solid var(--border); border-radius:8px; overflow:hidden;"><img src="${escapeHTML(url)}" style="width:100%; height:80px; object-fit:cover;"><button type="button" onclick="removeGalleryImage(${index})" style="position:absolute; top:2px; right:2px; background:rgba(239,68,68,0.9); color:#fff; border:none; border-radius:50%; width:20px; height:20px; font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1;">&times;</button></div>`).join('');
 }
-function removeGalleryImage(index) {
-    currentGallery.splice(index, 1);
-    renderGalleryPreview();
-}
+function removeGalleryImage(index) { currentGallery.splice(index, 1); renderGalleryPreview(); }
 
-// ===== ADMIN PACKAGES =====
 async function loadAdminPackages() {
-    const { data } = await sb.from('packages')
-        .select('id, title, price, is_published, image_url, destinations(name)')
-        .order('created_at', { ascending: false });
-    const rows = (data || []).map(p => `
-        <tr>
-            <td><input type="checkbox" class="package-checkbox" value="${escapeHTML(p.id)}" onchange="updateBulkBar('packages')"></td>
-            <td><img src="${escapeHTML(p.image_url || '')}" style="width:50px; height:50px; object-fit:cover; border-radius:4px;"></td>
-            <td>${escapeHTML(p.title)}<br><small>${escapeHTML(p.destinations?.name || '')}</small></td>
-            <td>₹${Number(p.price).toLocaleString('en-IN')}</td>
-            <td>${p.is_published ? 'Live' : 'Hidden'}</td>
-            <td>
-                <button class="btn-blue" style="background:var(--brand-blue); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;" onclick="editPackage('${escapeHTML(p.id)}')">Edit</button>
-                <button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem('packages', '${escapeHTML(p.id)}')">Delete</button>
-            </td>
-        </tr>`).join('');
-    document.getElementById('table_packages').innerHTML = rows;
+    const { data } = await sb.from('packages').select('id, title, price, is_published, image_url, destinations(name)').order('created_at', { ascending: false });
+    document.getElementById('table_packages').innerHTML = (data||[]).map(p => `<tr><td><input type="checkbox" class="package-checkbox" value="${escapeHTML(p.id)}" onchange="updateBulkBar('packages')"></td><td><img src="${escapeHTML(p.image_url || '')}" style="width:50px; height:50px; object-fit:cover; border-radius:4px;"></td><td>${escapeHTML(p.title)}<br><small>${escapeHTML(p.destinations?.name || '')}</small></td><td>₹${Number(p.price).toLocaleString('en-IN')}</td><td>${p.is_published ? 'Live' : 'Hidden'}</td><td><button class="btn-blue" style="background:var(--brand-blue); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;" onclick="editPackage('${escapeHTML(p.id)}')">Edit</button><button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem('packages', '${escapeHTML(p.id)}')">Delete</button></td></tr>`).join('');
     document.getElementById('pkg-bulk-actions').style.display = 'none';
     document.getElementById('select-all-packages').checked = false;
 }
@@ -1603,11 +1147,7 @@ function openPkgModal() {
     document.getElementById('pkg_modal_title').innerText = 'Add Package';
     document.querySelectorAll('#pkgFormModal input, #pkgFormModal textarea').forEach(i => { if(i.type !== 'hidden' && i.type !== 'file') i.value = ''; });
     document.getElementById('m_pkg_img').dataset.existing = '';
-    currentGallery = [];
-    renderGalleryPreview();
-    currentItinerary = [];
-    renderItinEditor();
-    loadDestDropdown();
+    currentGallery = []; renderGalleryPreview(); currentItinerary = []; renderItinEditor(); loadDestDropdown();
 }
 
 async function editPackage(id) {
@@ -1627,11 +1167,9 @@ async function editPackage(id) {
     document.getElementById('m_pkg_exc').value = p.exclusions ? p.exclusions.join('\n') : '';
     document.getElementById('m_pkg_imp').value = p.important_info ? p.important_info.join('\n') : '';
     document.getElementById('m_pkg_pub').value = p.is_published ? 'true' : 'false';
-    currentItinerary = p.itinerary || [];
-    renderItinEditor();
+    currentItinerary = p.itinerary || []; renderItinEditor();
     document.getElementById('m_pkg_img').dataset.existing = p.image_url || '';
-    currentGallery = p.gallery_images || [];
-    renderGalleryPreview();
+    currentGallery = p.gallery_images || []; renderGalleryPreview();
     loadDestDropdown();
 }
 
@@ -1639,21 +1177,10 @@ async function savePackage() {
     const id = document.getElementById('m_pkg_id').value;
     let imageUrl = document.getElementById('m_pkg_img').dataset.existing || '';
     let galleryUrls = [...currentGallery];
-
     const imgFile = document.getElementById('m_pkg_img').files[0];
-    if (imgFile) {
-        imageUrl = await uploadImage(imgFile);
-        if (!imageUrl) return;
-    }
-
+    if (imgFile) { imageUrl = await uploadImage(imgFile); if (!imageUrl) return; }
     const galleryFiles = document.getElementById('m_pkg_gallery').files;
-    if (galleryFiles.length > 0) {
-        for (let i = 0; i < galleryFiles.length; i++) {
-            const url = await uploadImage(galleryFiles[i]);
-            if (url) galleryUrls.push(url);
-        }
-    }
-
+    if (galleryFiles.length > 0) { for (let i = 0; i < galleryFiles.length; i++) { const url = await uploadImage(galleryFiles[i]); if (url) galleryUrls.push(url); } }
     const payload = {
         title: document.getElementById('m_pkg_title').value,
         price: parseFloat(document.getElementById('m_pkg_price').value || 0),
@@ -1670,19 +1197,13 @@ async function savePackage() {
         gallery_images: galleryUrls,
         is_published: document.getElementById('m_pkg_pub').value === 'true',
     };
-
     const { error } = id ? await sb.from('packages').update(payload).eq('id', id) : await sb.from('packages').insert([payload]);
-    if (error) {
-        showToast('Error saving package: ' + error.message, 'error');
-        return;
-    }
+    if (error) { showToast('Error saving package: ' + error.message, 'error'); return; }
     document.getElementById('pkgFormModal').style.display = 'none';
     showToast('Package saved successfully!');
-    loadAdminPackages();
-    loadAdminStats();
+    loadAdminPackages(); loadAdminStats();
 }
 
-// Bulk Actions
 function updateBulkBar(type) {
     const checkboxes = document.querySelectorAll(`.${type}-checkbox:checked`);
     const bar = document.getElementById(type === 'packages' ? 'pkg-bulk-actions' : 'dest-bulk-actions');
@@ -1690,50 +1211,27 @@ function updateBulkBar(type) {
 }
 
 function toggleAllCheckboxes(type, master) {
-    const checkboxes = document.querySelectorAll(`.${type}-checkbox`);
-    checkboxes.forEach(cb => cb.checked = master.checked);
+    document.querySelectorAll(`.${type}-checkbox`).forEach(cb => cb.checked = master.checked);
     updateBulkBar(type);
 }
 
 async function applyBulkAction(type) {
     const checkboxes = document.querySelectorAll(`.${type}-checkbox:checked`);
     const action = document.getElementById(type === 'packages' ? 'pkg-bulk-action' : 'dest-bulk-action').value;
-    if (!action || checkboxes.length === 0) {
-        showToast('Select items and an action.', 'error');
-        return;
-    }
+    if (!action || checkboxes.length === 0) { showToast('Select items and an action.', 'error'); return; }
     const ids = Array.from(checkboxes).map(cb => cb.value);
     showConfirm(`Are you sure you want to ${action} ${ids.length} item(s)?`, async () => {
-        if (action === 'delete') {
-            await sb.from(type).delete().in('id', ids);
-        } else if (action === 'publish') {
-            await sb.from(type).update({ is_published: true }).in('id', ids);
-        } else if (action === 'unpublish') {
-            await sb.from(type).update({ is_published: false }).in('id', ids);
-        }
-        loadAdminPackages();
-        loadAdminDestinations();
-        loadAdminStats();
+        if (action === 'delete') await sb.from(type).delete().in('id', ids);
+        else if (action === 'publish') await sb.from(type).update({ is_published: true }).in('id', ids);
+        else if (action === 'unpublish') await sb.from(type).update({ is_published: false }).in('id', ids);
+        loadAdminPackages(); loadAdminDestinations(); loadAdminStats();
         showToast('Bulk action completed.');
     });
 }
 
-// ===== ADMIN DESTINATIONS =====
 async function loadAdminDestinations() {
-    const { data } = await sb.from('destinations')
-        .select('id, name, country, is_published')
-        .order('created_at', { ascending: false });
-    document.getElementById('table_destinations').innerHTML = (data||[]).map(d => `
-        <tr>
-            <td><input type="checkbox" class="destination-checkbox" value="${escapeHTML(d.id)}" onchange="updateBulkBar('destinations')"></td>
-            <td>${escapeHTML(d.name)}</td>
-            <td>${escapeHTML(d.country || '')}</td>
-            <td>${d.is_published ? 'Live' : 'Hidden'}</td>
-            <td>
-                <button class="btn-blue" style="background:var(--brand-blue); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;" onclick="editDest('${escapeHTML(d.id)}')">Edit</button>
-                <button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem('destinations', '${escapeHTML(d.id)}')">Delete</button>
-            </td>
-        </tr>`).join('');
+    const { data } = await sb.from('destinations').select('id, name, country, is_published').order('created_at', { ascending: false });
+    document.getElementById('table_destinations').innerHTML = (data||[]).map(d => `<tr><td><input type="checkbox" class="destination-checkbox" value="${escapeHTML(d.id)}" onchange="updateBulkBar('destinations')"></td><td>${escapeHTML(d.name)}</td><td>${escapeHTML(d.country || '')}</td><td>${d.is_published ? 'Live' : 'Hidden'}</td><td><button class="btn-blue" style="background:var(--brand-blue); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;" onclick="editDest('${escapeHTML(d.id)}')">Edit</button><button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem('destinations', '${escapeHTML(d.id)}')">Delete</button></td></tr>`).join('');
     document.getElementById('dest-bulk-actions').style.display = 'none';
     document.getElementById('select-all-destinations').checked = false;
 }
@@ -1765,11 +1263,7 @@ async function saveDestination() {
     const id = document.getElementById('m_dest_id').value;
     let imageUrl = document.getElementById('m_dest_img').dataset.existing || '';
     const imgFile = document.getElementById('m_dest_img').files[0];
-    if (imgFile) {
-        imageUrl = await uploadImage(imgFile);
-        if (!imageUrl) return;
-    }
-
+    if (imgFile) { imageUrl = await uploadImage(imgFile); if (!imageUrl) return; }
     const payload = {
         name: document.getElementById('m_dest_name').value,
         country: document.getElementById('m_dest_country').value,
@@ -1782,43 +1276,15 @@ async function saveDestination() {
         is_published: document.getElementById('m_dest_pub').value === 'true',
     };
     const { error } = id ? await sb.from('destinations').update(payload).eq('id', id) : await sb.from('destinations').insert([payload]);
-    if (error) {
-        showToast('Error saving destination: ' + error.message, 'error');
-        return;
-    }
+    if (error) { showToast('Error saving destination: ' + error.message, 'error'); return; }
     document.getElementById('destFormModal').style.display = 'none';
     showToast('Destination saved successfully!');
-    loadAdminDestinations();
-    loadAdminStats();
-    loadDestDropdown();
-    populateCountryFilter();
+    loadAdminDestinations(); loadAdminStats(); loadDestDropdown(); populateCountryFilter();
 }
 
-// ===== ADMIN ENQUIRIES =====
 async function loadAdminEnquiries() {
-    const { data } = await sb.from('enquiries')
-        .select('id, name, email, phone, destination, travel_dates, budget, status, internal_notes, package_id, packages(title)')
-        .order('created_at', { ascending: false });
-    document.getElementById('table_enquiries').innerHTML = (data||[]).map(e => `
-        <tr>
-            <td>${escapeHTML(e.name)}<br>${escapeHTML(e.email)}<br>${escapeHTML(e.phone)}</td>
-            <td>Dest: ${escapeHTML(e.destination || 'N/A')}<br>Pkg: ${escapeHTML(e.packages?.title || 'N/A')}<br>Dates: ${escapeHTML(e.travel_dates || 'N/A')}<br>Budget: ₹${escapeHTML(e.budget || 'N/A')}</td>
-            <td>
-                <select class="status-dropdown" onchange="changeStatus('enquiries', '${escapeHTML(e.id)}', this.value)">
-                    <option ${e.status === 'New' ? 'selected' : ''}>New</option>
-                    <option ${e.status === 'Contacted' ? 'selected' : ''}>Contacted</option>
-                    <option ${e.status === 'Quotation Sent' ? 'selected' : ''}>Quotation Sent</option>
-                    <option ${e.status === 'Follow-up' ? 'selected' : ''}>Follow-up</option>
-                    <option ${e.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
-                    <option ${e.status === 'Completed' ? 'selected' : ''}>Completed</option>
-                    <option ${e.status === 'Lost' ? 'selected' : ''}>Lost</option>
-                </select>
-                <br><textarea placeholder="Internal Notes" onchange="saveNote('${escapeHTML(e.id)}', this.value)" style="margin-top:5px; width:100%; font-size:12px;">${escapeHTML(e.internal_notes || '')}</textarea>
-            </td>
-            <td>
-                <button class="btn btn-green" style="background:var(--green); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-bottom:5px;" onclick="createBookingFromEnquiry('${escapeHTML(e.id)}')">Create Booking</button>
-            </td>
-        </tr>`).join('');
+    const { data } = await sb.from('enquiries').select('id, name, email, phone, destination, travel_dates, budget, status, internal_notes, package_id, packages(title)').order('created_at', { ascending: false });
+    document.getElementById('table_enquiries').innerHTML = (data||[]).map(e => `<tr><td>${escapeHTML(e.name)}<br>${escapeHTML(e.email)}<br>${escapeHTML(e.phone)}</td><td>Dest: ${escapeHTML(e.destination || 'N/A')}<br>Pkg: ${escapeHTML(e.packages?.title || 'N/A')}<br>Dates: ${escapeHTML(e.travel_dates || 'N/A')}<br>Budget: ₹${escapeHTML(e.budget || 'N/A')}</td><td><select class="status-dropdown" onchange="changeStatus('enquiries', '${escapeHTML(e.id)}', this.value)"><option ${e.status === 'New' ? 'selected' : ''}>New</option><option ${e.status === 'Contacted' ? 'selected' : ''}>Contacted</option><option ${e.status === 'Quotation Sent' ? 'selected' : ''}>Quotation Sent</option><option ${e.status === 'Follow-up' ? 'selected' : ''}>Follow-up</option><option ${e.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option><option ${e.status === 'Completed' ? 'selected' : ''}>Completed</option><option ${e.status === 'Lost' ? 'selected' : ''}>Lost</option></select><br><textarea placeholder="Internal Notes" onchange="saveNote('${escapeHTML(e.id)}', this.value)" style="margin-top:5px; width:100%; font-size:12px;">${escapeHTML(e.internal_notes || '')}</textarea></td><td><button class="btn btn-green" style="background:var(--green); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-bottom:5px;" onclick="createBookingFromEnquiry('${escapeHTML(e.id)}')">Create Booking</button></td></tr>`).join('');
 }
 
 function exportEnquiries() {
@@ -1828,13 +1294,7 @@ function exportEnquiries() {
         if (tds.length < 3) return;
         const info = tds[0].innerText.split('\n');
         const details = tds[1].innerText.split('\n');
-        rows.push([
-            info[0], info[1], info[2],
-            details[0].replace('Dest: ', ''),
-            details[2].replace('Dates: ', ''),
-            details[3].replace('Budget: ₹', ''),
-            tds[2].innerText.split('\n')[0]
-        ]);
+        rows.push([info[0], info[1], info[2], details[0].replace('Dest: ', ''), details[2].replace('Dates: ', ''), details[3].replace('Budget: ₹', ''), tds[2].innerText.split('\n')[0]]);
     });
     const csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
     const link = document.createElement("a");
@@ -1843,168 +1303,64 @@ function exportEnquiries() {
     link.click();
 }
 
-async function saveNote(id, text) {
-    await sb.from('enquiries').update({ internal_notes: text }).eq('id', id);
-}
+async function saveNote(id, text) { await sb.from('enquiries').update({ internal_notes: text }).eq('id', id); }
+async function changeStatus(table, id, status) { await sb.from(table).update({ status }).eq('id', id); loadAdminStats(); if (table === 'enquiries') loadAdminEnquiries(); }
 
-async function changeStatus(table, id, status) {
-    await sb.from(table).update({ status }).eq('id', id);
-    loadAdminStats();
-    if (table === 'enquiries') loadAdminEnquiries();
-}
-
-// Create Booking from Enquiry
 async function createBookingFromEnquiry(enqId) {
-    const { data: enq, error } = await sb.from('enquiries')
-        .select('id, name, email, phone, destination, package_id, travel_dates')
-        .eq('id', enqId)
-        .single();
-    if (error || !enq) {
-        showToast('Enquiry not found.', 'error');
-        return;
-    }
-    
-    // Prefill booking modal
+    const { data: enq, error } = await sb.from('enquiries').select('id, name, email, phone, destination, package_id, travel_dates').eq('id', enqId).single();
+    if (error || !enq) { showToast('Enquiry not found.', 'error'); return; }
     document.getElementById('bookFormModal').style.display = 'block';
     document.getElementById('m_book_date').value = enq.travel_dates || '';
-
-    // Set customer name
-    const custSelect = document.getElementById('m_book_cust');
-    if (custSelect) {
-        const { data: cust } = await sb.from('customers')
-            .select('id, name')
-            .eq('email', enq.email)
-            .maybeSingle();
-        if (cust) {
-            for (let i = 0; i < custSelect.options.length; i++) {
-                if (custSelect.options[i].value === cust.id) {
-                    custSelect.selectedIndex = i;
-                    break;
-                }
-            }
-        } else {
-            const opt = document.createElement('option');
-            opt.value = 'new';
-            opt.textContent = enq.name;
-            custSelect.appendChild(opt);
-            custSelect.selectedIndex = custSelect.options.length - 1;
-        }
-    }
-
-    // Set package name
+    document.getElementById('m_book_customer_name').value = enq.name || '';
+    document.getElementById('m_book_travelers').value = parseInt(enq.travelers) || 1;
     if (enq.package_id) {
-        const { data: pkg } = await sb.from('packages')
-            .select('id, title')
-            .eq('id', enq.package_id)
-            .maybeSingle();
-        if (pkg) {
-            const pkgSelect = document.getElementById('m_book_pkg');
-            for (let i = 0; i < pkgSelect.options.length; i++) {
-                if (pkgSelect.options[i].value === pkg.id) {
-                    pkgSelect.selectedIndex = i;
-                    break;
-                }
-            }
-        }
+        const { data: pkg } = await sb.from('packages').select('id, title').eq('id', enq.package_id).maybeSingle();
+        if (pkg) document.getElementById('m_book_package_name').value = pkg.title;
     }
 }
 
-// ===== ADMIN CUSTOMERS =====
 async function loadAdminCustomers() {
-    const { data } = await sb.from('customers')
-        .select('id, name, email, phone, whatsapp, notes')
-        .order('created_at', { ascending: false });
-    document.getElementById('table_customers').innerHTML = (data||[]).map(c => `
-        <tr>
-            <td>${escapeHTML(c.name)}</td>
-            <td>${escapeHTML(c.email)}<br>${escapeHTML(c.phone)}<br>WhatsApp: ${escapeHTML(c.whatsapp || 'N/A')}</td>
-            <td><textarea placeholder="Notes" onchange="saveCustNote('${escapeHTML(c.id)}', this.value)" style="width:100%; font-size:12px;">${escapeHTML(c.notes || '')}</textarea></td>
-        </tr>`).join('');
+    const { data } = await sb.from('customers').select('id, name, email, phone, whatsapp, notes').order('created_at', { ascending: false });
+    document.getElementById('table_customers').innerHTML = (data||[]).map(c => `<tr><td>${escapeHTML(c.name)}</td><td>${escapeHTML(c.email)}<br>${escapeHTML(c.phone)}<br>WhatsApp: ${escapeHTML(c.whatsapp || 'N/A')}</td><td><textarea placeholder="Notes" onchange="saveCustNote('${escapeHTML(c.id)}', this.value)" style="width:100%; font-size:12px;">${escapeHTML(c.notes || '')}</textarea></td></tr>`).join('');
 }
 
-async function saveCustNote(id, text) {
-    await sb.from('customers').update({ notes: text }).eq('id', id);
-}
+async function saveCustNote(id, text) { await sb.from('customers').update({ notes: text }).eq('id', id); }
 
-// ===== ADMIN BOOKINGS =====
 async function loadAdminBookings() {
-    // Populate dropdowns
-    const [c, p] = await Promise.all([
-        sb.from('customers').select('id, name'),
-        sb.from('packages').select('id, title')
-    ]);
-    
-    const custSelect = document.getElementById('m_book_cust');
-    const pkgSelect = document.getElementById('m_book_pkg');
-    if (custSelect) custSelect.innerHTML = (c.data||[]).map(x => `<option value="${escapeHTML(x.id)}">${escapeHTML(x.name)}</option>`).join('');
-    if (pkgSelect) pkgSelect.innerHTML = (p.data||[]).map(x => `<option value="${escapeHTML(x.id)}">${escapeHTML(x.title)}</option>`).join('');
-
-    // Load bookings
-    const { data } = await sb.from('bookings')
-        .select('id, travel_date, total_amount, amount_paid, balance, booking_status, customer_name, package_name')
-        .order('travel_date', { ascending: false });
-    
-    document.getElementById('table_bookings').innerHTML = (data||[]).map(b => `
-        <tr>
-            <td>${escapeHTML(b.customer_name || 'N/A')}</td>
-            <td>${new Date(b.travel_date).toLocaleDateString()}</td>
-            <td>₹${Number(b.total_amount).toLocaleString('en-IN')}<br>(Paid: ₹${Number(b.amount_paid).toLocaleString('en-IN')})</td>
-            <td>${escapeHTML(b.booking_status)}</td>
-        </tr>`).join('');
+    const { data } = await sb.from('bookings').select('id, travel_date, total_amount, amount_paid, balance, booking_status, customer_name, package_name').order('travel_date', { ascending: false });
+    document.getElementById('table_bookings').innerHTML = (data||[]).map(b => `<tr><td>${escapeHTML(b.customer_name || 'N/A')}</td><td>${escapeHTML(b.package_name || 'N/A')}</td><td>${new Date(b.travel_date).toLocaleDateString()}</td><td>₹${Number(b.total_amount).toLocaleString('en-IN')}<br>(Paid: ₹${Number(b.amount_paid).toLocaleString('en-IN')})</td><td>${escapeHTML(b.booking_status)}</td></tr>`).join('');
 }
 
 function openBookModal() {
     document.getElementById('bookFormModal').style.display = 'block';
     document.querySelectorAll('#bookFormModal input').forEach(i => i.value = '');
-    loadAdminBookings(); // refresh dropdowns
+    document.getElementById('m_book_travelers').value = 1;
+    document.getElementById('m_book_status').value = 'Pending';
 }
 
 async function saveBooking() {
     const total = parseFloat(document.getElementById('m_book_total').value || 0);
     const paid = parseFloat(document.getElementById('m_book_paid').value || 0);
-    
-    // Get selected text from dropdowns
-    const custSelect = document.getElementById('m_book_cust');
-    const pkgSelect = document.getElementById('m_book_pkg');
-    const customerName = custSelect.options[custSelect.selectedIndex]?.text || '';
-    const packageName = pkgSelect.options[pkgSelect.selectedIndex]?.text || '';
-
     const payload = {
-        customer_name: customerName,
-        package_name: packageName,
+        customer_name: document.getElementById('m_book_customer_name').value,
+        package_name: document.getElementById('m_book_package_name').value,
         travel_date: document.getElementById('m_book_date').value,
-        travelers: 1, // Default to 1, can be enhanced later
+        travelers: parseInt(document.getElementById('m_book_travelers').value) || 1,
         total_amount: total,
         amount_paid: paid,
         balance: total - paid,
         booking_status: document.getElementById('m_book_status').value,
     };
-
     const { error } = await sb.from('bookings').insert([payload]);
-    if (error) {
-        showToast('Error saving booking: ' + error.message, 'error');
-        return;
-    }
+    if (error) { showToast('Error saving booking: ' + error.message, 'error'); return; }
     document.getElementById('bookFormModal').style.display = 'none';
     showToast('Booking saved successfully!');
-    loadAdminBookings();
-    loadAdminStats();
+    loadAdminBookings(); loadAdminStats();
 }
 
-// ===== ADMIN BLOG =====
 async function loadAdminBlog() {
-    const { data } = await sb.from('blog_posts')
-        .select('id, title, is_published')
-        .order('created_at', { ascending: false });
-    document.getElementById('table_blog').innerHTML = (data||[]).map(b => `
-        <tr>
-            <td>${escapeHTML(b.title)}</td>
-            <td>${b.is_published ? 'Live' : 'Hidden'}</td>
-            <td>
-                <button class="btn-blue" style="background:var(--brand-blue); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;" onclick="editBlog('${escapeHTML(b.id)}')">Edit</button>
-                <button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem('blog_posts', '${escapeHTML(b.id)}')">Delete</button>
-            </td>
-        </tr>`).join('');
+    const { data } = await sb.from('blog_posts').select('id, title, is_published').order('created_at', { ascending: false });
+    document.getElementById('table_blog').innerHTML = (data||[]).map(b => `<tr><td>${escapeHTML(b.title)}</td><td>${b.is_published ? 'Live' : 'Hidden'}</td><td><button class="btn-blue" style="background:var(--brand-blue); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;" onclick="editBlog('${escapeHTML(b.id)}')">Edit</button><button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem('blog_posts', '${escapeHTML(b.id)}')">Delete</button></td></tr>`).join('');
 }
 
 function openBlogModal() {
@@ -2041,64 +1397,41 @@ async function saveBlogPost() {
     };
     const id = document.getElementById('m_blog_id').value;
     const { error } = id ? await sb.from('blog_posts').update(payload).eq('id', id) : await sb.from('blog_posts').insert([payload]);
-    if (error) {
-        showToast('Error saving blog post: ' + error.message, 'error');
-        return;
-    }
+    if (error) { showToast('Error saving blog post: ' + error.message, 'error'); return; }
     document.getElementById('blogFormModal').style.display = 'none';
     showToast('Blog post saved!');
     loadAdminBlog();
 }
 
-// ===== ADMIN TESTIMONIALS =====
 async function loadAdminTestimonials() {
-    const { data } = await sb.from('testimonials')
-        .select('id, name, message')
-        .order('created_at', { ascending: false });
-    document.getElementById('table_testimonials').innerHTML = (data||[]).map(t => `
-        <tr>
-            <td>${escapeHTML(t.name)}</td>
-            <td>${escapeHTML(t.message ? t.message.substring(0, 50) + '...' : '')}</td>
-            <td><button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem('testimonials', '${escapeHTML(t.id)}')">Delete</button></td>
-        </tr>`).join('');
+    const { data } = await sb.from('testimonials').select('id, name, message').order('created_at', { ascending: false });
+    document.getElementById('table_testimonials').innerHTML = (data||[]).map(t => `<tr><td>${escapeHTML(t.name)}</td><td>${escapeHTML(t.message ? t.message.substring(0, 50) + '...' : '')}</td><td><button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem('testimonials', '${escapeHTML(t.id)}')">Delete</button></td></tr>`).join('');
 }
 
 function openTestModal() {
     document.getElementById('testFormModal').style.display = 'block';
     document.querySelectorAll('#testFormModal input, #testFormModal textarea').forEach(i => { if(i.type !== 'hidden') i.value = ''; });
+    document.getElementById('m_test_rating').value = 5;
 }
 
 async function saveTestimonial() {
     const payload = {
         name: document.getElementById('m_test_name').value,
         location: document.getElementById('m_test_loc').value,
+        rating: parseInt(document.getElementById('m_test_rating').value) || 5,
         image_url: document.getElementById('m_test_img').value,
         message: document.getElementById('m_test_msg').value,
     };
     const { error } = await sb.from('testimonials').insert([payload]);
-    if (error) {
-        showToast('Error saving testimonial: ' + error.message, 'error');
-        return;
-    }
+    if (error) { showToast('Error saving testimonial: ' + error.message, 'error'); return; }
     document.getElementById('testFormModal').style.display = 'none';
     showToast('Testimonial saved!');
     loadAdminTestimonials();
 }
 
-// ===== ADMIN FAQs =====
 async function loadAdminFaqs() {
-    const { data } = await sb.from('faqs')
-        .select('id, question, answer, is_published')
-        .order('created_at', { ascending: false });
-    document.getElementById('table_faqs').innerHTML = (data||[]).map(f => `
-        <tr>
-            <td>${escapeHTML(f.question)}</td>
-            <td>${f.is_published ? 'Live' : 'Hidden'}</td>
-            <td>
-                <button class="btn-blue" style="background:var(--brand-blue); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;" onclick="editFaq('${escapeHTML(f.id)}')">Edit</button>
-                <button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem('faqs', '${escapeHTML(f.id)}')">Delete</button>
-            </td>
-        </tr>`).join('');
+    const { data } = await sb.from('faqs').select('id, question, answer, is_published').order('created_at', { ascending: false });
+    document.getElementById('table_faqs').innerHTML = (data||[]).map(f => `<tr><td>${escapeHTML(f.question)}</td><td>${f.is_published ? 'Live' : 'Hidden'}</td><td><button class="btn-blue" style="background:var(--brand-blue); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;" onclick="editFaq('${escapeHTML(f.id)}')">Edit</button><button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem('faqs', '${escapeHTML(f.id)}')">Delete</button></td></tr>`).join('');
 }
 
 function openFaqModal() {
@@ -2127,17 +1460,12 @@ async function saveFaq() {
     };
     const id = document.getElementById('m_faq_id').value;
     const { error } = id ? await sb.from('faqs').update(payload).eq('id', id) : await sb.from('faqs').insert([payload]);
-    if (error) {
-        showToast('Error saving FAQ: ' + error.message, 'error');
-        return;
-    }
+    if (error) { showToast('Error saving FAQ: ' + error.message, 'error'); return; }
     document.getElementById('faqFormModal').style.display = 'none';
     showToast('FAQ saved!');
-    loadAdminFaqs();
-    loadHomeFaqs();
+    loadAdminFaqs(); loadHomeFaqs();
 }
 
-// ===== ADMIN SETTINGS =====
 async function loadAdminSettings() {
     const { data } = await sb.from('website_settings').select('*').eq('id', 1).single();
     if (data) {
@@ -2158,23 +1486,15 @@ async function saveSettings() {
         address: document.getElementById('set_address').value,
     };
     const { error } = await sb.from('website_settings').update(payload).eq('id', 1);
-    if (error) {
-        showToast('Error saving settings: ' + error.message, 'error');
-        return;
-    }
+    if (error) { showToast('Error saving settings: ' + error.message, 'error'); return; }
     showToast('Settings saved successfully!');
     loadSettings();
 }
 
-// ===== DELETE ITEM =====
 async function delItem(table, id) {
     showConfirm('Delete this item? This action cannot be undone.', async () => {
         const { error } = await sb.from(table).delete().eq('id', id);
-        if (error) {
-            showToast('Error deleting: ' + error.message, 'error');
-            return;
-        }
-        // Refresh relevant tables
+        if (error) { showToast('Error deleting: ' + error.message, 'error'); return; }
         switch(table) {
             case 'packages': loadAdminPackages(); break;
             case 'destinations': loadAdminDestinations(); loadDestDropdown(); populateCountryFilter(); break;
@@ -2187,30 +1507,20 @@ async function delItem(table, id) {
     });
 }
 
-// ===== LOAD DEST DROPDOWN (for package form) =====
 async function loadDestDropdown() {
-    const { data } = await sb.from('destinations')
-        .select('id, name, country')
-        .order('country', { ascending: true });
+    const { data } = await sb.from('destinations').select('id, name, country').order('country', { ascending: true });
     let html = '<option value="">None</option>';
     const grouped = {};
-    (data||[]).forEach(d => {
-        const c = d.country || 'Other';
-        if (!grouped[c]) grouped[c] = [];
-        grouped[c].push(d);
-    });
+    (data||[]).forEach(d => { const c = d.country || 'Other'; if (!grouped[c]) grouped[c] = []; grouped[c].push(d); });
     for (const country in grouped) {
         html += `<optgroup label="${escapeHTML(country)}">`;
-        grouped[country].forEach(d => {
-            html += `<option value="${escapeHTML(d.id)}">${escapeHTML(d.name)}</option>`;
-        });
+        grouped[country].forEach(d => { html += `<option value="${escapeHTML(d.id)}">${escapeHTML(d.name)}</option>`; });
         html += '</optgroup>';
     }
     const select = document.getElementById('m_pkg_dest');
     if (select) select.innerHTML = html;
 }
 
-// ===== INITIAL LOAD =====
 window.addEventListener('scroll', () => {
     const scrollTop = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -2221,14 +1531,10 @@ window.addEventListener('scroll', () => {
     else btn.classList.remove('show');
 });
 
-// Preloader
 window.addEventListener('load', () => {
-    setTimeout(() => {
-        document.getElementById('preloader').classList.add('hidden');
-    }, 800);
+    setTimeout(() => { document.getElementById('preloader').classList.add('hidden'); }, 800);
 });
 
-// Call initial data loads
 loadSettings();
 populateCountryFilter();
 loadHomeFaqs();
