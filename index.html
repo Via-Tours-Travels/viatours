@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 :root { --white:#fff; --bg-light:#f8fafc; --text-dark:#0f172a; --text-body:#334155; --text-muted:#64748b; --border:#e2e8f0; --brand-blue:#2563eb; --brand-orange:#f97316; --green:#10b981; }
+body.dark-mode { --white:#1e293b; --bg-light:#0f172a; --text-dark:#f1f5f9; --text-body:#cbd5e1; --text-muted:#94a3b8; --border:#334155; }
 * { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
 body { font-family:'Inter',sans-serif; background:var(--white); color:var(--text-body); line-height:1.6; }
 h1,h2,h3,h4 { font-family:'Poppins',sans-serif; color:var(--text-dark); margin-bottom:10px; line-height:1.2; }
@@ -439,6 +440,7 @@ ul { list-style:none; }
                 <li onclick="showAdminTab('testimonials', event)"><i class="fas fa-comment-dots"></i> Testimonials</li>
                 <li onclick="showAdminTab('faqs', event)"><i class="fas fa-question-circle"></i> FAQs</li>
                 <li onclick="showAdminTab('settings', event)"><i class="fas fa-cog"></i> Website Settings</li>
+                <li onclick="toggleDarkMode()" style="margin-top:20px;"><i class="fas fa-moon"></i> Dark Mode</li>
                 <li onclick="logout()" style="margin-top:50px; color:#ef4444;"><i class="fas fa-sign-out-alt"></i> Logout</li>
             </ul>
         </div>
@@ -474,7 +476,13 @@ ul { list-style:none; }
 
                 <div id="tab-packages" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Manage Packages</h2><button class="btn btn-primary" onclick="openPkgModal()">Add Package</button></div><div class="admin-table"><table><thead><tr><th>Image</th><th>Title</th><th>Price (₹)</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_packages"></tbody></table></div></div>
                 <div id="tab-destinations" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Manage Destinations</h2><button class="btn btn-primary" onclick="openDestModal()">Add Destination</button></div><div class="admin-table"><table><thead><tr><th>Name</th><th>Country</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_destinations"></tbody></table></div></div>
-                <div id="tab-enquiries" class="admin-tab" style="display:none;"><h2>Enquiries</h2><div class="admin-table" style="margin-top:20px;"><table><thead><tr><th>Customer</th><th>Details</th><th>Status & Notes</th></tr></thead><tbody id="table_enquiries"></tbody></table></div></div>
+                <div id="tab-enquiries" class="admin-tab" style="display:none;">
+    <div class="admin-header">
+        <h2>Enquiries</h2>
+        <button class="btn btn-green" onclick="exportEnquiries()"><i class="fas fa-file-csv"></i> Export CSV</button>
+    </div>
+    <div class="admin-table" style="margin-top:20px;"><table><thead><tr><th>Customer</th><th>Details</th><th>Status & Notes</th></tr></thead><tbody id="table_enquiries"></tbody></table></div>
+</div>
                 <div id="tab-customers" class="admin-tab" style="display:none;"><h2>Customers</h2><div class="admin-table" style="margin-top:20px;"><table><thead><tr><th>Name</th><th>Contact</th><th>Notes</th></tr></thead><tbody id="table_customers"></tbody></table></div></div>
                 <div id="tab-bookings" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Bookings</h2><button class="btn btn-primary" onclick="openBookModal()">Add Booking</button></div><div class="admin-table"><table><thead><tr><th>Customer</th><th>Travel Date</th><th>Amount</th><th>Status</th></tr></thead><tbody id="table_bookings"></tbody></table></div></div>
                 <div id="tab-blog" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Manage Blog</h2><button class="btn btn-primary" onclick="openBlogModal()">Add Post</button></div><div class="admin-table"><table><thead><tr><th>Title</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_blog"></tbody></table></div></div>
@@ -637,6 +645,12 @@ async function saveFaq() {
     document.getElementById('faqFormModal').style.display = 'none';
     loadAdminFaqs();
 }
+
+function toggleDarkMode() { 
+    document.body.classList.toggle('dark-mode'); 
+    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); 
+}
+if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
 
 function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
 function toggleChat() { document.getElementById('chatWindow').classList.toggle('active'); }
@@ -1017,23 +1031,35 @@ function showAdminTab(tab, ev) {
 }
 
 async function loadAdminStats() { 
-    const [e, newE, p, c, b] = await Promise.all([
+    const [e, p, b] = await Promise.all([
         sb.from('enquiries').select('*', { count: 'exact', head: true }),
-        sb.from('enquiries').select('*', { count: 'exact', head: true }).eq('status', 'New'),
         sb.from('packages').select('*', { count: 'exact', head: true }).eq('is_published', true),
-        sb.from('customers').select('*', { count: 'exact', head: true }),
-        sb.from('bookings').select('*', { count: 'exact', head: true }).eq('booking_status', 'Confirmed')
+        sb.from('bookings').select('amount_paid, balance, booking_status')
     ]);
     stat_enq.innerText = e.count || 0; 
-    stat_new_enq.innerText = newE.count || 0; 
     stat_pkg.innerText = p.count || 0; 
-    stat_cust.innerText = c.count || 0;
     
-    const { data: recEnq } = await sb.from('enquiries').select('*').order('created_at', { ascending: false }).limit(5);
-    table_recent_enq.innerHTML = (recEnq||[]).map(e => '<tr><td>' + e.name + '</td><td>' + (e.destination||'N/A') + '</td><td><span class="tag">' + e.status + '</span></td></tr>').join('');
+    // New Revenue & Balance Stats
+    const rev = (b.data||[]).reduce((sum, b) => sum + (b.amount_paid || 0), 0);
+    const bal = (b.data||[]).reduce((sum, b) => sum + (b.balance || 0), 0);
     
-    const { data: upBook } = await sb.from('bookings').select('*, customers(name)').gte('travel_date', new Date().toISOString().split('T')[0]).order('travel_date', { ascending: true }).limit(5);
-    table_upcoming_book.innerHTML = (upBook||[]).map(b => '<tr><td>' + (b.customers?.name || 'N/A') + '</td><td>' + new Date(b.travel_date).toLocaleDateString() + '</td></tr>').join('');
+    let statsHtml = '<div class="stat-card"><h2>' + (e.count || 0) + '</h2><p>Total Enquiries</p></div>';
+    statsHtml += '<div class="stat-card"><h2>' + (p.count || 0) + '</h2><p>Active Packages</p></div>';
+    statsHtml += '<div class="stat-card"><h2>₹' + rev.toLocaleString() + '</h2><p>Revenue Collected</p></div>';
+    statsHtml += '<div class="stat-card"><h2>₹' + bal.toLocaleString() + '</h2><p>Outstanding Balance</p></div>';
+    
+    // New CSS Bar Chart
+    const statuses = ['Pending', 'Confirmed', 'Completed', 'Cancelled'];
+    const counts = statuses.map(s => (b.data||[]).filter(x => x.booking_status === s).length);
+    const max = Math.max(...counts, 1);
+    let chartHtml = '<div style="margin-top:40px; background:#fff; padding:20px; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,0.05);"><h3>Bookings by Status</h3><div style="display:flex; align-items:flex-end; gap:15px; height:200px; padding-top:20px; padding-bottom:30px;">';
+    statuses.forEach((s, i) => {
+        chartHtml += '<div style="flex:1; background:var(--brand-blue); text-align:center; color:#fff; border-radius:8px 8px 0 0; position:relative; min-height:5px; height:' + ((counts[i] / max) * 100) + '%">' + counts[i] + '<span style="position:absolute; bottom:-25px; left:0; right:0; font-size:12px; color:var(--text-muted);">' + s + '</span></div>';
+    });
+    chartHtml += '</div></div>';
+    
+    document.querySelector('#tab-dashboard .grid-4').innerHTML = statsHtml;
+    document.querySelector('#tab-dashboard .grid-4').insertAdjacentHTML('afterend', chartHtml);
 }
 
 async function uploadImage(file) { 
@@ -1235,6 +1261,21 @@ async function loadAdminEnquiries() {
         '<tr><td>' + e.name + '<br>' + e.email + '<br>' + e.phone + '</td><td>Dest: ' + (e.destination||'N/A') + '<br>Pkg: ' + (e.packages?.title || 'N/A') + '<br>Dates: ' + (e.travel_dates||'N/A') + '<br>Budget: ₹' + (e.budget||'N/A') + '</td><td><select class="status-dropdown" onchange="changeStatus(\'enquiries\', \'' + e.id + '\', this.value)"><option ' + (e.status==='New'?'selected':'') + '>New</option><option ' + (e.status==='Contacted'?'selected':'') + '>Contacted</option><option ' + (e.status==='Quotation Sent'?'selected':'') + '>Quotation Sent</option><option ' + (e.status==='Follow-up'?'selected':'') + '>Follow-up</option><option ' + (e.status==='Confirmed'?'selected':'') + '>Confirmed</option><option ' + (e.status==='Completed'?'selected':'') + '>Completed</option><option ' + (e.status==='Lost'?'selected':'') + '>Lost</option></select><br><textarea placeholder="Internal Notes" onchange="saveNote(\'' + e.id + '\', this.value)" style="margin-top:5px; width:100%; font-size:12px;">' + (e.internal_notes||'') + '</textarea></td></tr>'
     ).join(''); 
 }
+function exportEnquiries() {
+    const rows = [['Name', 'Email', 'Phone', 'Destination', 'Travel Dates', 'Budget', 'Status']];
+    document.querySelectorAll('#table_enquiries tr').forEach(tr => {
+        const tds = tr.querySelectorAll('td'); if(tds.length < 3) return;
+        const info = tds[0].innerText.split('\n');
+        const details = tds[1].innerText.split('\n');
+        rows.push([info[0], info[1], info[2], details[0].replace('Dest: ',''), details[2].replace('Dates: ',''), details[3].replace('Budget: ₹',''), tds[2].innerText.split('\n')[0]]);
+    });
+    let csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
+    const link = document.createElement("a"); 
+    link.href = encodeURI(csvContent); 
+    link.download = "via_tours_enquiries.csv"; 
+    link.click();
+}
+
 async function saveNote(id, text) { await sb.from('enquiries').update({ internal_notes: text }).eq('id', id); }
 
 async function loadAdminCustomers() { 
