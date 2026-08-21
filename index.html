@@ -1468,7 +1468,7 @@ async function loadAdminStats() {
     const [e, p, b, c] = await Promise.all([
         sb.from('enquiries').select('id, status, created_at'),
         sb.from('packages').select('id', { count: 'exact', head: true }).eq('is_published', true),
-        sb.from('bookings').select('amount_paid, balance, booking_status, travel_date'),
+        sb.from('bookings').select('amount_paid, balance, booking_status, travel_date, customer_name'),
         sb.from('customers').select('id', { count: 'exact', head: true })
     ]);
 
@@ -1499,7 +1499,7 @@ async function loadAdminStats() {
         return d >= now && d <= future && x.booking_status !== 'Cancelled';
     }).slice(0, 5);
     document.getElementById('table_upcoming_book').innerHTML = upcoming.map(x => `
-        <tr><td>${escapeHTML(x.customers?.name || 'N/A')}</td><td>${new Date(x.travel_date).toLocaleDateString()}</td></tr>`
+        <tr><td>${escapeHTML(x.customer_name || 'N/A')}</td><td>${new Date(x.travel_date).toLocaleDateString()}</td></tr>`
     ).join('');
 
     // Chart: Bookings by status
@@ -1863,17 +1863,19 @@ async function createBookingFromEnquiry(enqId) {
         showToast('Enquiry not found.', 'error');
         return;
     }
+    
     // Prefill booking modal
     document.getElementById('bookFormModal').style.display = 'block';
     document.getElementById('m_book_date').value = enq.travel_dates || '';
 
-    // Set customer name directly in the dropdown
+    // Set customer name
     const custSelect = document.getElementById('m_book_cust');
     if (custSelect) {
-        // Check if customer exists in customers table, otherwise add an option
-        const { data: cust } = await sb.from('customers').select('id, name').eq('email', enq.email).maybeSingle();
+        const { data: cust } = await sb.from('customers')
+            .select('id, name')
+            .eq('email', enq.email)
+            .maybeSingle();
         if (cust) {
-            // Find and select matching option
             for (let i = 0; i < custSelect.options.length; i++) {
                 if (custSelect.options[i].value === cust.id) {
                     custSelect.selectedIndex = i;
@@ -1881,18 +1883,20 @@ async function createBookingFromEnquiry(enqId) {
                 }
             }
         } else {
-            // Add a temporary option with the enquiry name
             const opt = document.createElement('option');
-            opt.value = 'new_' + enq.email; // dummy value
+            opt.value = 'new';
             opt.textContent = enq.name;
             custSelect.appendChild(opt);
             custSelect.selectedIndex = custSelect.options.length - 1;
         }
     }
 
-    // Set package title similarly
+    // Set package name
     if (enq.package_id) {
-        const { data: pkg } = await sb.from('packages').select('id, title').eq('id', enq.package_id).maybeSingle();
+        const { data: pkg } = await sb.from('packages')
+            .select('id, title')
+            .eq('id', enq.package_id)
+            .maybeSingle();
         if (pkg) {
             const pkgSelect = document.getElementById('m_book_pkg');
             for (let i = 0; i < pkgSelect.options.length; i++) {
@@ -1908,12 +1912,12 @@ async function createBookingFromEnquiry(enqId) {
 // ===== ADMIN CUSTOMERS =====
 async function loadAdminCustomers() {
     const { data } = await sb.from('customers')
-        .select('id, name, email, phone, notes')
+        .select('id, name, email, phone, whatsapp, notes')
         .order('created_at', { ascending: false });
     document.getElementById('table_customers').innerHTML = (data||[]).map(c => `
         <tr>
             <td>${escapeHTML(c.name)}</td>
-            <td>${escapeHTML(c.email)}<br>${escapeHTML(c.phone)}</td>
+            <td>${escapeHTML(c.email)}<br>${escapeHTML(c.phone)}<br>WhatsApp: ${escapeHTML(c.whatsapp || 'N/A')}</td>
             <td><textarea placeholder="Notes" onchange="saveCustNote('${escapeHTML(c.id)}', this.value)" style="width:100%; font-size:12px;">${escapeHTML(c.notes || '')}</textarea></td>
         </tr>`).join('');
 }
@@ -1924,21 +1928,22 @@ async function saveCustNote(id, text) {
 
 // ===== ADMIN BOOKINGS =====
 async function loadAdminBookings() {
-    // Dropdowns for adding a booking
+    // Populate dropdowns
     const [c, p] = await Promise.all([
         sb.from('customers').select('id, name'),
         sb.from('packages').select('id, title')
     ]);
+    
     const custSelect = document.getElementById('m_book_cust');
     const pkgSelect = document.getElementById('m_book_pkg');
     if (custSelect) custSelect.innerHTML = (c.data||[]).map(x => `<option value="${escapeHTML(x.id)}">${escapeHTML(x.name)}</option>`).join('');
     if (pkgSelect) pkgSelect.innerHTML = (p.data||[]).map(x => `<option value="${escapeHTML(x.id)}">${escapeHTML(x.title)}</option>`).join('');
 
-    // Bookings list – now selects customer_name and package_name directly
+    // Load bookings
     const { data } = await sb.from('bookings')
         .select('id, travel_date, total_amount, amount_paid, balance, booking_status, customer_name, package_name')
         .order('travel_date', { ascending: false });
-
+    
     document.getElementById('table_bookings').innerHTML = (data||[]).map(b => `
         <tr>
             <td>${escapeHTML(b.customer_name || 'N/A')}</td>
@@ -1958,7 +1963,7 @@ async function saveBooking() {
     const total = parseFloat(document.getElementById('m_book_total').value || 0);
     const paid = parseFloat(document.getElementById('m_book_paid').value || 0);
     
-    // Get selected text (name) from dropdowns
+    // Get selected text from dropdowns
     const custSelect = document.getElementById('m_book_cust');
     const pkgSelect = document.getElementById('m_book_pkg');
     const customerName = custSelect.options[custSelect.selectedIndex]?.text || '';
@@ -1968,6 +1973,7 @@ async function saveBooking() {
         customer_name: customerName,
         package_name: packageName,
         travel_date: document.getElementById('m_book_date').value,
+        travelers: 1, // Default to 1, can be enhanced later
         total_amount: total,
         amount_paid: paid,
         balance: total - paid,
@@ -2135,11 +2141,11 @@ async function saveFaq() {
 async function loadAdminSettings() {
     const { data } = await sb.from('website_settings').select('*').eq('id', 1).single();
     if (data) {
-        document.getElementById('set_name').value = data.business_name;
-        document.getElementById('set_email').value = data.email;
-        document.getElementById('set_phone').value = data.phone;
-        document.getElementById('set_whatsapp').value = data.whatsapp;
-        document.getElementById('set_address').value = data.address;
+        document.getElementById('set_name').value = data.business_name || '';
+        document.getElementById('set_email').value = data.email || '';
+        document.getElementById('set_phone').value = data.phone || '';
+        document.getElementById('set_whatsapp').value = data.whatsapp || '';
+        document.getElementById('set_address').value = data.address || '';
     }
 }
 
