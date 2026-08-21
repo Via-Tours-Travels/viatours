@@ -99,6 +99,28 @@ ul { list-style:none; }
   .pkg-details-grid { grid-template-columns:1fr !important; }
   .form-grid-2 { grid-template-columns:1fr !important; }
 }
+/* Skeleton Shimmer Effect */
+.skeleton { background: linear-gradient(to right, #e2e8f0 8%, #f1f5f9 18%, #e2e8f0 33%); background-size: 1000px 100%; animation: shimmer 1.5s infinite linear; border-radius: 8px; }
+@keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
+.skel-card { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.skel-img { height: 220px; }
+.skel-body { padding: 20px; }
+.skel-line { height: 16px; margin-bottom: 10px; }
+
+/* Toast Notifications */
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text-dark); color: #fff; padding: 15px 25px; border-radius: 8px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 9999; opacity: 0; transition: all 0.3s ease; font-weight: 500; }
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+.toast.success { background: var(--green); }
+.toast.error { background: #ef4444; }
+
+/* Scroll to Top */
+.scroll-top { position: fixed; bottom: 100px; left: 24px; width: 45px; height: 45px; background: var(--brand-blue); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transition: 0.3s; z-index: 998; }
+.scroll-top.show { opacity: 1; }
+
+/* Advanced Packages Layout */
+.pkg-layout { display:grid; grid-template-columns: 250px 1fr; gap:30px; margin-top:20px; }
+.filter-sidebar { background:#fff; padding:20px; border-radius:12px; border:1px solid var(--border); height:fit-content; }
+@media (max-width: 768px) { .pkg-layout { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -184,16 +206,27 @@ ul { list-style:none; }
 
         <div id="page-destinations" class="page-view container"><h2>Explore Destinations</h2><div id="list_destinations" style="margin-top:30px;"><p class="text-center">Loading...</p></div></div>
         
-        <div id="page-packages" class="page-view container">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; flex-wrap:wrap; gap:15px;">
-                <h2 id="pkg_header_title">Travel Packages</h2>
-                <div style="display:flex; gap:10px;">
-                    <input type="text" id="pkg_search" placeholder="Search packages..." oninput="loadPackages()" style="padding:10px; border:1px solid var(--border); border-radius:8px; width:200px;">
-                    <button class="btn btn-outline" onclick="clearFilter()">Clear Filter</button>
-                </div>
+<div id="page-packages" class="page-view container">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:15px;">
+        <h2 id="pkg_header_title">Travel Packages</h2>
+        <input type="text" id="pkg_search" placeholder="Search packages..." oninput="loadPackages()" style="padding:10px; border:1px solid var(--border); border-radius:8px; width:300px; max-width:100%;">
+    </div>
+    <div class="pkg-layout">
+        <aside class="filter-sidebar">
+            <h4 style="margin-bottom:15px;">Sort & Filter</h4>
+            <div class="form-sec">
+                <label>Sort By Price</label>
+                <select id="pkg_sort" onchange="loadPackages()" style="width:100%; padding:10px; border:1px solid var(--border); border-radius:8px;">
+                    <option value="new">Newest First</option>
+                    <option value="price_asc">Low to High</option>
+                    <option value="price_desc">High to Low</option>
+                </select>
             </div>
-            <div class="grid-3" id="list_packages"><p class="text-center" style="grid-column:1/-1;">Loading...</p></div>
-        </div>
+            <button class="btn btn-outline" style="width:100%; margin-top:10px;" onclick="clearFilter()">Clear Filters</button>
+        </aside>
+        <div class="grid-3" id="list_packages"></div>
+    </div>
+</div>
         
         <div id="page-package" class="page-view container"><div id="pkg_details_container">Loading...</div></div>
         <div id="page-blog" class="page-view container"><h2 class="text-center">Travel Blog & Guides</h2><p class="text-center" style="margin-bottom:30px;">Tips, stories, and inspiration for your next journey.</p><div class="grid-3" id="list_blog"><p class="text-center" style="grid-column:1/-1;">Loading...</p></div></div>
@@ -324,6 +357,7 @@ ul { list-style:none; }
     </footer>
 </div>
 
+<div class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})"><i class="fas fa-arrow-up"></i></div>
 <div class="chat-bubble" onclick="toggleChat()"><i class="fas fa-robot"></i></div>
 <div class="chat-window" id="chatWindow">
     <div class="chat-header">Via AI Assistant <button class="chat-close" onclick="toggleChat()">&times;</button></div>
@@ -592,19 +626,30 @@ function clearFilter() {
     loadPackages();
 }
 
+// Skeleton Loader Helper
+function renderSkeletons() {
+    let html = '';
+    for(let i=0; i<6; i++) {
+        html += '<div class="skel-card"><div class="skeleton skel-img"></div><div class="skel-body"><div class="skeleton skel-line" style="width:60%"></div><div class="skeleton skel-line" style="width:40%"></div><div class="skeleton skel-line" style="width:30%; height:24px; margin-top:15px;"></div></div></div>';
+    }
+    document.getElementById('list_packages').innerHTML = html;
+}
+
 async function loadPackages() { 
+    renderSkeletons(); // Show loading animation
+    
     const term = (document.getElementById('pkg_search')?.value || '').toLowerCase(); 
+    const sortVal = document.getElementById('pkg_sort')?.value || 'new';
     const { data, error } = await sb.from('packages').select('*, destinations(name, country)').eq('is_published', true); 
     
     if (error) {
-        document.getElementById('list_packages').innerHTML = '<p class="text-center" style="grid-column:1/-1;">Error loading packages. Please try again later.</p>';
+        document.getElementById('list_packages').innerHTML = '<p class="text-center" style="grid-column:1/-1;">Error loading packages.</p>';
         return;
     }
     
     let filtered = (data||[]).filter(p => p.title.toLowerCase().includes(term) || (p.duration||'').toLowerCase().includes(term));
     
     const headerTitle = document.getElementById('pkg_header_title');
-    
     if(activeDestFilter) {
         filtered = filtered.filter(p => p.destination_id === activeDestFilter);
         const dest = await sb.from('destinations').select('name, country').eq('id', activeDestFilter).single();
@@ -613,21 +658,48 @@ async function loadPackages() {
         headerTitle.innerText = 'Travel Packages';
     }
     
-    let emptyText = activeDestFilter 
-        ? 'No packages found for this destination yet.' 
-        : 'No packages are available right now. Please check back soon!';
+    // Sorting Logic
+    if (sortVal === 'price_asc') {
+        filtered.sort((a, b) => a.price - b.price);
+    } else if (sortVal === 'price_desc') {
+        filtered.sort((a, b) => b.price - a.price);
+    }
     
-    document.getElementById('list_packages').innerHTML = filtered.length ? filtered.map(p => 
-        '<div class="card" onclick="navTo(\'package\', \'' + p.id + '\')">' +
-            '<img src="' + (p.image_url || 'https://via.placeholder.com/400x300') + '">' +
-            '<div class="card-body">' +
-                '<h3>' + p.title + '</h3>' +
-                '<p>' + (p.duration||'') + ' | ' + (p.destinations?.name || '') + '</p>' +
-                '<span class="price-tag">₹' + p.price + '</span>' +
-            '</div>' +
-        '</div>'
-    ).join('') : '<p class="text-center" style="grid-column:1/-1;">' + emptyText + '</p>'; 
+    let emptyText = activeDestFilter ? 'No packages found for this destination yet.' : 'No packages are available right now. Please check back soon!';
+    
+    setTimeout(() => { // Small delay so skeleton shows briefly
+        document.getElementById('list_packages').innerHTML = filtered.length ? filtered.map(p => 
+            '<div class="card" onclick="navTo(\'package\', \'' + p.id + '\')">' +
+                '<img src="' + (p.image_url || 'https://via.placeholder.com/400x300') + '">' +
+                '<div class="card-body">' +
+                    '<h3>' + p.title + '</h3>' +
+                    '<p>' + (p.duration||'') + ' | ' + (p.destinations?.name || '') + '</p>' +
+                    '<span class="price-tag">₹' + p.price + '</span>' +
+                '</div>' +
+            '</div>'
+        ).join('') : '<p class="text-center" style="grid-column:1/-1;">' + emptyText + '</p>'; 
+    }, 400);
 }
+
+// Toast Notification Helper
+function showToast(msg, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = 'toast ' + type;
+    toast.textContent = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add('show'), 10);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// Scroll to Top Listener
+window.addEventListener('scroll', () => {
+    const btn = document.getElementById('scrollTopBtn');
+    if (window.scrollY > 300) btn.classList.add('show');
+    else btn.classList.remove('show');
+});
 
 async function loadPackageDetails(id) { 
     const { data: p, error } = await sb.from('packages').select('*, destinations(name)').eq('id', id).single(); 
@@ -694,26 +766,54 @@ async function setupPlanForm(pkgId) {
         }
     }
 }
+
+async function loadBlogPost(slug) {
+    document.getElementById('blog_details_container').innerHTML = '<p>Loading...</p>';
+    
+    // Check if the slug is actually a UUID (ID)
+    const isUUID = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(slug);
+    
+    let query = sb.from('blog_posts').select('*').eq('is_published', true);
+    if (isUUID) {
+        query = query.eq('id', slug);
+    } else {
+        query = query.eq('slug', slug);
+    }
+    
+    const { data: b, error } = await query.single();
+
+    if (error || !b) {
+        document.getElementById('blog_details_container').innerHTML = '<p>Blog post not found. <a onclick="navTo(\'blog\')" style="color:var(--brand-blue); cursor:pointer;">Back to Blog</a></p>'; 
+        return; 
+    } 
+    
+    if (b.meta_title) updateSEO(b.meta_title, b.meta_description || b.excerpt);
+    else updateSEO(b.title + ' - Via Tours Blog', b.excerpt || 'Read our latest blog post.');
+
+    document.getElementById('blog_details_container').innerHTML = 
+        '<img src="' + (b.image_url || 'https://via.placeholder.com/800x400') + '" style="width:100%; height:400px; object-fit:cover; border-radius:12px; margin-bottom:30px;">' +
+        '<span class="tag">' + new Date(b.created_at).toLocaleDateString() + '</span>' +
+        '<h1>' + b.title + '</h1>' +
+        '<div class="blog-content" style="margin-top:20px;">' + (b.content || '') + '</div>' +
+        '<button class="btn btn-outline" style="margin-top:40px;" onclick="navTo(\'blog\')"><i class="fas fa-arrow-left"></i> Back to Blog</button>';
+}
+
 document.getElementById('planTripForm').addEventListener('submit', async (e) => { 
     e.preventDefault(); 
     const payload = { 
-        name: pt_name.value, 
-        email: pt_email.value, 
-        phone: pt_phone.value, 
-        destination: pt_dest.value, 
-        travel_dates: pt_dates.value, 
-        travelers: pt_travelers.value, 
-        budget: pt_budget.value, 
-        hotel_pref: pt_hotel.value, 
-        requirements: pt_req.value, 
-        package_id: pt_pkg_id.value || null 
+        name: pt_name.value, email: pt_email.value, phone: pt_phone.value, destination: pt_dest.value, 
+        travel_dates: pt_dates.value, travelers: pt_travelers.value, budget: pt_budget.value, 
+        hotel_pref: pt_hotel.value, requirements: pt_req.value, package_id: pt_pkg_id.value || null 
     }; 
     const { error } = await sb.from('enquiries').insert([payload]); 
     const { data: cust } = await sb.from('customers').select('*').eq('email', pt_email.value).maybeSingle();
     if (!cust) await sb.from('customers').insert([{ name: pt_name.value, email: pt_email.value, phone: pt_phone.value, whatsapp: pt_phone.value }]);
     
-    if (error) alert('Error: ' + error.message); 
-    else { alert('Trip request submitted successfully!'); navTo('home'); } 
+    if (error) showToast('Error submitting request. Please try again.', 'error'); 
+    else { 
+        showToast('Trip request submitted! We will contact you soon.', 'success'); 
+        navTo('home'); 
+    } 
 });
 
 async function adminLogin() { 
@@ -1071,22 +1171,23 @@ async function editBlog(id) {
     m_blog_pub.value = b.is_published ? 'true' : 'false'; 
     document.getElementById('blogFormModal').style.display = 'block'; 
 }
-async function saveBlogPost() { 
-    const payload = { 
-        title: m_blog_title.value, 
-        slug: m_blog_slug.value, 
-        image_url: m_blog_img.value, 
-        excerpt: m_blog_excerpt.value, 
-        content: m_blog_content.value, 
-        meta_title: m_blog_meta_title.value, 
-        meta_description: m_blog_meta_desc.value, 
-        is_published: m_blog_pub.value === 'true' 
-    }; 
-    const id = m_blog_id.value; 
-    if (id) await sb.from('blog_posts').update(payload).eq('id', id); 
-    else await sb.from('blog_posts').insert([payload]); 
-    document.getElementById('blogFormModal').style.display = 'none'; 
-    loadAdminBlog(); 
+async function loadBlog() { 
+    const { data, error } = await sb.from('blog_posts').select('*').eq('is_published', true).order('created_at', { ascending: false });
+    if (error) {
+        document.getElementById('list_blog').innerHTML = '<p class="text-center" style="grid-column:1/-1;">Error loading blogs.</p>';
+        return;
+    }
+    document.getElementById('list_blog').innerHTML = (data||[]).length ? data.map(b => 
+        '<div class="card" onclick="navTo(\'blog-post\', \'' + (b.slug || b.id) + '\')">' +
+            '<img src="' + (b.image_url || 'https://via.placeholder.com/400x300') + '">' +
+            '<div class="card-body">' +
+                '<span class="tag">' + new Date(b.created_at).toLocaleDateString() + '</span>' +
+                '<h3>' + b.title + '</h3>' +
+                '<p class="blog-excerpt">' + (b.excerpt || '') + '</p>' +
+                '<span style="color:var(--brand-blue); font-weight:600;">Read More <i class="fas fa-arrow-right"></i></span>' +
+            '</div>' +
+        '</div>'
+    ).join('') : '<p class="text-center" style="grid-column:1/-1;">No blog posts yet.</p>'; 
 }
 </script>
 </body>
