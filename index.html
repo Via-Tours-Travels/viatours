@@ -121,10 +121,57 @@ ul { list-style:none; }
 .pkg-layout { display:grid; grid-template-columns: 250px 1fr; gap:30px; margin-top:20px; }
 .filter-sidebar { background:#fff; padding:20px; border-radius:12px; border:1px solid var(--border); height:fit-content; }
 @media (max-width: 768px) { .pkg-layout { grid-template-columns: 1fr; } }
+/* Scroll Progress Bar */
+#scrollProgress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--brand-blue), var(--brand-orange));
+    width: 0%;
+    z-index: 10000;
+    transition: width 0.1s linear;
+}
+
+/* Flying Plane Preloader */
+#preloader {
+    position: fixed;
+    inset: 0;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+#preloader.hidden { opacity: 0; visibility: hidden; }
+.loader-plane { font-size: 64px; animation: flyPlane 1.2s ease-in-out infinite; }
+@keyframes flyPlane {
+    0%, 100% { transform: translateX(-20px) translateY(0) rotate(-10deg); }
+    50% { transform: translateX(20px) translateY(-15px) rotate(10deg); }
+}
+.loader-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-top: 16px;
+    color: var(--brand-blue);
+    letter-spacing: 2px;
+}
 </style>
 </head>
 <body>
 
+<!-- Scroll Progress -->
+<div id="scrollProgress"></div>
+
+<!-- Preloader -->
+<div id="preloader">
+    <div style="text-align:center;">
+        <div class="loader-plane">✈️</div>
+        <div class="loader-text">VIA TOURS</div>
+    </div>
+</div>    
 <div id="site-wrapper">
     <header class="header">
         <div class="container header-in">
@@ -463,6 +510,20 @@ let currentItinerary = [];
 let activeDestFilter = null;
 let currentGallery = []; // Tracks images for the edit modal
 
+// Preloader Hide
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        document.getElementById('preloader').classList.add('hidden');
+    }, 800); // Hides after 0.8 seconds
+});
+
+// Scroll Progress Bar
+window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / docHeight) * 100;
+    document.getElementById('scrollProgress').style.width = progress + '%';
+});
 function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
 function toggleChat() { document.getElementById('chatWindow').classList.toggle('active'); }
 function handleChat(e) { 
