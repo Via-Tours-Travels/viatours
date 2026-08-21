@@ -1189,6 +1189,23 @@ async function loadBlog() {
         '</div>'
     ).join('') : '<p class="text-center" style="grid-column:1/-1;">No blog posts yet.</p>'; 
 }
+async function saveBlogPost() { 
+    const payload = { 
+        title: document.getElementById('m_blog_title').value, 
+        slug: document.getElementById('m_blog_slug').value, 
+        image_url: document.getElementById('m_blog_img').value, 
+        excerpt: document.getElementById('m_blog_excerpt').value, 
+        content: document.getElementById('m_blog_content').value, 
+        meta_title: document.getElementById('m_blog_meta_title').value, 
+        meta_description: document.getElementById('m_blog_meta_desc').value, 
+        is_published: document.getElementById('m_blog_pub').value === 'true' 
+    }; 
+    const id = document.getElementById('m_blog_id').value; 
+    if (id) await sb.from('blog_posts').update(payload).eq('id', id); 
+    else await sb.from('blog_posts').insert([payload]); 
+    document.getElementById('blogFormModal').style.display = 'none'; 
+    loadAdminBlog(); 
+}
 </script>
 </body>
 </html>
