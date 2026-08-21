@@ -1866,11 +1866,43 @@ async function createBookingFromEnquiry(enqId) {
     // Prefill booking modal
     document.getElementById('bookFormModal').style.display = 'block';
     document.getElementById('m_book_date').value = enq.travel_dates || '';
-    // Customer may or may not exist, find by email
-    const { data: cust } = await sb.from('customers').select('id').eq('email', enq.email).maybeSingle();
-    if (cust) document.getElementById('m_book_cust').value = cust.id;
-    else showToast('Customer not found. Please add customer first.', 'error');
-    document.getElementById('m_book_pkg').value = enq.package_id || '';
+
+    // Set customer name directly in the dropdown
+    const custSelect = document.getElementById('m_book_cust');
+    if (custSelect) {
+        // Check if customer exists in customers table, otherwise add an option
+        const { data: cust } = await sb.from('customers').select('id, name').eq('email', enq.email).maybeSingle();
+        if (cust) {
+            // Find and select matching option
+            for (let i = 0; i < custSelect.options.length; i++) {
+                if (custSelect.options[i].value === cust.id) {
+                    custSelect.selectedIndex = i;
+                    break;
+                }
+            }
+        } else {
+            // Add a temporary option with the enquiry name
+            const opt = document.createElement('option');
+            opt.value = 'new_' + enq.email; // dummy value
+            opt.textContent = enq.name;
+            custSelect.appendChild(opt);
+            custSelect.selectedIndex = custSelect.options.length - 1;
+        }
+    }
+
+    // Set package title similarly
+    if (enq.package_id) {
+        const { data: pkg } = await sb.from('packages').select('id, title').eq('id', enq.package_id).maybeSingle();
+        if (pkg) {
+            const pkgSelect = document.getElementById('m_book_pkg');
+            for (let i = 0; i < pkgSelect.options.length; i++) {
+                if (pkgSelect.options[i].value === pkg.id) {
+                    pkgSelect.selectedIndex = i;
+                    break;
+                }
+            }
+        }
+    }
 }
 
 // ===== ADMIN CUSTOMERS =====
@@ -1892,6 +1924,7 @@ async function saveCustNote(id, text) {
 
 // ===== ADMIN BOOKINGS =====
 async function loadAdminBookings() {
+    // Dropdowns for adding a booking
     const [c, p] = await Promise.all([
         sb.from('customers').select('id, name'),
         sb.from('packages').select('id, title')
@@ -1901,12 +1934,14 @@ async function loadAdminBookings() {
     if (custSelect) custSelect.innerHTML = (c.data||[]).map(x => `<option value="${escapeHTML(x.id)}">${escapeHTML(x.name)}</option>`).join('');
     if (pkgSelect) pkgSelect.innerHTML = (p.data||[]).map(x => `<option value="${escapeHTML(x.id)}">${escapeHTML(x.title)}</option>`).join('');
 
+    // Bookings list – now selects customer_name and package_name directly
     const { data } = await sb.from('bookings')
-        .select('id, travel_date, total_amount, amount_paid, balance, booking_status, customers(name), packages(title)')
+        .select('id, travel_date, total_amount, amount_paid, balance, booking_status, customer_name, package_name')
         .order('travel_date', { ascending: false });
+
     document.getElementById('table_bookings').innerHTML = (data||[]).map(b => `
         <tr>
-            <td>${escapeHTML(b.customers?.name || 'N/A')}</td>
+            <td>${escapeHTML(b.customer_name || 'N/A')}</td>
             <td>${new Date(b.travel_date).toLocaleDateString()}</td>
             <td>₹${Number(b.total_amount).toLocaleString('en-IN')}<br>(Paid: ₹${Number(b.amount_paid).toLocaleString('en-IN')})</td>
             <td>${escapeHTML(b.booking_status)}</td>
@@ -1922,15 +1957,23 @@ function openBookModal() {
 async function saveBooking() {
     const total = parseFloat(document.getElementById('m_book_total').value || 0);
     const paid = parseFloat(document.getElementById('m_book_paid').value || 0);
+    
+    // Get selected text (name) from dropdowns
+    const custSelect = document.getElementById('m_book_cust');
+    const pkgSelect = document.getElementById('m_book_pkg');
+    const customerName = custSelect.options[custSelect.selectedIndex]?.text || '';
+    const packageName = pkgSelect.options[pkgSelect.selectedIndex]?.text || '';
+
     const payload = {
-        customer_id: document.getElementById('m_book_cust').value,
-        package_id: document.getElementById('m_book_pkg').value,
+        customer_name: customerName,
+        package_name: packageName,
         travel_date: document.getElementById('m_book_date').value,
         total_amount: total,
         amount_paid: paid,
         balance: total - paid,
         booking_status: document.getElementById('m_book_status').value,
     };
+
     const { error } = await sb.from('bookings').insert([payload]);
     if (error) {
         showToast('Error saving booking: ' + error.message, 'error');
