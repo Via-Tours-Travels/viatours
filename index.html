@@ -10,23 +10,23 @@
 <style>
 :root { --white:#fff; --bg-light:#f8fafc; --text-dark:#0f172a; --text-body:#334155; --text-muted:#64748b; --border:#e2e8f0; --brand-blue:#2563eb; --brand-orange:#f97316; --green:#10b981; }
 * { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
-body { font-family:'Inter',sans-serif; background:var(--bg-light); color:var(--text-body); line-height:1.6; }
+body { font-family:'Inter',sans-serif; background:var(--white); color:var(--text-body); line-height:1.6; }
 h1,h2,h3,h4 { font-family:'Poppins',sans-serif; color:var(--text-dark); margin-bottom:10px; line-height:1.2; }
 a { text-decoration:none; color:inherit; }
 img { max-width:100%; display:block; }
 ul { list-style:none; }
 .container { max-width:1200px; margin:0 auto; padding:0 24px; }
-.btn { padding:12px 24px; border-radius:8px; font-weight:600; cursor:pointer; border:none; font-family:'Poppins',sans-serif; transition:.2s; display:inline-flex; align-items:center; gap:8px; text-align:center; justify-content:center; }
-.btn-primary { background:var(--brand-orange); color:#fff; }
+.btn { padding:12px 24px; border-radius:8px; font-weight:600; cursor:pointer; border:none; font-family:'Poppins',sans-serif; transition:.2s; display:inline-flex; align-items:center; gap:8px; text-align:center; justify-content:center;}
+.btn-primary { background:var(--brand-orange); color:var(--white); }
 .btn-primary:hover { background:#ea580c; }
-.btn-blue { background:var(--brand-blue); color:#fff; }
+.btn-blue { background:var(--brand-blue); color:var(--white); }
 .btn-blue:hover { background:#1d4ed8; }
-.btn-green { background:var(--green); color:#fff; }
+.btn-green { background:var(--green); color:var(--white); }
 .btn-outline { background:transparent; border:2px solid var(--border); color:var(--text-dark); }
 .btn-outline:hover { border-color:var(--brand-blue); color:var(--brand-blue); }
 .form-sec { margin-bottom:15px; }
 .form-sec label { display:block; margin-bottom:5px; font-weight:500; font-size:14px; }
-.form-sec input, .form-sec select, .form-sec textarea { width:100%; padding:12px; border:1px solid var(--border); border-radius:8px; font-family:'Inter',sans-serif; resize:vertical; background:var(--white); color:var(--text-dark); }
+.form-sec input, .form-sec select, .form-sec textarea { width:100%; padding:12px; border:1px solid var(--border); border-radius:8px; font-family:'Inter',sans-serif; resize:vertical; background:#fff; }
 
 .header { background:var(--white); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; box-shadow:0 2px 10px rgba(0,0,0,0.02); }
 .header-in { display:flex; justify-content:space-between; align-items:center; height:80px; position:relative; }
@@ -49,22 +49,120 @@ ul { list-style:none; }
 .hero-overlay { position:absolute; inset:0; background:linear-gradient(rgba(15,23,42,0.6), rgba(37,99,235,0.4)); z-index:-1; }
 .hero h1 { font-size:4rem; color:#fff; margin-bottom:15px; }
 .hero p { font-size:1.2rem; margin-bottom:30px; opacity:.9; padding:0 20px; }
-.search-box { background:#fff; padding:20px; border-radius:12px; box-shadow:0 15px 40px rgba(0,0,0,0.2); display:grid; grid-template-columns:1.5fr 1fr 1fr auto; gap:15px; text-align:left; color:var(--text-dark); max-width:900px; margin:0 auto; }
+.search-box { background:#fff; padding:20px; border-radius:12px; box-shadow:0 15px 40px rgba(0,0,0,0.2); display:grid; grid-template-columns:1.5fr 1fr 1fr auto; gap:15px; text-align:left; color:var(--text-dark); max-width: 900px; margin: 0 auto; }
 
-.card { background:var(--white); border:1px solid var(--border); border-radius:12px; overflow:hidden; transition:.3s; cursor:pointer; position:relative; }
+.card { background:#fff; border:1px solid var(--border); border-radius:12px; overflow:hidden; transition:.3s; cursor:pointer; }
 .card:hover { transform:translateY(-5px); box-shadow:0 15px 30px rgba(0,0,0,0.1); }
-.card img { width:100%; height:220px; object-fit:cover; transition: transform 0.5s; }
-.card:hover img { transform: scale(1.05); }
+.card img { width:100%; height:220px; object-fit:cover; }
 .card-body { padding:20px; }
 .tag { display:inline-block; background:var(--bg-light); padding:4px 10px; border-radius:20px; font-size:12px; font-weight:600; color:var(--text-muted); margin-bottom:10px; }
 .price-tag { font-family:'Poppins',sans-serif; font-weight:700; font-size:1.4rem; color:var(--text-dark); }
-.destination-card .card-overlay { position:absolute; bottom:0; left:0; right:0; padding:20px; background:linear-gradient(to top, rgba(0,0,0,0.8), transparent); color:#fff; }
-.destination-card h3 { color:#fff; margin:0; }
-.country-badge { display:inline-block; background:var(--brand-blue); color:#fff; padding:4px 10px; border-radius:20px; font-size:0.75rem; font-weight:600; margin-bottom:5px; }
 
+.admin-layout { display:flex; min-height:100vh; background:var(--bg-light); }
+.admin-side { width:250px; background:var(--text-dark); color:#fff; padding:30px 0; position:fixed; height:100vh; overflow-y:auto; }
+.admin-side h3 { padding:0 20px 20px; color:#fff; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:20px; }
+.admin-menu li { padding:15px 20px; cursor:pointer; display:flex; align-items:center; gap:10px; transition:.2s; }
+.admin-menu li:hover, .admin-menu li.active { background:rgba(255,255,255,0.1); }
+.admin-main { flex:1; padding:40px; overflow-y:auto; margin-left:250px; }
+.admin-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; flex-wrap:wrap; gap:15px; }
+.admin-table { width:100%; background:#fff; border-radius:8px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.05); overflow-x:auto; }
+.admin-table table { width:100%; border-collapse:collapse; min-width: 600px; }
+.admin-table th, .admin-table td { padding:15px; text-align:left; border-bottom:1px solid var(--border); font-size:14px; }
+.admin-table th { background:var(--bg-light); text-transform:uppercase; font-size:12px; color:var(--text-muted); }
+.admin-table td img { width:50px; height:50px; border-radius:6px; object-fit:cover; }
+.stat-card { background:#fff; padding:25px; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,0.05); text-align:center; }
+.stat-card h2 { font-size:2.5rem; color:var(--brand-blue); margin-bottom:5px; }
+
+.mobile-toggle { display:none; background:none; border:none; font-size:1.8rem; color:var(--text-dark); cursor:pointer; position:absolute; right:24px; top:50%; transform:translateY(-50%); }
+.chat-bubble { position:fixed; bottom:24px; right:24px; width:60px; height:60px; background:var(--brand-blue); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,0.3); z-index:998; transition: transform 0.2s; }
+.chat-window { position:fixed; bottom:100px; right:24px; width:350px; max-width:calc(100% - 48px); height:450px; background:white; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.2); z-index:998; display:none; flex-direction:column; overflow:hidden; }
+
+.gallery-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(100px, 1fr)); gap:10px; margin-top:15px; }
+.gallery-grid img { width:100%; height:80px; object-fit:cover; border-radius:8px; }
+.status-dropdown { padding:5px; border-radius:4px; border:1px solid var(--border); font-size:12px; cursor:pointer; }
+
+.itin-day { border:1px solid var(--border); padding:15px; border-radius:8px; margin-bottom:10px; background:var(--bg-light); }
+.itin-day input { margin-bottom:10px; }
+
+.country-group { margin-bottom: 40px; }
+.country-group h3 { font-size: 1.5rem; color: var(--brand-blue); border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 20px; }
+
+@media (max-width: 768px) {
+  .mobile-toggle { display:block; }
+  .nav-menu { display:none; flex-direction:column; position:absolute; top:80px; left:0; right:0; background:#fff; padding:20px; box-shadow:0 10px 15px rgba(0,0,0,0.1); gap:15px; align-items:flex-start; border-top:1px solid var(--border); }
+  .nav-menu.active { display:flex; }
+  .hero h1 { font-size:2.2rem; }
+  .search-box { grid-template-columns:1fr; padding:15px; }
+  .grid-3, .grid-4 { grid-template-columns:1fr; }
+  .admin-side { position:relative; width:100%; height:auto; }
+  .admin-main { margin-left:0; }
+  .pkg-details-grid { grid-template-columns:1fr !important; }
+  .form-grid-2 { grid-template-columns:1fr !important; }
+}
+/* Skeleton Shimmer Effect */
+.skeleton { background: linear-gradient(to right, #e2e8f0 8%, #f1f5f9 18%, #e2e8f0 33%); background-size: 1000px 100%; animation: shimmer 1.5s infinite linear; border-radius: 8px; }
+@keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
+.skel-card { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.skel-img { height: 220px; }
+.skel-body { padding: 20px; }
+.skel-line { height: 16px; margin-bottom: 10px; }
+
+/* Toast Notifications */
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text-dark); color: #fff; padding: 15px 25px; border-radius: 8px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 9999; opacity: 0; transition: all 0.3s ease; font-weight: 500; }
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+.toast.success { background: var(--green); }
+.toast.error { background: #ef4444; }
+
+/* Scroll to Top */
+.scroll-top { position: fixed; bottom: 100px; left: 24px; width: 45px; height: 45px; background: var(--brand-blue); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transition: 0.3s; z-index: 998; }
+.scroll-top.show { opacity: 1; }
+
+/* Advanced Packages Layout */
+.pkg-layout { display:grid; grid-template-columns: 250px 1fr; gap:30px; margin-top:20px; }
+.filter-sidebar { background:#fff; padding:20px; border-radius:12px; border:1px solid var(--border); height:fit-content; }
+@media (max-width: 768px) { .pkg-layout { grid-template-columns: 1fr; } }
+/* Scroll Progress Bar */
+#scrollProgress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--brand-blue), var(--brand-orange));
+    width: 0%;
+    z-index: 10000;
+    transition: width 0.1s linear;
+}
+
+/* Flying Plane Preloader */
+#preloader {
+    position: fixed;
+    inset: 0;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+#preloader.hidden { opacity: 0; visibility: hidden; }
+.loader-plane { font-size: 64px; animation: flyPlane 1.2s ease-in-out infinite; }
+@keyframes flyPlane {
+    0%, 100% { transform: translateX(-20px) translateY(0) rotate(-10deg); }
+    50% { transform: translateX(20px) translateY(-15px) rotate(10deg); }
+}
+.loader-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-top: 16px;
+    color: var(--brand-blue);
+    letter-spacing: 2px;
+}
+/* Filter Bar */
 .filter-bar { background:var(--white); padding:15px; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,0.05); margin-bottom:20px; display:flex; gap:15px; flex-wrap:wrap; align-items:center; }
 .filter-bar select, .filter-bar input { padding:10px; border:1px solid var(--border); border-radius:8px; flex:1; min-width:120px; }
 
+/* Package Detail Gallery & Tabs */
 .pkg-gallery { display:grid; grid-template-columns:2fr 1fr; gap:40px; margin-top:20px; }
 .main-image { width:100%; height:400px; object-fit:cover; border-radius:12px; margin-bottom:15px; }
 .thumbnail-container { display:grid; grid-template-columns:repeat(auto-fill, minmax(80px, 1fr)); gap:10px; margin-bottom:20px; }
@@ -74,71 +172,20 @@ ul { list-style:none; }
 .tab-btn { padding:10px 20px; background:none; border:none; font-family:'Poppins',sans-serif; font-weight:600; color:var(--text-muted); cursor:pointer; border-bottom:3px solid transparent; margin-bottom:-2px; }
 .tab-btn.active { color:var(--brand-blue); border-bottom:3px solid var(--brand-blue); }
 
-.skeleton { background:linear-gradient(to right, #e2e8f0 8%, #f1f5f9 18%, #e2e8f0 33%); background-size:1000px 100%; animation:shimmer 1.5s infinite linear; border-radius:8px; }
-@keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
-.skel-card { border:1px solid var(--border); border-radius:12px; overflow:hidden; }
-.skel-img { height:220px; } .skel-body { padding:20px; } .skel-line { height:16px; margin-bottom:10px; }
-
-.admin-layout { display:flex; min-height:100vh; background:var(--bg-light); }
-.admin-side { width:250px; background:var(--text-dark); color:#fff; padding:30px 0; position:fixed; height:100vh; overflow-y:auto; }
-.admin-side h3 { padding:0 20px 20px; color:#fff; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:20px; }
-.admin-menu li { padding:15px 20px; cursor:pointer; display:flex; align-items:center; gap:10px; transition:.2s; }
-.admin-menu li:hover, .admin-menu li.active { background:rgba(255,255,255,0.1); }
-.admin-main { flex:1; padding:40px; overflow-y:auto; margin-left:250px; }
-.admin-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; flex-wrap:wrap; gap:15px; }
-.admin-table { width:100%; background:var(--white); border-radius:8px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.05); overflow-x:auto; }
-.admin-table table { width:100%; border-collapse:collapse; min-width: 600px; }
-.admin-table th, .admin-table td { padding:15px; text-align:left; border-bottom:1px solid var(--border); font-size:14px; }
-.admin-table th { background:var(--bg-light); text-transform:uppercase; font-size:12px; color:var(--text-muted); }
-.admin-table td img { width:50px; height:50px; border-radius:6px; object-fit:cover; }
-.stat-card { background:var(--white); padding:25px; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,0.05); text-align:center; }
-.stat-card h2 { font-size:2rem; color:var(--brand-blue); margin-bottom:5px; }
-.bar-chart { display:flex; align-items:flex-end; gap:15px; height:200px; padding-top:20px; padding-bottom:30px; }
-.bar { flex:1; background:var(--brand-blue); text-align:center; color:#fff; border-radius:8px 8px 0 0; position:relative; min-height:5px; transition: height 0.5s; }
-.bar-label { position:absolute; bottom:-25px; left:0; right:0; font-size:12px; color:var(--text-muted); }
-
-.mobile-toggle { display:none; background:none; border:none; font-size:1.8rem; color:var(--text-dark); cursor:pointer; position:absolute; right:24px; top:50%; transform:translateY(-50%); }
-.chat-bubble { position:fixed; bottom:24px; right:24px; width:60px; height:60px; background:var(--brand-blue); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,0.3); z-index:998; transition: transform 0.2s; }
-.chat-window { position:fixed; bottom:100px; right:24px; width:350px; max-width:calc(100% - 48px); height:450px; background:var(--white); border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.2); z-index:998; display:none; flex-direction:column; overflow:hidden; }
-
-.gallery-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(100px, 1fr)); gap:10px; margin-top:15px; }
-.gallery-grid img { width:100%; height:80px; object-fit:cover; border-radius:8px; }
-.status-dropdown { padding:5px; border-radius:4px; border:1px solid var(--border); font-size:12px; cursor:pointer; background:var(--white); color:var(--text-dark); }
-.itin-day { border:1px solid var(--border); padding:15px; border-radius:8px; margin-bottom:10px; background:var(--bg-light); }
-.itin-day input { margin-bottom:10px; background:var(--white); }
-.country-group { margin-bottom: 40px; }
-.country-group h3 { font-size: 1.5rem; color: var(--brand-blue); border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 20px; }
-
-.custom-modal { position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; display:none; align-items:center; justify-content:center; }
-.custom-modal-box { background:var(--white); padding:30px; border-radius:12px; max-width:400px; width:90%; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.2); }
-.custom-modal-box h3 { margin-bottom:15px; }
-.custom-modal-box p { margin-bottom:25px; color:var(--text-body); }
-.custom-modal-buttons { display:flex; gap:10px; justify-content:center; }
-
-@media (max-width: 768px) {
-  .mobile-toggle { display:block; }
-  .nav-menu { display:none; flex-direction:column; position:absolute; top:80px; left:0; right:0; background:var(--white); padding:20px; box-shadow:0 10px 15px rgba(0,0,0,0.1); gap:15px; align-items:flex-start; border-top:1px solid var(--border); }
-  .nav-menu.active { display:flex; }
-  .hero h1 { font-size:2.2rem; }
-  .search-box { grid-template-columns:1fr; padding:15px; }
-  .grid-3, .grid-4 { grid-template-columns:1fr; }
-  .admin-side { position:relative; width:100%; height:auto; }
-  .admin-main { margin-left:0; }
-  .pkg-gallery { grid-template-columns:1fr !important; }
-  .form-grid-2 { grid-template-columns:1fr !important; }
-}
 </style>
 </head>
 <body>
 
-<div id="preloader" style="position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:99999;transition:opacity 0.6s;">
-    <div style="text-align:center;">
-        <div style="font-size:64px;animation:flyPlane 1.2s infinite;">✈️</div>
-        <div style="font-family:'Poppins';font-size:1.4rem;font-weight:800;margin-top:16px;color:#2563eb;">VIA TOURS</div>
-    </div>
-</div>
-<style>@keyframes flyPlane { 0%,100% { transform: translateX(-20px) rotate(-10deg); } 50% { transform: translateX(20px) translateY(-15px) rotate(10deg); } }</style>
+<!-- Scroll Progress -->
+<div id="scrollProgress"></div>
 
+<!-- Preloader -->
+<div id="preloader">
+    <div style="text-align:center;">
+        <div class="loader-plane">✈️</div>
+        <div class="loader-text">VIA TOURS</div>
+    </div>
+</div>    
 <div id="site-wrapper">
     <header class="header">
         <div class="container header-in">
@@ -177,11 +224,11 @@ ul { list-style:none; }
             </div>
             <div class="container section-pad">
                 <div class="text-center" style="margin-bottom:40px;"><h2>Popular Destinations</h2><p>Handpicked places you must visit.</p></div>
-                <div class="grid-4" id="home_destinations"></div>
+                <div class="grid-4" id="home_destinations"><p class="text-center" style="grid-column:1/-1;">Loading...</p></div>
             </div>
-            <div class="container section-pad" style="background:var(--white);">
+            <div class="container section-pad" style="background:var(--bg-light);">
                 <div class="text-center" style="margin-bottom:40px;"><h2>Featured Packages</h2><p>Best deals curated just for you.</p></div>
-                <div class="grid-3" id="home_packages"></div>
+                <div class="grid-3" id="home_packages"><p class="text-center" style="grid-column:1/-1;">Loading...</p></div>
             </div>
             <div class="container section-pad">
                 <div class="grid-3">
@@ -190,7 +237,7 @@ ul { list-style:none; }
                     <div class="text-center"><i class="fas fa-map-marked-alt" style="font-size:2rem; color:var(--brand-orange);"></i><h4>Custom Itineraries</h4><p>Tailor-made trips crafted to perfection.</p></div>
                 </div>
             </div>
-            <div class="container section-pad" style="background:var(--white);">
+            <div class="container section-pad" style="background:var(--bg-light);">
                 <h2 class="text-center">How It Works</h2>
                 <div class="grid-4" style="margin-top:30px;">
                     <div class="text-center"><i class="fas fa-search" style="font-size:1.5rem; color:var(--brand-blue);"></i><h4>1. Choose Destination</h4></div>
@@ -201,18 +248,11 @@ ul { list-style:none; }
             </div>
             <div class="container section-pad">
                 <div class="text-center" style="margin-bottom:40px;"><h2>Travel Blog</h2><p>Tips, stories, and inspiration.</p></div>
-                <div class="grid-3" id="home_blog"></div>
-            </div>
-            <div class="container section-pad" style="background:var(--white);">
-                <div class="text-center" style="margin-bottom:40px;"><h2>What Our Travelers Say</h2></div>
-                <div class="grid-3" id="home_testimonials"></div>
+                <div class="grid-3" id="home_blog"><p class="text-center" style="grid-column:1/-1;">Loading...</p></div>
             </div>
             <div class="container section-pad" style="background:var(--bg-light);">
-                <div class="text-center" style="margin-bottom:40px;">
-                    <h2>Frequently Asked Questions</h2>
-                    <p>Everything you need to know about traveling with Via Tours & Travels.</p>
-                </div>
-                <div id="home_faqs" style="max-width: 800px; margin: 0 auto;"></div>
+                <div class="text-center" style="margin-bottom:40px;"><h2>What Our Travelers Say</h2></div>
+                <div class="grid-3" id="home_testimonials"><p class="text-center" style="grid-column:1/-1;">Loading...</p></div>
             </div>
             <div class="hero" style="height:40vh; min-height:300px;">
                 <img src="https://images.unsplash.com/photo-1528127269322-539801943592" alt="CTA">
@@ -225,36 +265,45 @@ ul { list-style:none; }
             </div>
         </div>
 
-        <div id="page-destinations" class="page-view container"><h2>Explore Destinations</h2><div id="list_destinations" style="margin-top:30px;"></div></div>
+        <div id="page-destinations" class="page-view container"><h2>Explore Destinations</h2><div id="list_destinations" style="margin-top:30px;"><p class="text-center">Loading...</p></div></div>
         
-        <div id="page-packages" class="page-view container">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:15px;">
-                <h2 id="pkg_header_title">Travel Packages</h2>
-                <input type="text" id="pkg_search" placeholder="Search packages..." oninput="debounceSearch()" style="padding:10px; border:1px solid var(--border); border-radius:8px; width:300px; max-width:100%; background:var(--white); color:var(--text-dark);">
-            </div>
-            <div class="filter-bar">
-                <select id="filter-destination" onchange="loadPackages()" style="flex:1; min-width:150px;"></select>
-                <select id="filter-category" onchange="loadPackages()" style="flex:1; min-width:150px;">
-                    <option value="">All Categories</option>
-                    <option value="Adventure">Adventure</option>
-                    <option value="Family">Family</option>
-                    <option value="Honeymoon">Honeymoon</option>
-                    <option value="Luxury">Luxury</option>
-                </select>
-                <input type="number" id="filter-min-price" placeholder="Min ₹" oninput="debounceSearch()" style="width:100px;">
-                <input type="number" id="filter-max-price" placeholder="Max ₹" oninput="debounceSearch()" style="width:100px;">
-                <select id="pkg_sort" onchange="loadPackages()" style="flex:1; min-width:150px;">
-                    <option value="new">Newest First</option>
-                    <option value="price_asc">Price: Low to High</option>
-                    <option value="price_desc">Price: High to Low</option>
-                </select>
-                <button class="btn btn-outline" onclick="clearFilter()">Clear</button>
-            </div>
-            <div class="grid-3" id="list_packages"></div>
-        </div>
-        
+<div id="page-packages" class="page-view container">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:15px;">
+        <h2 id="pkg_header_title">Travel Packages</h2>
+        <input type="text" id="pkg_search" placeholder="Search packages..." oninput="debounceSearch()" style="padding:10px; border:1px solid var(--border); border-radius:8px; width:300px; max-width:100%;">
+    </div>
+    <div class="filter-bar">
+        <select id="filter-destination" onchange="loadPackages()" style="flex:1; min-width:150px;"></select>
+        <select id="filter-category" onchange="loadPackages()" style="flex:1; min-width:150px;">
+            <option value="">All Categories</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Family">Family</option>
+            <option value="Honeymoon">Honeymoon</option>
+            <option value="Luxury">Luxury</option>
+        </select>
+        <input type="number" id="filter-min-price" placeholder="Min ₹" oninput="debounceSearch()" style="width:100px;">
+        <input type="number" id="filter-max-price" placeholder="Max ₹" oninput="debounceSearch()" style="width:100px;">
+        <select id="pkg_sort" onchange="loadPackages()" style="flex:1; min-width:150px;">
+            <option value="new">Newest First</option>
+            <option value="price_asc">Price: Low to High</option>
+            <option value="price_desc">Price: High to Low</option>
+        </select>
+        <button class="btn btn-outline" onclick="clearFilter()">Clear</button>
+    </div>
+    <div class="grid-3" id="list_packages"></div>
+</div>
+        <!-- FAQ SECTION -->
+<div class="container section-pad" style="background:var(--bg-light);">
+    <div class="text-center" style="margin-bottom:40px;">
+        <h2>Frequently Asked Questions</h2>
+        <p>Everything you need to know about traveling with Via Tours & Travels.</p>
+    </div>
+    <div id="home_faqs" style="max-width: 800px; margin: 0 auto;">
+        <p class="text-center">Loading...</p>
+    </div>
+</div>
         <div id="page-package" class="page-view container"><div id="pkg_details_container">Loading...</div></div>
-        <div id="page-blog" class="page-view container"><h2 class="text-center">Travel Blog & Guides</h2><p class="text-center" style="margin-bottom:30px;">Tips, stories, and inspiration for your next journey.</p><div class="grid-3" id="list_blog"></div></div>
+        <div id="page-blog" class="page-view container"><h2 class="text-center">Travel Blog & Guides</h2><p class="text-center" style="margin-bottom:30px;">Tips, stories, and inspiration for your next journey.</p><div class="grid-3" id="list_blog"><p class="text-center" style="grid-column:1/-1;">Loading...</p></div></div>
         <div id="page-blog-post" class="page-view container" style="max-width:800px;"><div id="blog_details_container">Loading...</div></div>
         
         <div id="page-plan-trip" class="page-view container" style="max-width:800px;">
@@ -278,8 +327,9 @@ ul { list-style:none; }
         </div>
         
         <div id="page-about" class="page-view container" style="max-width:800px; text-align:center;"><h2>About Via Tours & Travels</h2><p style="margin-top:20px;">We are a premium travel agency dedicated to creating unforgettable experiences. Since 2009, we have helped thousands of travelers explore the globe.</p></div>
-        <div id="page-contact" class="page-view container" style="max-width:800px; text-align:center;"><h2>Contact Us</h2><p style="margin-top:20px;" id="contact_info">Loading...</p></div>
         
+        <div id="page-contact" class="page-view container" style="max-width:800px; text-align:center;"><h2>Contact Us</h2><p style="margin-top:20px;" id="contact_info">Loading...</p></div>
+
         <div id="page-terms" class="page-view container" style="max-width: 800px;">
             <h2>Terms & Conditions</h2>
             <p style="margin-bottom: 15px;"><strong>Last Updated: February 2025</strong></p>
@@ -343,21 +393,27 @@ ul { list-style:none; }
                 <div>
                     <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
                         <img src="https://goqwtovltftehautxekh.supabase.co/storage/v1/object/public/package-images/Via%20tours%20&%20travels.png" alt="Logo" style="height:50px; border-radius:4px;">
-                        <div><strong style="display:block; font-family:'Poppins'; font-size:1.2rem; color:#fff; line-height:1;">Via</strong><span style="font-size:0.65rem; color:#f97316; text-transform:uppercase;">Tours & Travels</span></div>
+                        <div>
+                            <strong style="display:block; font-family:'Poppins',sans-serif; font-size:1.2rem; color:#fff; line-height:1;">Via</strong>
+                            <span style="font-size:0.65rem; color:#f97316; text-transform:uppercase; letter-spacing:1px;">Tours & Travels</span>
+                        </div>
                     </div>
-                    <p style="font-size:0.9rem; color:#94a3b8; max-width:300px;">Your trusted partner for unforgettable journeys.</p>
+                    <p style="font-size:0.9rem; color:#94a3b8; max-width:300px;">Your trusted partner for unforgettable journeys. We make the world accessible, one destination at a time.</p>
                 </div>
                 <div>
-                    <h4 style="color:#fff; font-family:'Poppins'; margin-bottom:15px;">Quick Links</h4>
+                    <h4 style="color:#fff; font-family:'Poppins',sans-serif; margin-bottom:15px; font-size:1rem;">Quick Links</h4>
                     <ul style="display:flex; flex-direction:column; gap:10px;">
                         <li><a onclick="navTo('home')" style="color:#94a3b8; cursor:pointer; font-size:0.9rem;">Home</a></li>
                         <li><a onclick="navTo('packages')" style="color:#94a3b8; cursor:pointer; font-size:0.9rem;">Packages</a></li>
+                        <li><a onclick="navTo('destinations')" style="color:#94a3b8; cursor:pointer; font-size:0.9rem;">Destinations</a></li>
+                        <li><a onclick="navTo('blog')" style="color:#94a3b8; cursor:pointer; font-size:0.9rem;">Travel Blog</a></li>
                         <li><a onclick="navTo('plan-trip')" style="color:#94a3b8; cursor:pointer; font-size:0.9rem;">Plan My Trip</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 style="color:#fff; font-family:'Poppins'; margin-bottom:15px;">Get In Touch</h4>
+                    <h4 style="color:#fff; font-family:'Poppins',sans-serif; margin-bottom:15px; font-size:1rem;">Get In Touch</h4>
                     <ul style="display:flex; flex-direction:column; gap:10px; color:#94a3b8; font-size:0.9rem;">
+                        <li><i class="fas fa-map-marker-alt" style="color:#f97316; width:20px;"></i> MG Road, Bengaluru, India</li>
                         <li><i class="fas fa-envelope" style="color:#f97316; width:20px;"></i> hello@viatours.com</li>
                         <li><i class="fas fa-phone" style="color:#f97316; width:20px;"></i> +91 98765 43210</li>
                     </ul>
@@ -367,6 +423,7 @@ ul { list-style:none; }
                 <p style="color:#64748b; font-size:0.85rem;">&copy; 2024 Via Tours & Travels. All Rights Reserved.</p>
                 <div style="display:flex; gap:20px;">
                     <a onclick="navTo('terms')" style="color:#94a3b8; cursor:pointer; font-size:0.85rem;">Terms & Conditions</a>
+                    <span style="color:#475569;">|</span>
                     <a onclick="navTo('privacy')" style="color:#94a3b8; cursor:pointer; font-size:0.85rem;">Privacy Policy</a>
                 </div>
             </div>
@@ -374,17 +431,17 @@ ul { list-style:none; }
     </footer>
 </div>
 
+<div class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})"><i class="fas fa-arrow-up"></i></div>
 <div class="chat-bubble" onclick="toggleChat()"><i class="fas fa-robot"></i></div>
 <div class="chat-window" id="chatWindow">
-    <div class="chat-header" style="background:var(--brand-blue); color:#fff; padding:15px; font-family:'Poppins'; font-weight:600; display:flex; justify-content:space-between; align-items:center;">Via AI Assistant <button onclick="toggleChat()" style="background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button></div>
-    <div class="chat-body" id="chatBody" style="flex:1; padding:15px; overflow-y:auto; display:flex; flex-direction:column; gap:10px; background:var(--bg-light);"><div class="chat-msg bot" style="background:#fff; border:1px solid var(--border); padding:10px 14px; border-radius:12px; max-width:85%; align-self:flex-start;">Hello! How can I help you plan your trip today?</div></div>
-    <div class="chat-input-area" style="padding:10px; border-top:1px solid var(--border); display:flex; gap:10px; background:var(--white);">
-        <input type="text" id="chatInput" placeholder="Ask a question..." onkeypress="handleChat(event)" style="flex:1; padding:10px; border:1px solid var(--border); border-radius:20px;">
-        <button onclick="handleChat(event)" style="background:var(--brand-orange); color:#fff; border:none; width:40px; height:40px; border-radius:50%; cursor:pointer;"><i class="fas fa-paper-plane"></i></button>
+    <div class="chat-header">Via AI Assistant <button class="chat-close" onclick="toggleChat()">&times;</button></div>
+    <div class="chat-body" id="chatBody"><div class="chat-msg bot">Hello! I'm the Via Tours AI assistant. How can I help you plan your trip today?</div></div>
+    <div class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="Ask a question..." onkeypress="handleChat(event)">
+        <button class="chat-send-btn" onclick="handleChat(event)"><i class="fas fa-paper-plane"></i></button>
     </div>
 </div>
 
-<!-- ADMIN APP -->
 <div id="admin-wrapper" style="display:none;">
     <div class="admin-layout">
         <div class="admin-side">
@@ -400,92 +457,210 @@ ul { list-style:none; }
                 <li onclick="showAdminTab('testimonials', event)"><i class="fas fa-comment-dots"></i> Testimonials</li>
                 <li onclick="showAdminTab('faqs', event)"><i class="fas fa-question-circle"></i> FAQs</li>
                 <li onclick="showAdminTab('settings', event)"><i class="fas fa-cog"></i> Website Settings</li>
-                <li onclick="logout()" style="margin-top:30px; color:#ef4444;"><i class="fas fa-sign-out-alt"></i> Logout</li>
+                <li onclick="logout()" style="margin-top:50px; color:#ef4444;"><i class="fas fa-sign-out-alt"></i> Logout</li>
             </ul>
         </div>
         <div class="admin-main">
-            <div id="admin-login" style="max-width:400px; margin:50px auto; background:var(--white); padding:30px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.1);"><h2>Admin Login</h2><div class="form-sec"><label>Email</label><input type="email" id="loginEmail"></div><div class="form-sec"><label>Password</label><input type="password" id="loginPass"></div><button class="btn btn-blue" style="width:100%;" onclick="adminLogin()">Login</button></div>
+            <div id="admin-login" style="max-width:400px; margin:50px auto; background:#fff; padding:30px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.1);"><h2>Admin Login</h2><div class="form-sec"><label>Email</label><input type="email" id="loginEmail"></div><div class="form-sec"><label>Password</label><input type="password" id="loginPass"></div><button class="btn btn-blue" style="width:100%;" onclick="adminLogin()">Login</button></div>
             <div id="admin-dashboard" style="display:none;">
                 <div id="tab-dashboard" class="admin-tab">
                     <h2>Dashboard</h2>
-                    <div class="grid-4" style="margin-top:30px;" id="dashboard_stats"></div>
-                    <div id="dashboard_chart" style="margin-top:40px; background:var(--white); padding:20px; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,0.05);"></div>
-                </div>
-                
-                <div id="tab-packages" class="admin-tab" style="display:none;">
-                    <div class="admin-header"><h2>Manage Packages</h2><button class="btn btn-primary" onclick="openPkgModal()">Add Package</button></div>
-                    <div class="admin-list-controls" style="display:flex; gap:15px; margin-bottom:20px;">
-                        <input type="text" id="admin_pkg_search" placeholder="Search by title..." oninput="loadAdminPackages()" style="padding:10px; border:1px solid var(--border); border-radius:8px; flex:1;">
+                    <div class="grid-4" style="margin-top:30px;">
+                        <div class="stat-card"><h2 id="stat_enq">0</h2><p>Total Enquiries</p></div>
+                        <div class="stat-card"><h2 id="stat_new_enq">0</h2><p>New Enquiries</p></div>
+                        <div class="stat-card"><h2 id="stat_pkg">0</h2><p>Active Packages</p></div>
+                        <div class="stat-card"><h2 id="stat_cust">0</h2><p>Customers</p></div>
                     </div>
-                    <div class="admin-table"><table><thead><tr><th>Image</th><th>Title</th><th>Price (₹)</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_packages"></tbody></table></div>
+                    <div class="grid-3" style="margin-top:40px;">
+                        <div style="grid-column: 1 / span 2;"><h3>Recent Enquiries</h3><div class="admin-table" style="margin-top:15px;"><table><thead><tr><th>Name</th><th>Destination</th><th>Status</th></tr></thead><tbody id="table_recent_enq"></tbody></table></div></div>
+                        <div><h3>Upcoming Bookings</h3><div class="admin-table" style="margin-top:15px;"><table><thead><tr><th>Customer</th><th>Date</th></tr></thead><tbody id="table_upcoming_book"></tbody></table></div></div>
+                    </div>
                 </div>
                 
+                <div id="tab-faqs" class="admin-tab" style="display:none;">
+    <div class="admin-header">
+        <h2>Manage FAQs</h2>
+        <button class="btn btn-primary" onclick="openFaqModal()">Add FAQ</button>
+    </div>
+    <div class="admin-table">
+        <table>
+            <thead><tr><th>Question</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="table_faqs"></tbody>
+        </table>
+    </div>
+</div>
+
+                <div id="tab-packages" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Manage Packages</h2><button class="btn btn-primary" onclick="openPkgModal()">Add Package</button></div><div class="admin-table"><table><thead><tr><th>Image</th><th>Title</th><th>Price (₹)</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_packages"></tbody></table></div></div>
                 <div id="tab-destinations" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Manage Destinations</h2><button class="btn btn-primary" onclick="openDestModal()">Add Destination</button></div><div class="admin-table"><table><thead><tr><th>Name</th><th>Country</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_destinations"></tbody></table></div></div>
-                
                 <div id="tab-enquiries" class="admin-tab" style="display:none;">
-                    <div class="admin-header">
-                        <h2>Enquiries</h2>
-                        <button class="btn btn-green" onclick="exportEnquiries()"><i class="fas fa-file-csv"></i> Export CSV</button>
-                    </div>
-                    <div class="admin-list-controls" style="display:flex; gap:15px; margin-bottom:20px;">
-                        <select id="enq_status_filter" onchange="loadAdminEnquiries()" style="padding:10px; border:1px solid var(--border); border-radius:8px; flex:1;">
-                            <option value="all">All Statuses</option>
-                            <option value="New">New</option>
-                            <option value="Contacted">Contacted</option>
-                            <option value="Quotation Sent">Quotation Sent</option>
-                            <option value="Confirmed">Confirmed</option>
-                            <option value="Lost">Lost</option>
-                        </select>
-                    </div>
-                    <div class="admin-table"><table><thead><tr><th>Customer</th><th>Details</th><th>Status & Notes</th></tr></thead><tbody id="table_enquiries"></tbody></table></div>
-                </div>
-                
+    <div class="admin-header">
+        <h2>Enquiries</h2>
+        <button class="btn btn-green" onclick="exportEnquiries()"><i class="fas fa-file-csv"></i> Export CSV</button>
+    </div>
+    <div class="admin-table" style="margin-top:20px;"><table><thead><tr><th>Customer</th><th>Details</th><th>Status & Notes</th></tr></thead><tbody id="table_enquiries"></tbody></table></div>
+</div>
                 <div id="tab-customers" class="admin-tab" style="display:none;"><h2>Customers</h2><div class="admin-table" style="margin-top:20px;"><table><thead><tr><th>Name</th><th>Contact</th><th>Notes</th></tr></thead><tbody id="table_customers"></tbody></table></div></div>
                 <div id="tab-bookings" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Bookings</h2><button class="btn btn-primary" onclick="openBookModal()">Add Booking</button></div><div class="admin-table"><table><thead><tr><th>Customer</th><th>Travel Date</th><th>Amount</th><th>Status</th></tr></thead><tbody id="table_bookings"></tbody></table></div></div>
                 <div id="tab-blog" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Manage Blog</h2><button class="btn btn-primary" onclick="openBlogModal()">Add Post</button></div><div class="admin-table"><table><thead><tr><th>Title</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_blog"></tbody></table></div></div>
                 <div id="tab-testimonials" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Manage Testimonials</h2><button class="btn btn-primary" onclick="openTestModal()">Add Testimonial</button></div><div class="admin-table"><table><thead><tr><th>Customer Name</th><th>Message</th><th>Actions</th></tr></thead><tbody id="table_testimonials"></tbody></table></div></div>
-                <div id="tab-faqs" class="admin-tab" style="display:none;">
-                    <div class="admin-header"><h2>Manage FAQs</h2><button class="btn btn-primary" onclick="openFaqModal()">Add FAQ</button></div>
-                    <div class="admin-table"><table><thead><tr><th>Question</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_faqs"></tbody></table></div>
-                </div>
-                <div id="tab-settings" class="admin-tab" style="display:none;"><h2>Website Settings</h2><div style="background:var(--white); padding:30px; border-radius:8px; max-width:600px; margin-top:20px;"><div class="form-sec"><label>Business Name</label><input type="text" id="set_name"></div><div class="form-sec"><label>Contact Email</label><input type="email" id="set_email"></div><div class="form-sec"><label>Contact Phone</label><input type="text" id="set_phone"></div><div class="form-sec"><label>WhatsApp Number</label><input type="text" id="set_whatsapp"></div><div class="form-sec"><label>Address</label><input type="text" id="set_address"></div><button class="btn btn-blue" onclick="saveSettings()">Save Settings</button></div></div>
+                <div id="tab-settings" class="admin-tab" style="display:none;"><h2>Website Settings</h2><div style="background:#fff; padding:30px; border-radius:8px; max-width:600px; margin-top:20px;"><div class="form-sec"><label>Business Name</label><input type="text" id="set_name"></div><div class="form-sec"><label>Contact Email</label><input type="email" id="set_email"></div><div class="form-sec"><label>Contact Phone</label><input type="text" id="set_phone"></div><div class="form-sec"><label>WhatsApp Number</label><input type="text" id="set_whatsapp"></div><div class="form-sec"><label>Address</label><input type="text" id="set_address"></div><button class="btn btn-blue" onclick="saveSettings()">Save Settings</button></div></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Custom Confirm Modal -->
-<div id="customConfirmModal" class="custom-modal">
-    <div class="custom-modal-box">
-        <h3 id="confirmTitle">Are you sure?</h3>
-        <p id="confirmMessage">This action cannot be undone.</p>
-        <div class="custom-modal-buttons">
-            <button class="btn btn-outline" onclick="closeCustomConfirm()">Cancel</button>
-            <button class="btn btn-primary" id="confirmYesBtn">Confirm</button>
+<div id="pkgFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;">
+    <div style="background:#fff; max-width:600px; margin:auto; padding:30px; border-radius:12px; position:relative;">
+        <button onclick="document.getElementById('pkgFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button>
+        <h3 style="margin-bottom:20px;" id="pkg_modal_title">Add Package</h3>
+        <input type="hidden" id="m_pkg_id">
+        <div class="form-sec"><label>Title</label><input type="text" id="m_pkg_title"></div>
+        <div class="form-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+            <div class="form-sec"><label>Price (INR ₹)</label><input type="number" id="m_pkg_price"></div>
+            <div class="form-sec"><label>Category</label><input type="text" id="m_pkg_cat"></div>
         </div>
+        <div class="form-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+            <div class="form-sec"><label>Duration</label><input type="text" id="m_pkg_duration" placeholder="5 Days / 4 Nights"></div>
+            <div class="form-sec"><label>Destination (Grouped by Country)</label><select id="m_pkg_dest"></select></div>
+        </div>
+        <div class="form-sec"><label>Short Description</label><input type="text" id="m_pkg_short_desc"></div>
+        <div class="form-sec"><label>Full Description</label><textarea id="m_pkg_desc" rows="4"></textarea></div>
+        <div class="form-sec"><label>Featured Image Upload</label><input type="file" id="m_pkg_img" accept="image/*"></div>
+        <div class="form-sec">
+            <label>Gallery Images (Multiple)</label>
+            <input type="file" id="m_pkg_gallery" multiple accept="image/*">
+            <div id="gallery_preview" class="gallery-grid" style="margin-top: 10px; display: none;"></div>
+        </div>
+        <div class="form-sec"><label>Itinerary</label><div id="itin_editor"></div><button type="button" class="btn btn-outline" style="margin-top:10px;" onclick="addItinDay()"><i class="fas fa-plus"></i> Add Day</button></div>
+        <div class="form-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+            <div class="form-sec"><label>Inclusions (One per line)</label><textarea id="m_pkg_inc" rows="4"></textarea></div>
+            <div class="form-sec"><label>Exclusions (One per line)</label><textarea id="m_pkg_exc" rows="4"></textarea></div>
+        </div>
+        <div class="form-sec"><label>Important Information (One per line)</label><textarea id="m_pkg_imp" rows="4"></textarea></div>
+        <div class="form-sec"><label>Published?</label><select id="m_pkg_pub"><option value="true">Yes</option><option value="false">No</option></select></div>
+        <button class="btn btn-blue" onclick="savePackage()" style="width:100%; margin-top:15px;">Save Package</button>
     </div>
 </div>
 
-<!-- Modals -->
-<div id="pkgFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;"><div style="background:var(--white); max-width:600px; margin:auto; padding:30px; border-radius:12px; position:relative;"><button onclick="document.getElementById('pkgFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button><h3 style="margin-bottom:20px;" id="pkg_modal_title">Add Package</h3><input type="hidden" id="m_pkg_id"><div class="form-sec"><label>Title</label><input type="text" id="m_pkg_title"></div><div class="form-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;"><div class="form-sec"><label>Price (INR ₹)</label><input type="number" id="m_pkg_price"></div><div class="form-sec"><label>Category</label><input type="text" id="m_pkg_cat"></div></div><div class="form-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;"><div class="form-sec"><label>Duration</label><input type="text" id="m_pkg_duration" placeholder="5 Days / 4 Nights"></div><div class="form-sec"><label>Destination</label><select id="m_pkg_dest"></select></div></div><div class="form-sec"><label>Short Description</label><input type="text" id="m_pkg_short_desc"></div><div class="form-sec"><label>Full Description</label><textarea id="m_pkg_desc" rows="4"></textarea></div><div class="form-sec"><label>Featured Image Upload</label><input type="file" id="m_pkg_img" accept="image/*" onchange="previewImage(this, 'img_prev_pkg')"><img id="img_prev_pkg" src="" style="max-width:200px; margin-top:10px; border-radius:8px; display:none;"></div><div class="form-sec"><label>Gallery Images (Multiple)</label><input type="file" id="m_pkg_gallery" multiple accept="image/*"></div><div id="gallery_preview" class="gallery-grid" style="display:none;"></div><div class="form-sec"><label>Itinerary</label><div id="itin_editor"></div><button type="button" class="btn btn-outline" style="margin-top:10px;" onclick="addItinDay()"><i class="fas fa-plus"></i> Add Day</button></div><div class="form-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;"><div class="form-sec"><label>Inclusions (One per line)</label><textarea id="m_pkg_inc" rows="4"></textarea></div><div class="form-sec"><label>Exclusions (One per line)</label><textarea id="m_pkg_exc" rows="4"></textarea></div></div><div class="form-sec"><label>Important Information (One per line)</label><textarea id="m_pkg_imp" rows="4"></textarea></div><div class="form-sec"><label>Published?</label><select id="m_pkg_pub"><option value="true">Yes</option><option value="false">No</option></select></div><button class="btn btn-blue" onclick="savePackage()" style="width:100%; margin-top:15px;">Save Package</button></div></div>
-<div id="destFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;"><div style="background:var(--white); max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;"><button onclick="document.getElementById('destFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button><h3 style="margin-bottom:20px;" id="dest_modal_title">Add Destination</h3><input type="hidden" id="m_dest_id"><div class="form-sec"><label>Name</label><input type="text" id="m_dest_name"></div><div class="form-sec"><label>Country</label><input type="text" id="m_dest_country"></div><div class="form-sec"><label>Region</label><input type="text" id="m_dest_region"></div><div class="form-sec"><label>Cover Image Upload</label><input type="file" id="m_dest_img" accept="image/*" onchange="previewImage(this, 'img_prev_dest')"><img id="img_prev_dest" src="" style="max-width:200px; margin-top:10px; border-radius:8px; display:none;"></div><div class="form-sec"><label>Description</label><textarea id="m_dest_desc" rows="3"></textarea></div><div class="form-sec"><label>Best Time to Visit</label><input type="text" id="m_dest_time"></div><div class="form-sec"><label>Popular Attractions (Comma separated)</label><input type="text" id="m_dest_attr"></div><div class="form-sec"><label>Travel Tips (Comma separated)</label><input type="text" id="m_dest_tips"></div><div class="form-sec"><label>Published?</label><select id="m_dest_pub"><option value="true">Yes</option><option value="false">No</option></select></div><button class="btn btn-blue" onclick="saveDestination()" style="width:100%; margin-top:15px;">Save</button></div></div>
-<div id="bookFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;"><div style="background:var(--white); max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;"><button onclick="document.getElementById('bookFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button><h3 style="margin-bottom:20px;">Add Booking</h3><div class="form-sec"><label>Customer</label><select id="m_book_cust"></select></div><div class="form-sec"><label>Package</label><select id="m_book_pkg"></select></div><div class="form-sec"><label>Travel Date</label><input type="date" id="m_book_date"></div><div class="form-sec"><label>Total Amount (₹)</label><input type="number" id="m_book_total"></div><div class="form-sec"><label>Amount Paid (₹)</label><input type="number" id="m_book_paid"></div><div class="form-sec"><label>Booking Status</label><select id="m_book_status"><option>Pending</option><option>Confirmed</option><option>Completed</option><option>Cancelled</option></select></div><button class="btn btn-blue" onclick="saveBooking()" style="width:100%; margin-top:15px;">Save Booking</button></div></div>
-<div id="testFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;"><div style="background:var(--white); max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;"><button onclick="document.getElementById('testFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button><h3 style="margin-bottom:20px;">Add Testimonial</h3><div class="form-sec"><label>Customer Name</label><input type="text" id="m_test_name"></div><div class="form-sec"><label>Location</label><input type="text" id="m_test_loc"></div><div class="form-sec"><label>Image URL</label><input type="text" id="m_test_img"></div><div class="form-sec"><label>Message</label><textarea id="m_test_msg" rows="4"></textarea></div><button class="btn btn-blue" onclick="saveTestimonial()" style="width:100%; margin-top:15px;">Save</button></div></div>
-<div id="faqFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;"><div style="background:var(--white); max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;"><button onclick="document.getElementById('faqFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button><h3 style="margin-bottom:20px;" id="faq_modal_title">Add FAQ</h3><input type="hidden" id="m_faq_id"><div class="form-sec"><label>Question</label><input type="text" id="m_faq_question"></div><div class="form-sec"><label>Answer</label><textarea id="m_faq_answer" rows="4"></textarea></div><div class="form-sec"><label>Published?</label><select id="m_faq_pub"><option value="true">Yes</option><option value="false">No</option></select></div><button class="btn btn-blue" onclick="saveFaq()" style="width:100%; margin-top:15px;">Save FAQ</button></div></div>
-<div id="blogFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;"><div style="background:var(--white); max-width:700px; margin:auto; padding:30px; border-radius:12px; position:relative;"><button onclick="document.getElementById('blogFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button><h3 style="margin-bottom:20px;" id="blog_modal_title">Add Blog Post</h3><input type="hidden" id="m_blog_id"><div class="form-sec"><label>Title</label><input type="text" id="m_blog_title"></div><div class="form-sec"><label>URL Slug</label><input type="text" id="m_blog_slug"></div><div class="form-sec"><label>Cover Image URL</label><input type="text" id="m_blog_img"></div><div class="form-sec"><label>Short Excerpt</label><textarea id="m_blog_excerpt" rows="2"></textarea></div><div class="form-sec"><label>Full Article Content</label><textarea id="m_blog_content" rows="10"></textarea></div><div class="form-sec"><label>SEO Meta Title</label><input type="text" id="m_blog_meta_title"></div><div class="form-sec"><label>SEO Meta Description</label><input type="text" id="m_blog_meta_desc"></div><div class="form-sec"><label>Published?</label><select id="m_blog_pub"><option value="true">Yes</option><option value="false">No</option></select></div><button class="btn btn-blue" onclick="saveBlogPost()" style="width:100%; margin-top:15px;">Save Post</button></div></div>
+<div id="faqFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;">
+    <div style="background:#fff; max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;">
+        <button onclick="document.getElementById('faqFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button>
+        <h3 style="margin-bottom:20px;" id="faq_modal_title">Add FAQ</h3>
+        <input type="hidden" id="m_faq_id">
+        <div class="form-sec"><label>Question</label><input type="text" id="m_faq_question"></div>
+        <div class="form-sec"><label>Answer</label><textarea id="m_faq_answer" rows="4"></textarea></div>
+        <div class="form-sec"><label>Published?</label><select id="m_faq_pub"><option value="true">Yes</option><option value="false">No</option></select></div>
+        <button class="btn btn-blue" onclick="saveFaq()" style="width:100%; margin-top:15px;">Save FAQ</button>
+    </div>
+</div>
+
+<div id="destFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;"><div style="background:#fff; max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;"><button onclick="document.getElementById('destFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button><h3 style="margin-bottom:20px;" id="dest_modal_title">Add Destination</h3><input type="hidden" id="m_dest_id"><div class="form-sec"><label>Name</label><input type="text" id="m_dest_name"></div><div class="form-sec"><label>Country</label><input type="text" id="m_dest_country"></div><div class="form-sec"><label>Region</label><input type="text" id="m_dest_region"></div><div class="form-sec"><label>Cover Image Upload</label><input type="file" id="m_dest_img" accept="image/*"></div><div class="form-sec"><label>Description</label><textarea id="m_dest_desc" rows="3"></textarea></div><div class="form-sec"><label>Best Time to Visit</label><input type="text" id="m_dest_time"></div><div class="form-sec"><label>Popular Attractions (Comma separated)</label><input type="text" id="m_dest_attr"></div><div class="form-sec"><label>Travel Tips (Comma separated)</label><input type="text" id="m_dest_tips"></div><div class="form-sec"><label>Published?</label><select id="m_dest_pub"><option value="true">Yes</option><option value="false">No</option></select></div><button class="btn btn-blue" onclick="saveDestination()" style="width:100%; margin-top:15px;">Save</button></div></div>
+<div id="bookFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;"><div style="background:#fff; max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;"><button onclick="document.getElementById('bookFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button><h3 style="margin-bottom:20px;">Add Booking</h3><div class="form-sec"><label>Customer</label><select id="m_book_cust"></select></div><div class="form-sec"><label>Package</label><select id="m_book_pkg"></select></div><div class="form-sec"><label>Travel Date</label><input type="date" id="m_book_date"></div><div class="form-sec"><label>Total Amount (₹)</label><input type="number" id="m_book_total"></div><div class="form-sec"><label>Amount Paid (₹)</label><input type="number" id="m_book_paid"></div><div class="form-sec"><label>Booking Status</label><select id="m_book_status"><option>Pending</option><option>Confirmed</option><option>Completed</option><option>Cancelled</option></select></div><button class="btn btn-blue" onclick="saveBooking()" style="width:100%; margin-top:15px;">Save Booking</button></div></div>
+<div id="testFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;"><div style="background:#fff; max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;"><button onclick="document.getElementById('testFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button><h3 style="margin-bottom:20px;">Add Testimonial</h3><div class="form-sec"><label>Customer Name</label><input type="text" id="m_test_name"></div><div class="form-sec"><label>Location</label><input type="text" id="m_test_loc"></div><div class="form-sec"><label>Image URL</label><input type="text" id="m_test_img"></div><div class="form-sec"><label>Message</label><textarea id="m_test_msg" rows="4"></textarea></div><button class="btn btn-blue" onclick="saveTestimonial()" style="width:100%; margin-top:15px;">Save</button></div></div>
+<div id="blogFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;"><div style="background:#fff; max-width:700px; margin:auto; padding:30px; border-radius:12px; position:relative;"><button onclick="document.getElementById('blogFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button><h3 style="margin-bottom:20px;" id="blog_modal_title">Add Blog Post</h3><input type="hidden" id="m_blog_id"><div class="form-sec"><label>Title</label><input type="text" id="m_blog_title"></div><div class="form-sec"><label>URL Slug</label><input type="text" id="m_blog_slug"></div><div class="form-sec"><label>Cover Image URL</label><input type="text" id="m_blog_img"></div><div class="form-sec"><label>Short Excerpt</label><textarea id="m_blog_excerpt" rows="2"></textarea></div><div class="form-sec"><label>Full Article Content</label><textarea id="m_blog_content" rows="10"></textarea></div><div class="form-sec"><label>SEO Meta Title</label><input type="text" id="m_blog_meta_title"></div><div class="form-sec"><label>SEO Meta Description</label><input type="text" id="m_blog_meta_desc"></div><div class="form-sec"><label>Published?</label><select id="m_blog_pub"><option value="true">Yes</option><option value="false">No</option></select></div><button class="btn btn-blue" onclick="saveBlogPost()" style="width:100%; margin-top:15px;">Save Post</button></div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// PART 2 (JAVASCRIPT) WILL GO HERE
 const SUPABASE_URL = 'https://goqwtovltftehautxekh.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_bQXp8x_2x4ymx4_oxcOFUA_UTGsqF-5';
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let appSettings = { whatsapp: '919876543210' };
 let currentItinerary = [];
 let activeDestFilter = null;
-let currentGallery = [];
+let currentGallery = []; // Tracks images for the edit modal
 
-window.addEventListener('load', () => { setTimeout(() => { document.getElementById('preloader').style.opacity = '0'; setTimeout(() => document.getElementById('preloader').style.display = 'none', 600); }, 500); });
+// Preloader Hide
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        document.getElementById('preloader').classList.add('hidden');
+    }, 800); // Hides after 0.8 seconds
+});
+
+// Scroll Progress Bar
+window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / docHeight) * 100;
+    document.getElementById('scrollProgress').style.width = progress + '%';
+});
+// ===== FAQ LOGIC =====
+async function loadHomeFaqs() {
+    const { data, error } = await sb.from('faqs').select('*').eq('is_published', true).order('created_at', { ascending: true });
+    const faqContainer = document.getElementById('home_faqs');
+    if (error || !data || data.length === 0) {
+        faqContainer.innerHTML = '<p class="text-center">No FAQs available right now.</p>';
+        return;
+    }
+    faqContainer.innerHTML = data.map((f, i) => `
+        <div style="margin-bottom: 15px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: #fff;">
+            <div onclick="toggleFaq(${i})" style="padding: 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--text-dark);">
+                ${f.question}
+                <i class="fas fa-chevron-down" id="faq-icon-${i}" style="transition: transform 0.3s ease;"></i>
+            </div>
+            <div id="faq-answer-${i}" style="display: none; padding: 0 20px 20px; color: var(--text-body); border-top: 1px solid var(--border);">
+                <p style="margin-top:15px; white-space: pre-wrap;">${f.answer || ''}</p>
+            </div>
+        </div>
+    `).join('');
+}
+
+function toggleFaq(index) {
+    const answer = document.getElementById('faq-answer-' + index);
+    const icon = document.getElementById('faq-icon-' + index);
+    if (answer.style.display === 'none' || answer.style.display === '') {
+        answer.style.display = 'block';
+        icon.style.transform = 'rotate(180deg)';
+    } else {
+        answer.style.display = 'none';
+        icon.style.transform = 'rotate(0deg)';
+    }
+}
+
+// ===== ADMIN FAQ LOGIC =====
+async function loadAdminFaqs() {
+    const { data } = await sb.from('faqs').select('*').order('created_at', { ascending: false });
+    document.getElementById('table_faqs').innerHTML = (data||[]).map(f => `
+        <tr>
+            <td>${f.question}</td>
+            <td>${f.is_published ? 'Live' : 'Hidden'}</td>
+            <td>
+                <button class="btn-blue" style="background:var(--brand-blue); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;" onclick="editFaq('${f.id}')">Edit</button>
+                <button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem('faqs', '${f.id}')">Delete</button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function openFaqModal() {
+    document.getElementById('faqFormModal').style.display = 'block';
+    document.getElementById('m_faq_id').value = '';
+    document.getElementById('faq_modal_title').innerText = 'Add FAQ';
+    document.querySelectorAll('#faqFormModal input, #faqFormModal textarea').forEach(i => { if(i.type !== 'hidden') i.value = ''; });
+}
+
+async function editFaq(id) {
+    const { data: f } = await sb.from('faqs').select('*').eq('id', id).single();
+    if (!f) return;
+    document.getElementById('faqFormModal').style.display = 'block';
+    document.getElementById('faq_modal_title').innerText = 'Edit FAQ';
+    document.getElementById('m_faq_id').value = f.id;
+    document.getElementById('m_faq_question').value = f.question;
+    document.getElementById('m_faq_answer').value = f.answer;
+    document.getElementById('m_faq_pub').value = f.is_published ? 'true' : 'false';
+}
+
+async function saveFaq() {
+    const payload = {
+        question: document.getElementById('m_faq_question').value,
+        answer: document.getElementById('m_faq_answer').value,
+        is_published: document.getElementById('m_faq_pub').value === 'true'
+    };
+    const id = document.getElementById('m_faq_id').value;
+    if (id) await sb.from('faqs').update(payload).eq('id', id);
+    else await sb.from('faqs').insert([payload]);
+    document.getElementById('faqFormModal').style.display = 'none';
+    loadAdminFaqs();
+}
 
 function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
 function toggleChat() { document.getElementById('chatWindow').classList.toggle('active'); }
@@ -494,28 +669,92 @@ function handleChat(e) {
     const input = document.getElementById('chatInput'); 
     const msg = input.value.trim(); 
     if (!msg) return; 
+    
     const chatBody = document.getElementById('chatBody'); 
-    const userDiv = document.createElement('div'); userDiv.className = 'chat-msg user'; userDiv.style.cssText = 'background:var(--brand-blue); color:#fff; padding:10px 14px; border-radius:12px; max-width:85%; align-self:flex-end;'; 
-    userDiv.textContent = msg; chatBody.appendChild(userDiv); input.value = ''; chatBody.scrollTop = chatBody.scrollHeight; 
+    
+    const userDiv = document.createElement('div');
+    userDiv.className = 'chat-msg user';
+    userDiv.textContent = msg;
+    chatBody.appendChild(userDiv);
+    
+    input.value = ''; 
+    chatBody.scrollTop = chatBody.scrollHeight; 
+    
     setTimeout(() => { 
-        let res = "I can help with packages, destinations, and bookings!"; const m = msg.toLowerCase(); 
-        if (m.includes('book') || m.includes('plan')) res = "Click the 'Plan My Trip' button in the menu to fill out the form!"; 
-        else if (m.includes('package') || m.includes('tour')) res = "Check out our 'Packages' page for amazing deals."; 
-        else if (m.includes('contact')) res = "Call us at " + (appSettings.phone || 'our contact number') + "."; 
-        const botDiv = document.createElement('div'); botDiv.className = 'chat-msg bot'; botDiv.style.cssText = 'background:#fff; border:1px solid var(--border); padding:10px 14px; border-radius:12px; max-width:85%; align-self:flex-start;'; 
-        botDiv.textContent = res; chatBody.appendChild(botDiv); chatBody.scrollTop = chatBody.scrollHeight; 
+        let res = "I can help with packages, destinations, and bookings! You can ask me about our tours, pricing, or how to plan a trip."; 
+        const m = msg.toLowerCase(); 
+        
+        if (m.includes('book') || m.includes('plan') || m.includes('enquiry')) {
+            res = "You can easily plan your trip by clicking the 'Plan My Trip' button in the menu! Just fill out the form and our team will create a custom itinerary for you.";
+        } 
+        else if (m.includes('package') || m.includes('tour') || m.includes('deal')) {
+            res = "We have amazing travel packages! You can view them all by clicking on 'Packages' in the menu above. Each package includes detailed itineraries and pricing.";
+        } 
+        else if (m.includes('destination') || m.includes('place') || m.includes('where')) {
+            res = "We offer trips to beautiful destinations worldwide. Click 'Destinations' in the menu to see our featured spots!";
+        } 
+        else if (m.includes('contact') || m.includes('phone') || m.includes('email') || m.includes('whatsapp')) {
+            res = "You can reach us at " + (appSettings.phone || 'our contact number') + " or email " + (appSettings.email || 'us') + ". We are available 24/7!";
+        } 
+        else if (m.includes('visa') || m.includes('passport')) {
+            res = "We provide full visa assistance for 80+ countries! Just mention it in the 'Plan My Trip' form and we'll handle the paperwork.";
+        }
+        else if (m.includes('price') || m.includes('cost') || m.includes('budget')) {
+            res = "Package prices vary depending on the destination and duration. Please check the 'Packages' page for starting prices, or fill out the 'Plan My Trip' form for a custom quote!";
+        }
+        else if (m.includes('hi') || m.includes('hello') || m.includes('hey')) {
+            res = "Hello there! How can I assist you with your travel plans today?";
+        }
+        
+        const botDiv = document.createElement('div');
+        botDiv.className = 'chat-msg bot';
+        botDiv.textContent = res;
+        chatBody.appendChild(botDiv);
+        
+        chatBody.scrollTop = chatBody.scrollHeight; 
     }, 600); 
 }
 
-function updateSEO(title, desc) { document.title = title; let metaDesc = document.querySelector('meta[name="description"]'); if (!metaDesc) { metaDesc = document.createElement('meta'); metaDesc.name = 'description'; document.head.appendChild(metaDesc); } metaDesc.content = desc; }
-function navTo(page, id = null) { document.getElementById('navMenu').classList.remove('active'); if (id) window.location.hash = '#/' + page + '/' + id; else window.location.hash = '#/' + page; }
+function updateSEO(title, desc) { 
+    document.title = title; 
+    let metaDesc = document.querySelector('meta[name="description"]'); 
+    if (!metaDesc) { 
+        metaDesc = document.createElement('meta'); 
+        metaDesc.name = 'description'; 
+        document.head.appendChild(metaDesc); 
+    } 
+    metaDesc.content = desc; 
+}
+
+function navTo(page, id = null) { 
+    document.getElementById('navMenu').classList.remove('active'); 
+    if (id) window.location.hash = '#/' + page + '/' + id; 
+    else window.location.hash = '#/' + page; 
+}
 
 async function router() {
-    const hash = window.location.hash || '#/home'; const parts = hash.split('/'); const page = parts[1] || 'home'; const id = parts[2];
-    const siteWrapper = document.getElementById('site-wrapper'); const adminWrapper = document.getElementById('admin-wrapper');
-    if (page === 'admin') { siteWrapper.style.display = 'none'; adminWrapper.style.display = 'block'; const { data: { session } } = await sb.auth.getSession(); if (session) initAdminDashboard(); return; }
-    siteWrapper.style.display = 'block'; adminWrapper.style.display = 'none';
-    document.querySelectorAll('.page-view').forEach(p => p.style.display = 'none'); const view = document.getElementById('page-' + page) || document.getElementById('page-home'); view.style.display = 'block'; window.scrollTo(0, 0);
+    const hash = window.location.hash || '#/home'; 
+    const parts = hash.split('/'); 
+    const page = parts[1] || 'home'; 
+    const id = parts[2];
+    const siteWrapper = document.getElementById('site-wrapper'); 
+    const adminWrapper = document.getElementById('admin-wrapper');
+    
+    if (page === 'admin') { 
+        siteWrapper.style.display = 'none'; 
+        adminWrapper.style.display = 'block'; 
+        const { data: { session } } = await sb.auth.getSession(); 
+        if (session) initAdminDashboard(); 
+        return; 
+    }
+    
+    siteWrapper.style.display = 'block'; 
+    adminWrapper.style.display = 'none';
+    document.querySelectorAll('.page-view').forEach(p => p.style.display = 'none'); 
+    const view = document.getElementById('page-' + page) || document.getElementById('page-home'); 
+    view.style.display = 'block'; 
+    window.scrollTo(0, 0);
+    
     if (page === 'home') { loadHomeData(); updateSEO('Via Tours & Travels', 'Premium travel agency.'); }
     if (page === 'destinations') { loadDestinations(); }
     if (page === 'packages') { activeDestFilter = id || null; initPackageFilters(); loadPackages(); }
@@ -524,40 +763,55 @@ async function router() {
     if (page === 'package' && id) loadPackageDetails(id);
     if (page === 'blog-post' && id) loadBlogPost(id);
 }
-window.addEventListener('hashchange', router); window.addEventListener('load', router);
+window.addEventListener('hashchange', router); 
+window.addEventListener('load', router);
 
-async function loadSettings() { const { data } = await sb.from('website_settings').select('*').eq('id', 1).single(); if (data) { appSettings = data; document.getElementById('contact_info').innerHTML = 'Email: ' + data.email + ' | Phone: ' + data.phone; } }
+async function loadSettings() {
+    const { data } = await sb.from('website_settings').select('*').eq('id', 1).single();
+    if (data) { 
+        appSettings = data; 
+        document.getElementById('contact_info').innerHTML = 'Email: ' + data.email + ' | Phone: ' + data.phone + '<br>Address: ' + data.address; 
+    }
+}
 loadSettings();
 
-function renderSkeletons(containerId, count = 6) { let html = ''; for(let i=0; i<count; i++) { html += '<div class="skel-card"><div class="skeleton skel-img"></div><div class="skel-body"><div class="skeleton skel-line" style="width:60%"></div><div class="skeleton skel-line" style="width:40%"></div><div class="skeleton skel-line" style="width:30%; height:24px; margin-top:15px;"></div></div></div>'; } document.getElementById(containerId).innerHTML = html; }
-
 async function loadHomeData() {
-    renderSkeletons('home_destinations', 4);
     const { data: dests } = await sb.from('destinations').select('*').eq('is_published', true).limit(4);
-    document.getElementById('home_destinations').innerHTML = (dests||[]).length ? dests.map(d => '<div class="card destination-card" onclick="navTo(\'packages\', \'' + d.id + '\')"><img src="' + (d.image_url || '') + '" alt="' + d.name + '"><div class="card-overlay"><span class="country-badge">' + (d.country || '') + '</span><h3>' + d.name + '</h3></div></div>').join('') : '<p>No destinations yet.</p>';
+    document.getElementById('home_destinations').innerHTML = (dests||[]).length ? dests.map(d => '<div class="card" onclick="navTo(\'packages\', \'' + d.id + '\')"><img src="' + (d.image_url || '') + '"><div class="card-body"><h3>' + d.name + '</h3><p>' + (d.country||'') + '</p></div></div>').join('') : '<p>No destinations yet.</p>';
     
-    renderSkeletons('home_packages', 3);
     const { data: packs } = await sb.from('packages').select('*, destinations(name)').eq('is_published', true).limit(3);
-    document.getElementById('home_packages').innerHTML = (packs||[]).length ? packs.map(p => '<div class="card" onclick="navTo(\'package\', \'' + p.id + '\')"><img src="' + (p.image_url || '') + '" alt="' + p.title + '"><div class="card-body"><span class="tag">' + (p.category||'Travel') + '</span><h3>' + p.title + '</h3><p style="color:var(--text-muted); font-size:14px; margin-bottom:10px;">' + (p.duration||'') + ' | ' + (p.destinations?.name || '') + '</p><p style="font-size:14px; margin-bottom:15px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">' + (p.short_description || '') + '</p><div style="display:flex; justify-content:space-between; align-items:center;"><span class="price-tag">₹' + Number(p.price).toLocaleString('en-IN') + '</span><span style="color:var(--brand-blue); font-weight:600; font-size:14px;">View Deal <i class="fas fa-arrow-right"></i></span></div></div></div>').join('') : '<p>No packages yet.</p>';
+    document.getElementById('home_packages').innerHTML = (packs||[]).length ? packs.map(p => '<div class="card" onclick="navTo(\'package\', \'' + p.id + '\')"><img src="' + (p.image_url || '') + '"><div class="card-body"><span class="tag">' + (p.category||'Travel') + '</span><h3>' + p.title + '</h3><p>' + (p.duration||'') + ' | ' + (p.destinations?.name || '') + '</p><span class="price-tag">₹' + p.price + '</span></div></div>').join('') : '<p>No packages yet.</p>';
     
     const { data: blogs } = await sb.from('blog_posts').select('*').eq('is_published', true).limit(3);
-    document.getElementById('home_blog').innerHTML = (blogs||[]).length ? blogs.map(b => '<div class="card" onclick="navTo(\'blog-post\', \'' + (b.slug || b.id) + '\')"><img src="' + (b.image_url || '') + '"><div class="card-body"><h3>' + b.title + '</h3><p>' + (b.excerpt || '') + '</p></div></div>').join('') : '<p>No blogs yet.</p>';
+    document.getElementById('home_blog').innerHTML = (blogs||[]).length ? blogs.map(b => '<div class="card" onclick="navTo(\'blog-post\', \'' + b.slug + '\')"><img src="' + (b.image_url || '') + '"><div class="card-body"><h3>' + b.title + '</h3><p>' + (b.excerpt||'') + '</p></div></div>').join('') : '<p>No blogs yet.</p>';
     
     const { data: tests } = await sb.from('testimonials').select('*').limit(3);
     document.getElementById('home_testimonials').innerHTML = (tests||[]).length ? tests.map(t => '<div class="card"><div class="card-body"><p>"' + t.message + '"</p><h4>' + t.name + '</h4></div></div>').join('') : '<p>No testimonials yet.</p>';
-
-    const { data: faqs } = await sb.from('faqs').select('*').eq('is_published', true).order('created_at', { ascending: true });
-    document.getElementById('home_faqs').innerHTML = (faqs||[]).length ? faqs.map((f, i) => '<div style="margin-bottom: 15px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: #fff;"><div onclick="toggleFaq(' + i + ')" style="padding: 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--text-dark);">' + f.question + '<i class="fas fa-chevron-down" id="faq-icon-' + i + '" style="transition: transform 0.3s ease;"></i></div><div id="faq-answer-' + i + '" style="display: none; padding: 0 20px 20px; color: var(--text-body); border-top: 1px solid var(--border);"><p style="margin-top:15px; white-space: pre-wrap;">' + f.answer + '</p></div></div>').join('') : '<p class="text-center">No FAQs available right now.</p>';
 }
 
-function toggleFaq(index) { const answer = document.getElementById('faq-answer-' + index); const icon = document.getElementById('faq-icon-' + index); if (answer.style.display === 'none' || answer.style.display === '') { answer.style.display = 'block'; icon.style.transform = 'rotate(180deg)'; } else { answer.style.display = 'none'; icon.style.transform = 'rotate(0deg)'; } }
-
 async function loadDestinations() { 
-    renderSkeletons('list_destinations', 8);
     const { data, error } = await sb.from('destinations').select('*').eq('is_published', true).order('country', { ascending: true }); 
-    if (error || !data || data.length === 0) { document.getElementById('list_destinations').innerHTML = '<p class="text-center">No destinations available.</p>'; return; }
-    const grouped = {}; data.forEach(d => { const c = d.country || 'Other'; if(!grouped[c]) grouped[c] = []; grouped[c].push(d); });
-    let html = ''; for(const country in grouped) { html += '<div class="country-group"><h3>' + country + '</h3><div class="grid-4">'; grouped[country].forEach(d => { html += '<div class="card destination-card" onclick="navTo(\'packages\', \'' + d.id + '\')"><img src="' + (d.image_url || '') + '" alt="' + d.name + '"><div class="card-overlay"><span class="country-badge">' + (d.country || '') + '</span><h3>' + d.name + '</h3></div></div>'; }); html += '</div></div>'; }
+    
+    if (error || !data || data.length === 0) {
+        document.getElementById('list_destinations').innerHTML = '<p class="text-center">No destinations available right now.</p>';
+        return;
+    }
+    
+    const grouped = {};
+    data.forEach(d => {
+        const c = d.country || 'Other';
+        if(!grouped[c]) grouped[c] = [];
+        grouped[c].push(d);
+    });
+    
+    let html = '';
+    for(const country in grouped) {
+        html += '<div class="country-group"><h3>' + country + '</h3><div class="grid-4">';
+        grouped[country].forEach(d => {
+            html += '<div class="card" onclick="navTo(\'packages\', \'' + d.id + '\')"><img src="' + (d.image_url || 'https://via.placeholder.com/400x300') + '"><div class="card-body"><h4>' + d.name + '</h4></div></div>';
+        });
+        html += '</div></div>';
+    }
     document.getElementById('list_destinations').innerHTML = html;
 }
 
@@ -579,6 +833,15 @@ async function initPackageFilters() {
         const { data } = await sb.from('destinations').select('id, name').eq('is_published', true).order('name');
         destSelect.innerHTML = '<option value="">All Destinations</option>' + (data||[]).map(d => '<option value="' + d.id + '">' + d.name + '</option>').join('');
     }
+}
+
+// Skeleton Loader Helper
+function renderSkeletons() {
+    let html = '';
+    for(let i=0; i<6; i++) {
+        html += '<div class="skel-card"><div class="skeleton skel-img"></div><div class="skel-body"><div class="skeleton skel-line" style="width:60%"></div><div class="skeleton skel-line" style="width:40%"></div><div class="skeleton skel-line" style="width:30%; height:24px; margin-top:15px;"></div></div></div>';
+    }
+    document.getElementById('list_packages').innerHTML = html;
 }
 
 async function loadPackages() { 
@@ -604,8 +867,28 @@ async function loadPackages() {
     else if (sortVal === 'price_desc') filtered.sort((a, b) => b.price - a.price);
     
     let emptyText = filterDest ? 'No packages found for this destination.' : 'No packages match your filters.';
-    document.getElementById('list_packages').innerHTML = filtered.length ? filtered.map(p => '<div class="card" onclick="navTo(\'package\', \'' + p.id + '\')"><img src="' + (p.image_url || '') + '" alt="' + p.title + '"><div class="card-body"><span class="tag">' + (p.category||'Travel') + '</span><h3>' + p.title + '</h3><p style="color:var(--text-muted); font-size:14px;">' + (p.duration||'') + ' | ' + (p.destinations?.name || '') + '</p><span class="price-tag">₹' + Number(p.price).toLocaleString('en-IN') + '</span></div></div>').join('') : '<p class="text-center" style="grid-column:1/-1;">' + emptyText + '</p>'; 
+    document.getElementById('list_packages').innerHTML = filtered.length ? filtered.map(p => '<div class="card" onclick="navTo(\'package\', \'' + p.id + '\')"><img src="' + (p.image_url || '') + '"><div class="card-body"><span class="tag">' + (p.category||'Travel') + '</span><h3>' + p.title + '</h3><p style="color:var(--text-muted); font-size:14px;">' + (p.duration||'') + ' | ' + (p.destinations?.name || '') + '</p><span class="price-tag">₹' + Number(p.price).toLocaleString('en-IN') + '</span></div></div>').join('') : '<p class="text-center" style="grid-column:1/-1;">' + emptyText + '</p>'; 
 }
+
+// Toast Notification Helper
+function showToast(msg, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = 'toast ' + type;
+    toast.textContent = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add('show'), 10);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// Scroll to Top Listener
+window.addEventListener('scroll', () => {
+    const btn = document.getElementById('scrollTopBtn');
+    if (window.scrollY > 300) btn.classList.add('show');
+    else btn.classList.remove('show');
+});
 
 async function loadPackageDetails(id) { 
     document.getElementById('pkg_details_container').innerHTML = '<p>Loading...</p>';
@@ -667,25 +950,102 @@ function renderTabContent(pkg, tab) {
     }
 }
 
-async function setupPlanForm(pkgId) { document.getElementById('pt_pkg_id').value = ''; document.getElementById('pt_dest').value = ''; if (pkgId) { const { data: p } = await sb.from('packages').select('*, destinations(name)').eq('id', pkgId).single(); if (p) { document.getElementById('pt_pkg_id').value = p.id; document.getElementById('pt_dest').value = p.destinations?.name || p.title; } } }
+async function setupPlanForm(pkgId) {
+    document.getElementById('pt_pkg_id').value = '';
+    document.getElementById('pt_dest').value = '';
+    if (pkgId) {
+        const { data: p } = await sb.from('packages').select('*, destinations(name)').eq('id', pkgId).single();
+        if (p) { 
+            document.getElementById('pt_pkg_id').value = p.id; 
+            document.getElementById('pt_dest').value = p.destinations?.name || p.title; 
+        }
+    }
+}
+
+async function loadBlogPost(slug) {
+    document.getElementById('blog_details_container').innerHTML = '<p>Loading...</p>';
+    
+    // Check if the slug is actually a UUID (ID)
+    const isUUID = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(slug);
+    
+    let query = sb.from('blog_posts').select('*').eq('is_published', true);
+    if (isUUID) {
+        query = query.eq('id', slug);
+    } else {
+        query = query.eq('slug', slug);
+    }
+    
+    const { data: b, error } = await query.single();
+
+    if (error || !b) {
+        document.getElementById('blog_details_container').innerHTML = '<p>Blog post not found. <a onclick="navTo(\'blog\')" style="color:var(--brand-blue); cursor:pointer;">Back to Blog</a></p>'; 
+        return; 
+    } 
+    
+    if (b.meta_title) updateSEO(b.meta_title, b.meta_description || b.excerpt);
+    else updateSEO(b.title + ' - Via Tours Blog', b.excerpt || 'Read our latest blog post.');
+
+    document.getElementById('blog_details_container').innerHTML = 
+        '<img src="' + (b.image_url || 'https://via.placeholder.com/800x400') + '" style="width:100%; height:400px; object-fit:cover; border-radius:12px; margin-bottom:30px;">' +
+        '<span class="tag">' + new Date(b.created_at).toLocaleDateString() + '</span>' +
+        '<h1>' + b.title + '</h1>' +
+        '<div class="blog-content" style="margin-top:20px;">' + (b.content || '') + '</div>' +
+        '<button class="btn btn-outline" style="margin-top:40px;" onclick="navTo(\'blog\')"><i class="fas fa-arrow-left"></i> Back to Blog</button>';
+}
+
 document.getElementById('planTripForm').addEventListener('submit', async (e) => { 
-    e.preventDefault(); const payload = { name: pt_name.value, email: pt_email.value, phone: pt_phone.value, destination: pt_dest.value, travel_dates: pt_dates.value, travelers: pt_travelers.value, budget: pt_budget.value, hotel_pref: pt_hotel.value, requirements: pt_req.value, package_id: pt_pkg_id.value || null }; 
-    const { error } = await sb.from('enquiries').insert([payload]); const { data: cust } = await sb.from('customers').select('*').eq('email', pt_email.value).maybeSingle(); if (!cust) await sb.from('customers').insert([{ name: pt_name.value, email: pt_email.value, phone: pt_phone.value, whatsapp: pt_phone.value }]); 
-    if (error) showToast('Error submitting request.', 'error'); else { showToast('Trip request submitted! We will contact you soon.', 'success'); navTo('home'); } 
+    e.preventDefault(); 
+    const payload = { 
+        name: pt_name.value, email: pt_email.value, phone: pt_phone.value, destination: pt_dest.value, 
+        travel_dates: pt_dates.value, travelers: pt_travelers.value, budget: pt_budget.value, 
+        hotel_pref: pt_hotel.value, requirements: pt_req.value, package_id: pt_pkg_id.value || null 
+    }; 
+    const { error } = await sb.from('enquiries').insert([payload]); 
+    const { data: cust } = await sb.from('customers').select('*').eq('email', pt_email.value).maybeSingle();
+    if (!cust) await sb.from('customers').insert([{ name: pt_name.value, email: pt_email.value, phone: pt_phone.value, whatsapp: pt_phone.value }]);
+    
+    if (error) showToast('Error submitting request. Please try again.', 'error'); 
+    else { 
+        showToast('Trip request submitted! We will contact you soon.', 'success'); 
+        navTo('home'); 
+    } 
 });
 
-function showToast(msg, type = 'success') { const toast = document.createElement('div'); toast.className = 'toast ' + type; toast.style.cssText = 'position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(100px); background:var(--text-dark); color:#fff; padding:15px 25px; border-radius:8px; z-index:9999; opacity:0; transition:all 0.3s ease;'; if(type==='success') toast.style.background = 'var(--green)'; if(type==='error') toast.style.background = '#ef4444'; toast.textContent = msg; document.body.appendChild(toast); setTimeout(() => toast.style.opacity = '1', 10); setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000); }
-function showCustomConfirm(message, onConfirm) { document.getElementById('confirmMessage').textContent = message; document.getElementById('customConfirmModal').style.display = 'flex'; document.getElementById('confirmYesBtn').onclick = () => { document.getElementById('customConfirmModal').style.display = 'none'; onConfirm(); }; }
-function closeCustomConfirm() { document.getElementById('customConfirmModal').style.display = 'none'; }
-function previewImage(input, imgId) { const file = input.files[0]; if (file) { const reader = new FileReader(); reader.onload = (e) => { const img = document.getElementById(imgId); img.src = e.target.result; img.style.display = 'block'; }; reader.readAsDataURL(file); } }
-
-async function adminLogin() { const { data, error } = await sb.auth.signInWithPassword({ email: loginEmail.value, password: loginPass.value }); if (error) return showToast('Login failed: ' + error.message, 'error'); initAdminDashboard(); }
+async function adminLogin() { 
+    const { data, error } = await sb.auth.signInWithPassword({ email: loginEmail.value, password: loginPass.value }); 
+    if (error) return alert('Login failed: ' + error.message); 
+    initAdminDashboard(); 
+}
 async function logout() { await sb.auth.signOut(); window.location.hash = '#/home'; router(); }
-async function initAdminDashboard() { document.getElementById('admin-login').style.display = 'none'; document.getElementById('admin-dashboard').style.display = 'block'; loadAdminStats(); loadAdminPackages(); loadAdminDestinations(); loadAdminEnquiries(); loadAdminCustomers(); loadAdminBookings(); loadAdminBlog(); loadAdminTestimonials(); loadAdminFaqs(); loadAdminSettings(); loadDestDropdown(); }
-function showAdminTab(tab, ev) { document.querySelectorAll('.admin-tab').forEach(t => t.style.display = 'none'); document.getElementById('tab-' + tab).style.display = 'block'; document.querySelectorAll('.admin-menu li').forEach(li => li.classList.remove('active')); ev.currentTarget.classList.add('active'); if (tab === 'packages') loadAdminPackages(); if (tab === 'enquiries') loadAdminEnquiries(); }
+async function initAdminDashboard() { 
+    document.getElementById('admin-login').style.display = 'none'; 
+    document.getElementById('admin-dashboard').style.display = 'block'; 
+    loadAdminStats(); loadAdminPackages(); loadAdminDestinations(); loadAdminEnquiries(); loadAdminCustomers(); loadAdminBookings(); loadAdminBlog(); loadAdminFaqs(); loadAdminTestimonials(); loadAdminSettings(); loadDestDropdown(); 
+}
+
+function showAdminTab(tab, ev) { 
+    document.querySelectorAll('.admin-tab').forEach(t => t.style.display = 'none'); 
+    document.getElementById('tab-' + tab).style.display = 'block'; 
+    document.querySelectorAll('.admin-menu li').forEach(li => li.classList.remove('active')); 
+    ev.currentTarget.classList.add('active');
+    if (tab === 'destinations') loadAdminDestinations();
+    if (tab === 'packages') loadAdminPackages();
+    if (tab === 'enquiries') loadAdminEnquiries();
+    if (tab === 'customers') loadAdminCustomers();
+    if (tab === 'bookings') loadAdminBookings();
+    if (tab === 'faqs') loadAdminFaqs();
+}
 
 async function loadAdminStats() { 
-    const [e, p, b] = await Promise.all([ sb.from('enquiries').select('*', { count: 'exact', head: true }), sb.from('packages').select('*', { count: 'exact', head: true }).eq('is_published', true), sb.from('bookings').select('amount_paid, balance, booking_status') ]);
+    const [e, p, b] = await Promise.all([
+        sb.from('enquiries').select('*', { count: 'exact', head: true }),
+        sb.from('packages').select('*', { count: 'exact', head: true }).eq('is_published', true),
+        sb.from('bookings').select('amount_paid, balance, booking_status')
+    ]);
+    stat_enq.innerText = e.count || 0; 
+    stat_pkg.innerText = p.count || 0; 
+    
+    // New Revenue & Balance Stats
     const rev = (b.data||[]).reduce((sum, b) => sum + (b.amount_paid || 0), 0);
     const bal = (b.data||[]).reduce((sum, b) => sum + (b.balance || 0), 0);
     
@@ -693,44 +1053,219 @@ async function loadAdminStats() {
     statsHtml += '<div class="stat-card"><h2>' + (p.count || 0) + '</h2><p>Active Packages</p></div>';
     statsHtml += '<div class="stat-card"><h2>₹' + rev.toLocaleString() + '</h2><p>Revenue Collected</p></div>';
     statsHtml += '<div class="stat-card"><h2>₹' + bal.toLocaleString() + '</h2><p>Outstanding Balance</p></div>';
-    document.getElementById('dashboard_stats').innerHTML = statsHtml;
     
+    // New CSS Bar Chart
     const statuses = ['Pending', 'Confirmed', 'Completed', 'Cancelled'];
     const counts = statuses.map(s => (b.data||[]).filter(x => x.booking_status === s).length);
     const max = Math.max(...counts, 1);
-    let chartHtml = '<h3>Bookings by Status</h3><div class="bar-chart">';
-    statuses.forEach((s, i) => { chartHtml += '<div class="bar" style="height:' + ((counts[i] / max) * 100) + '%">' + counts[i] + '<span class="bar-label">' + s + '</span></div>'; });
-    chartHtml += '</div>';
-    document.getElementById('dashboard_chart').innerHTML = chartHtml;
+    let chartHtml = '<div style="margin-top:40px; background:#fff; padding:20px; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,0.05);"><h3>Bookings by Status</h3><div style="display:flex; align-items:flex-end; gap:15px; height:200px; padding-top:20px; padding-bottom:30px;">';
+    statuses.forEach((s, i) => {
+        chartHtml += '<div style="flex:1; background:var(--brand-blue); text-align:center; color:#fff; border-radius:8px 8px 0 0; position:relative; min-height:5px; height:' + ((counts[i] / max) * 100) + '%">' + counts[i] + '<span style="position:absolute; bottom:-25px; left:0; right:0; font-size:12px; color:var(--text-muted);">' + s + '</span></div>';
+    });
+    chartHtml += '</div></div>';
+    
+    document.querySelector('#tab-dashboard .grid-4').innerHTML = statsHtml;
+    document.querySelector('#tab-dashboard .grid-4').insertAdjacentHTML('afterend', chartHtml);
 }
 
-async function uploadImage(file) { const fileName = Date.now() + '_' + Math.floor(Math.random() * 1000) + '_' + file.name; const { data, error } = await sb.storage.from('package-images').upload(fileName, file); if (error) return null; return SUPABASE_URL + '/storage/v1/object/public/package-images/' + fileName; }
+async function uploadImage(file) { 
+    const fileName = Date.now() + '_' + Math.floor(Math.random() * 1000) + '_' + file.name; 
+    const { data, error } = await sb.storage.from('package-images').upload(fileName, file); 
+    if (error) return null; 
+    return SUPABASE_URL + '/storage/v1/object/public/package-images/' + fileName; 
+}
+
 function addItinDay(day = null) { currentItinerary.push(day || { title: 'Day ' + (currentItinerary.length + 1), desc: '' }); renderItinEditor(); }
-function renderItinEditor() { document.getElementById('itin_editor').innerHTML = currentItinerary.map((d, i) => '<div class="itin-day"><input value="' + d.title + '" oninput="currentItinerary[' + i + '].title=this.value"><textarea placeholder="Day description" oninput="currentItinerary[' + i + '].desc=this.value">' + d.desc + '</textarea><button type="button" onclick="currentItinerary.splice(' + i + ',1); renderItinEditor();" style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-top:5px;">Remove</button></div>').join(''); }
-async function loadDestDropdown() { const { data } = await sb.from('destinations').select('id, name, country').order('country', { ascending: true }); let html = '<option value="">None</option>'; const grouped = {}; (data||[]).forEach(d => { const c = d.country || 'Other'; if(!grouped[c]) grouped[c] = []; grouped[c].push(d); }); for(const country in grouped) { html += '<optgroup label="' + country + '">'; grouped[country].forEach(d => { html += '<option value="' + d.id + '">' + d.name + '</option>'; }); html += '</optgroup>'; } document.getElementById('m_pkg_dest').innerHTML = html; }
+function renderItinEditor() { 
+    document.getElementById('itin_editor').innerHTML = currentItinerary.map((d, i) => 
+        '<div class="itin-day"><input value="' + d.title + '" oninput="currentItinerary[' + i + '].title=this.value"><textarea placeholder="Day description" oninput="currentItinerary[' + i + '].desc=this.value">' + d.desc + '</textarea><button type="button" onclick="currentItinerary.splice(' + i + ',1); renderItinEditor();" class="btn-danger" style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-top:5px;">Remove</button></div>'
+    ).join(''); 
+}
+
+async function loadDestDropdown() { 
+    const { data } = await sb.from('destinations').select('id, name, country').order('country', { ascending: true }); 
+    let html = '<option value="">None</option>';
+    const grouped = {};
+    (data||[]).forEach(d => {
+        const c = d.country || 'Other';
+        if(!grouped[c]) grouped[c] = [];
+        grouped[c].push(d);
+    });
+    
+    for(const country in grouped) {
+        html += '<optgroup label="' + country + '">';
+        grouped[country].forEach(d => {
+            html += '<option value="' + d.id + '">' + d.name + '</option>';
+        });
+        html += '</optgroup>';
+    }
+    document.getElementById('m_pkg_dest').innerHTML = html; 
+}
 
 async function loadAdminPackages() { 
     const { data } = await sb.from('packages').select('*, destinations(name)').order('created_at', { ascending: false }); 
-    const term = (document.getElementById('admin_pkg_search')?.value || '').toLowerCase();
-    let filtered = (data||[]).filter(p => p.title.toLowerCase().includes(term));
-    document.getElementById('table_packages').innerHTML = filtered.map(p => '<tr><td><img src="' + (p.image_url||'') + '" style="width:50px; height:50px; object-fit:cover; border-radius:4px;"></td><td>' + p.title + '<br><small>' + (p.destinations?.name || '') + '</small></td><td>₹' + p.price + '</td><td>' + (p.is_published ? 'Live' : 'Hidden') + '</td><td><button class="btn-blue" style="background:var(--brand-blue); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;" onclick="editPackage(\'' + p.id + '\')">Edit</button><button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem(\'packages\', \'' + p.id + '\')">Delete</button></td></tr>').join(''); 
+    document.getElementById('table_packages').innerHTML = (data||[]).map(p => 
+        '<tr><td><img src="' + (p.image_url||'') + '" style="width:50px; height:50px; object-fit:cover; border-radius:4px;"></td><td>' + p.title + '<br><small>' + (p.destinations?.name || '') + '</small></td><td>₹' + p.price + '</td><td>' + (p.is_published ? 'Live' : 'Hidden') + '</td><td><button class="btn-blue" style="background:var(--brand-blue); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;" onclick="editPackage(\'' + p.id + '\')">Edit</button><button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem(\'packages\', \'' + p.id + '\')">Delete</button></td></tr>'
+    ).join(''); 
 }
-function openPkgModal() { document.getElementById('pkgFormModal').style.display = 'block'; document.getElementById('m_pkg_id').value = ''; document.getElementById('pkg_modal_title').innerText = 'Add Package'; document.querySelectorAll('#pkgFormModal input, #pkgFormModal textarea').forEach(i => { if(i.type !== 'hidden' && i.type !== 'file') i.value = ''; }); document.getElementById('m_pkg_img').dataset.existing = ''; currentGallery = []; renderGalleryPreview(); currentItinerary = []; renderItinEditor(); loadDestDropdown(); }
-async function editPackage(id) { const { data: p } = await sb.from('packages').select('*').eq('id', id).single(); if (!p) return; document.getElementById('pkgFormModal').style.display = 'block'; document.getElementById('pkg_modal_title').innerText = 'Edit Package'; document.getElementById('m_pkg_id').value = p.id; document.getElementById('m_pkg_title').value = p.title; document.getElementById('m_pkg_price').value = p.price; document.getElementById('m_pkg_cat').value = p.category || ''; document.getElementById('m_pkg_duration').value = p.duration || ''; document.getElementById('m_pkg_dest').value = p.destination_id || ''; document.getElementById('m_pkg_short_desc').value = p.short_description || ''; document.getElementById('m_pkg_desc').value = p.description || ''; document.getElementById('m_pkg_inc').value = p.inclusions ? p.inclusions.join('\n') : ''; document.getElementById('m_pkg_exc').value = p.exclusions ? p.exclusions.join('\n') : ''; document.getElementById('m_pkg_imp').value = p.important_info ? p.important_info.join('\n') : ''; document.getElementById('m_pkg_pub').value = p.is_published ? 'true' : 'false'; currentItinerary = p.itinerary || []; renderItinEditor(); document.getElementById('m_pkg_img').dataset.existing = p.image_url || ''; currentGallery = p.gallery_images || []; renderGalleryPreview(); }
-function renderGalleryPreview() { const previewDiv = document.getElementById('gallery_preview'); if (!previewDiv) return; if (!currentGallery || currentGallery.length === 0) { previewDiv.style.display = 'none'; previewDiv.innerHTML = ''; return; } previewDiv.style.display = 'grid'; previewDiv.innerHTML = currentGallery.map((url, index) => '<div style="position:relative; border:1px solid var(--border); border-radius:8px; overflow:hidden;"><img src="' + url + '" style="width:100%; height:80px; object-fit:cover;"><button type="button" onclick="removeGalleryImage(' + index + ')" style="position:absolute; top:2px; right:2px; background:rgba(239,68,68,0.9); color:#fff; border:none; border-radius:50%; width:20px; height:20px; font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center;">&times;</button></div>').join(''); }
-function removeGalleryImage(index) { currentGallery.splice(index, 1); renderGalleryPreview(); }
-async function savePackage() { const id = document.getElementById('m_pkg_id').value; let imageUrl = document.getElementById('m_pkg_img').dataset.existing || ''; let galleryUrls = [...currentGallery]; const imgFile = document.getElementById('m_pkg_img').files[0]; if (imgFile) imageUrl = await uploadImage(imgFile); const galleryFiles = document.getElementById('m_pkg_gallery').files; if (galleryFiles.length > 0) { for (let i = 0; i < galleryFiles.length; i++) { const url = await uploadImage(galleryFiles[i]); if (url) galleryUrls.push(url); } } const payload = { title: m_pkg_title.value, price: parseFloat(m_pkg_price.value || 0), duration: m_pkg_duration.value, category: m_pkg_cat.value, destination_id: m_pkg_dest.value || null, short_description: m_pkg_short_desc.value, description: m_pkg_desc.value, itinerary: currentItinerary, inclusions: m_pkg_inc.value.split('\n').filter(Boolean), exclusions: m_pkg_exc.value.split('\n').filter(Boolean), important_info: m_pkg_imp.value.split('\n').filter(Boolean), image_url: imageUrl, gallery_images: galleryUrls, is_published: m_pkg_pub.value === 'true' }; if (id) await sb.from('packages').update(payload).eq('id', id); else await sb.from('packages').insert([payload]); document.getElementById('pkgFormModal').style.display = 'none'; loadAdminPackages(); loadAdminStats(); }
 
-async function loadAdminDestinations() { const { data } = await sb.from('destinations').select('*').order('created_at', { ascending: false }); document.getElementById('table_destinations').innerHTML = (data||[]).map(d => '<tr><td>' + d.name + '</td><td>' + (d.country||'') + '</td><td>' + (d.is_published ? 'Live' : 'Hidden') + '</td><td><button class="btn-blue" style="background:var(--brand-blue); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;" onclick="editDest(\'' + d.id + '\')">Edit</button><button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem(\'destinations\', \'' + d.id + '\')">Delete</button></td></tr>').join(''); }
-function openDestModal() { document.getElementById('destFormModal').style.display = 'block'; document.getElementById('m_dest_id').value = ''; document.querySelectorAll('#destFormModal input, #destFormModal textarea').forEach(i => { if(i.type !== 'hidden' && i.type !== 'file') i.value = ''; }); }
-async function editDest(id) { const { data: d } = await sb.from('destinations').select('*').eq('id', id).single(); if (!d) return; document.getElementById('destFormModal').style.display = 'block'; m_dest_id.value = d.id; m_dest_name.value = d.name; m_dest_country.value = d.country || ''; m_dest_region.value = d.region || ''; m_dest_desc.value = d.description || ''; m_dest_time.value = d.best_time || ''; m_dest_attr.value = d.attractions ? d.attractions.join(', ') : ''; m_dest_tips.value = d.travel_tips ? d.travel_tips.join(', ') : ''; m_dest_pub.value = d.is_published ? 'true' : 'false'; document.getElementById('m_dest_img').dataset.existing = d.image_url || ''; }
-async function saveDestination() { const id = m_dest_id.value; let imageUrl = document.getElementById('m_dest_img').dataset.existing || ''; const imgFile = document.getElementById('m_dest_img').files[0]; if (imgFile) imageUrl = await uploadImage(imgFile); const payload = { name: m_dest_name.value, country: m_dest_country.value, region: m_dest_region.value, description: m_dest_desc.value, best_time: m_dest_time.value, attractions: m_dest_attr.value.split(',').map(s=>s.trim()).filter(Boolean), travel_tips: m_dest_tips.value.split(',').map(s=>s.trim()).filter(Boolean), image_url: imageUrl, is_published: m_dest_pub.value === 'true' }; if (id) await sb.from('destinations').update(payload).eq('id', id); else await sb.from('destinations').insert([payload]); document.getElementById('destFormModal').style.display = 'none'; loadAdminDestinations(); loadAdminStats(); loadDestDropdown(); }
+function openPkgModal() { 
+    document.getElementById('pkgFormModal').style.display = 'block'; 
+    document.getElementById('m_pkg_id').value = ''; 
+    document.getElementById('pkg_modal_title').innerText = 'Add Package'; 
+    document.querySelectorAll('#pkgFormModal input, #pkgFormModal textarea').forEach(i => { if(i.type !== 'hidden' && i.type !== 'file') i.value = ''; }); 
+    document.getElementById('m_pkg_img').dataset.existing = '';
+    currentGallery = []; 
+    renderGalleryPreview();
+    currentItinerary = []; 
+    renderItinEditor(); 
+    loadDestDropdown(); 
+}
+
+async function editPackage(id) { 
+    const { data: p } = await sb.from('packages').select('*').eq('id', id).single(); 
+    if (!p) return; 
+    document.getElementById('pkgFormModal').style.display = 'block'; 
+    document.getElementById('pkg_modal_title').innerText = 'Edit Package'; 
+    document.getElementById('m_pkg_id').value = p.id; 
+    document.getElementById('m_pkg_title').value = p.title; 
+    document.getElementById('m_pkg_price').value = p.price; 
+    document.getElementById('m_pkg_cat').value = p.category || ''; 
+    document.getElementById('m_pkg_duration').value = p.duration || ''; 
+    document.getElementById('m_pkg_dest').value = p.destination_id || ''; 
+    document.getElementById('m_pkg_short_desc').value = p.short_description || ''; 
+    document.getElementById('m_pkg_desc').value = p.description || ''; 
+    document.getElementById('m_pkg_inc').value = p.inclusions ? p.inclusions.join('\n') : ''; 
+    document.getElementById('m_pkg_exc').value = p.exclusions ? p.exclusions.join('\n') : ''; 
+    document.getElementById('m_pkg_imp').value = p.important_info ? p.important_info.join('\n') : ''; 
+    document.getElementById('m_pkg_pub').value = p.is_published ? 'true' : 'false'; 
+    currentItinerary = p.itinerary || []; 
+    renderItinEditor(); 
+    
+    document.getElementById('m_pkg_img').dataset.existing = p.image_url || '';
+    currentGallery = p.gallery_images || [];
+    renderGalleryPreview();
+}
+
+function renderGalleryPreview() {
+    const previewDiv = document.getElementById('gallery_preview');
+    if (!previewDiv) return;
+    if (!currentGallery || currentGallery.length === 0) {
+        previewDiv.style.display = 'none';
+        previewDiv.innerHTML = '';
+        return;
+    }
+    previewDiv.style.display = 'grid';
+    previewDiv.innerHTML = currentGallery.map((url, index) => 
+        '<div style="position:relative; border:1px solid var(--border); border-radius:8px; overflow:hidden;">' +
+            '<img src="' + url + '" style="width:100%; height:80px; object-fit:cover;">' +
+            '<button type="button" onclick="removeGalleryImage(' + index + ')" style="position:absolute; top:2px; right:2px; background:rgba(239,68,68,0.9); color:#fff; border:none; border-radius:50%; width:20px; height:20px; font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1;">&times;</button>' +
+        '</div>'
+    ).join('');
+}
+
+function removeGalleryImage(index) {
+    currentGallery.splice(index, 1);
+    renderGalleryPreview();
+}
+
+async function savePackage() {
+    const id = document.getElementById('m_pkg_id').value; 
+    let imageUrl = document.getElementById('m_pkg_img').dataset.existing || ''; 
+    
+    let galleryUrls = [...currentGallery];
+    
+    const imgFile = document.getElementById('m_pkg_img').files[0]; 
+    if (imgFile) imageUrl = await uploadImage(imgFile);
+    
+    const galleryFiles = document.getElementById('m_pkg_gallery').files; 
+    if (galleryFiles.length > 0) { 
+        for (let i = 0; i < galleryFiles.length; i++) { 
+            const url = await uploadImage(galleryFiles[i]); 
+            if (url) galleryUrls.push(url); 
+        } 
+    }
+    
+    const payload = { 
+        title: m_pkg_title.value, 
+        price: parseFloat(m_pkg_price.value || 0), 
+        duration: m_pkg_duration.value, 
+        category: m_pkg_cat.value, 
+        destination_id: m_pkg_dest.value || null, 
+        short_description: m_pkg_short_desc.value, 
+        description: m_pkg_desc.value, 
+        itinerary: currentItinerary, 
+        inclusions: m_pkg_inc.value.split('\n').filter(Boolean), 
+        exclusions: m_pkg_exc.value.split('\n').filter(Boolean), 
+        important_info: m_pkg_imp.value.split('\n').filter(Boolean), 
+        image_url: imageUrl, 
+        gallery_images: galleryUrls, 
+        is_published: m_pkg_pub.value === 'true' 
+    };
+    
+    if (id) await sb.from('packages').update(payload).eq('id', id); 
+    else await sb.from('packages').insert([payload]);
+    
+    document.getElementById('pkgFormModal').style.display = 'none'; 
+    loadAdminPackages(); 
+    loadAdminStats();
+}
+
+async function loadAdminDestinations() { 
+    const { data } = await sb.from('destinations').select('*').order('created_at', { ascending: false }); 
+    document.getElementById('table_destinations').innerHTML = (data||[]).map(d => 
+        '<tr><td>' + d.name + '</td><td>' + (d.country||'') + '</td><td>' + (d.is_published ? 'Live' : 'Hidden') + '</td><td><button class="btn-blue" style="background:var(--brand-blue); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;" onclick="editDest(\'' + d.id + '\')">Edit</button><button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem(\'destinations\', \'' + d.id + '\')">Delete</button></td></tr>'
+    ).join(''); 
+}
+function openDestModal() { 
+    document.getElementById('destFormModal').style.display = 'block'; 
+    document.getElementById('m_dest_id').value = ''; 
+    document.querySelectorAll('#destFormModal input, #destFormModal textarea').forEach(i => { if(i.type !== 'hidden' && i.type !== 'file') i.value = ''; }); 
+}
+async function editDest(id) { 
+    const { data: d } = await sb.from('destinations').select('*').eq('id', id).single(); 
+    if (!d) return; 
+    document.getElementById('destFormModal').style.display = 'block'; 
+    m_dest_id.value = d.id; 
+    m_dest_name.value = d.name; 
+    m_dest_country.value = d.country || ''; 
+    m_dest_region.value = d.region || ''; 
+    m_dest_desc.value = d.description || ''; 
+    m_dest_time.value = d.best_time || ''; 
+    m_dest_attr.value = d.attractions ? d.attractions.join(', ') : ''; 
+    m_dest_tips.value = d.travel_tips ? d.travel_tips.join(', ') : ''; 
+    m_dest_pub.value = d.is_published ? 'true' : 'false'; 
+    document.getElementById('m_dest_img').dataset.existing = d.image_url || ''; 
+}
+async function saveDestination() {
+    const id = m_dest_id.value; 
+    let imageUrl = document.getElementById('m_dest_img').dataset.existing || ''; 
+    const imgFile = document.getElementById('m_dest_img').files[0]; 
+    if (imgFile) imageUrl = await uploadImage(imgFile);
+    const payload = { 
+        name: m_dest_name.value, 
+        country: m_dest_country.value, 
+        region: m_dest_region.value, 
+        description: m_dest_desc.value, 
+        best_time: m_dest_time.value, 
+        attractions: m_dest_attr.value.split(',').map(s=>s.trim()).filter(Boolean), 
+        travel_tips: m_dest_tips.value.split(',').map(s=>s.trim()).filter(Boolean), 
+        image_url: imageUrl, 
+        is_published: m_dest_pub.value === 'true' 
+    };
+    if (id) await sb.from('destinations').update(payload).eq('id', id); 
+    else await sb.from('destinations').insert([payload]);
+    document.getElementById('destFormModal').style.display = 'none'; 
+    loadAdminDestinations(); 
+    loadAdminStats(); 
+    loadDestDropdown();
+}
 
 async function loadAdminEnquiries() { 
     const { data } = await sb.from('enquiries').select('*, packages(title)').order('created_at', { ascending: false }); 
-    const filter = document.getElementById('enq_status_filter')?.value || 'all';
-    let filtered = (data||[]).filter(e => filter === 'all' || e.status === filter);
-    document.getElementById('table_enquiries').innerHTML = filtered.map(e => '<tr><td>' + e.name + '<br>' + e.email + '<br>' + e.phone + '</td><td>Dest: ' + (e.destination||'N/A') + '<br>Pkg: ' + (e.packages?.title || 'N/A') + '<br>Dates: ' + (e.travel_dates||'N/A') + '<br>Budget: ₹' + (e.budget||'N/A') + '</td><td><select class="status-dropdown" onchange="changeStatus(\'enquiries\', \'' + e.id + '\', this.value)"><option ' + (e.status==='New'?'selected':'') + '>New</option><option ' + (e.status==='Contacted'?'selected':'') + '>Contacted</option><option ' + (e.status==='Quotation Sent'?'selected':'') + '>Quotation Sent</option><option ' + (e.status==='Confirmed'?'selected':'') + '>Confirmed</option><option ' + (e.status==='Lost'?'selected':'') + '>Lost</option></select><br><textarea placeholder="Internal Notes" onchange="saveNote(\'' + e.id + '\', this.value)" style="margin-top:5px; width:100%; font-size:12px;">' + (e.internal_notes||'') + '</textarea></td></tr>').join(''); 
+    document.getElementById('table_enquiries').innerHTML = (data||[]).map(e => 
+        '<tr><td>' + e.name + '<br>' + e.email + '<br>' + e.phone + '</td><td>Dest: ' + (e.destination||'N/A') + '<br>Pkg: ' + (e.packages?.title || 'N/A') + '<br>Dates: ' + (e.travel_dates||'N/A') + '<br>Budget: ₹' + (e.budget||'N/A') + '</td><td><select class="status-dropdown" onchange="changeStatus(\'enquiries\', \'' + e.id + '\', this.value)"><option ' + (e.status==='New'?'selected':'') + '>New</option><option ' + (e.status==='Contacted'?'selected':'') + '>Contacted</option><option ' + (e.status==='Quotation Sent'?'selected':'') + '>Quotation Sent</option><option ' + (e.status==='Follow-up'?'selected':'') + '>Follow-up</option><option ' + (e.status==='Confirmed'?'selected':'') + '>Confirmed</option><option ' + (e.status==='Completed'?'selected':'') + '>Completed</option><option ' + (e.status==='Lost'?'selected':'') + '>Lost</option></select><br><textarea placeholder="Internal Notes" onchange="saveNote(\'' + e.id + '\', this.value)" style="margin-top:5px; width:100%; font-size:12px;">' + (e.internal_notes||'') + '</textarea></td></tr>'
+    ).join(''); 
 }
 function exportEnquiries() {
     const rows = [['Name', 'Email', 'Phone', 'Destination', 'Travel Dates', 'Budget', 'Status']];
@@ -741,33 +1276,160 @@ function exportEnquiries() {
         rows.push([info[0], info[1], info[2], details[0].replace('Dest: ',''), details[2].replace('Dates: ',''), details[3].replace('Budget: ₹',''), tds[2].innerText.split('\n')[0]]);
     });
     let csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
-    const link = document.createElement("a"); link.href = encodeURI(csvContent); link.download = "via_tours_enquiries.csv"; link.click();
+    const link = document.createElement("a"); 
+    link.href = encodeURI(csvContent); 
+    link.download = "via_tours_enquiries.csv"; 
+    link.click();
 }
+
 async function saveNote(id, text) { await sb.from('enquiries').update({ internal_notes: text }).eq('id', id); }
-async function loadAdminCustomers() { const { data } = await sb.from('customers').select('*').order('created_at', { ascending: false }); document.getElementById('table_customers').innerHTML = (data||[]).map(c => '<tr><td>' + c.name + '</td><td>' + c.email + '<br>' + c.phone + '</td><td><textarea placeholder="Notes" onchange="saveCustNote(\'' + c.id + '\', this.value)" style="width:100%; font-size:12px;">' + (c.notes||'') + '</textarea></td></tr>').join(''); }
+
+async function loadAdminCustomers() { 
+    const { data } = await sb.from('customers').select('*').order('created_at', { ascending: false }); 
+    document.getElementById('table_customers').innerHTML = (data||[]).map(c => 
+        '<tr><td>' + c.name + '</td><td>' + c.email + '<br>' + c.phone + '</td><td><textarea placeholder="Notes" onchange="saveCustNote(\'' + c.id + '\', this.value)" style="width:100%; font-size:12px;">' + (c.notes||'') + '</textarea></td></tr>'
+    ).join(''); 
+}
 async function saveCustNote(id, text) { await sb.from('customers').update({ notes: text }).eq('id', id); }
-async function loadAdminBookings() { const [c, p] = await Promise.all([sb.from('customers').select('*'), sb.from('packages').select('*')]); document.getElementById('m_book_cust').innerHTML = (c.data||[]).map(c => '<option value="' + c.id + '">' + c.name + '</option>').join(''); document.getElementById('m_book_pkg').innerHTML = (p.data||[]).map(p => '<option value="' + p.id + '">' + p.title + '</option>').join(''); const { data } = await sb.from('bookings').select('*, customers(name), packages(title)').order('travel_date', { ascending: false }); document.getElementById('table_bookings').innerHTML = (data||[]).map(b => '<tr><td>' + (b.customers?.name||'N/A') + '</td><td>' + new Date(b.travel_date).toLocaleDateString() + '</td><td>₹' + b.total_amount + '<br>(Paid: ₹' + b.amount_paid + ')</td><td>' + b.booking_status + '</td></tr>').join(''); }
-function openBookModal() { document.getElementById('bookFormModal').style.display = 'block'; document.querySelectorAll('#bookFormModal input').forEach(i => i.value = ''); }
-async function saveBooking() { const payload = { customer_id: m_book_cust.value, package_id: m_book_pkg.value, travel_date: m_book_date.value, total_amount: parseFloat(m_book_total.value||0), amount_paid: parseFloat(m_book_paid.value||0), balance: parseFloat(m_book_total.value||0) - parseFloat(m_book_paid.value||0), booking_status: m_book_status.value }; await sb.from('bookings').insert([payload]); document.getElementById('bookFormModal').style.display = 'none'; loadAdminBookings(); loadAdminStats(); }
-async function loadAdminSettings() { const { data } = await sb.from('website_settings').select('*').eq('id', 1).single(); if (data) { set_name.value = data.business_name; set_email.value = data.email; set_phone.value = data.phone; set_whatsapp.value = data.whatsapp; set_address.value = data.address; } }
-async function saveSettings() { await sb.from('website_settings').update({ business_name: set_name.value, email: set_email.value, phone: set_phone.value, whatsapp: set_whatsapp.value, address: set_address.value }).eq('id', 1); loadSettings(); showToast('Settings Saved!'); }
-async function changeStatus(table, id, status) { await sb.from(table).update({ status }).eq('id', id); loadAdminStats(); }
-async function delItem(table, id) { showCustomConfirm('Are you sure you want to delete this item? This cannot be undone.', async () => { await sb.from(table).delete().eq('id', id); if(table==='packages') loadAdminPackages(); if(table==='destinations') loadAdminDestinations(); if(table==='blog_posts') loadAdminBlog(); if(table==='testimonials') loadAdminTestimonials(); if(table==='faqs') loadAdminFaqs(); loadAdminStats(); }); }
-async function loadAdminTestimonials() { const { data } = await sb.from('testimonials').select('*').order('created_at', { ascending: false }); document.getElementById('table_testimonials').innerHTML = (data||[]).map(t => '<tr><td>' + t.name + '</td><td>' + (t.message ? t.message.substring(0, 50) + '...' : '') + '</td><td><button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem(\'testimonials\', \'' + t.id + '\')">Delete</button></td></tr>').join(''); }
-function openTestModal() { document.getElementById('testFormModal').style.display = 'block'; document.querySelectorAll('#testFormModal input, #testFormModal textarea').forEach(i => { if(i.type !== 'hidden') i.value = ''; }); }
-async function saveTestimonial() { const payload = { name: m_test_name.value, location: m_test_loc.value, image_url: m_test_img.value, message: m_test_msg.value }; await sb.from('testimonials').insert([payload]); document.getElementById('testFormModal').style.display = 'none'; loadAdminTestimonials(); }
 
-async function loadAdminFaqs() { const { data } = await sb.from('faqs').select('*').order('created_at', { ascending: false }); document.getElementById('table_faqs').innerHTML = (data||[]).map(f => '<tr><td>' + f.question + '</td><td>' + (f.is_published ? 'Live' : 'Hidden') + '</td><td><button class="btn-blue" style="background:var(--brand-blue); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;" onclick="editFaq(\'' + f.id + '\')">Edit</button><button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem(\'faqs\', \'' + f.id + '\')">Delete</button></td></tr>').join(''); }
-function openFaqModal() { document.getElementById('faqFormModal').style.display = 'block'; document.getElementById('m_faq_id').value = ''; document.getElementById('faq_modal_title').innerText = 'Add FAQ'; document.querySelectorAll('#faqFormModal input, #faqFormModal textarea').forEach(i => { if(i.type !== 'hidden') i.value = ''; }); }
-async function editFaq(id) { const { data: f } = await sb.from('faqs').select('*').eq('id', id).single(); if (!f) return; document.getElementById('faqFormModal').style.display = 'block'; document.getElementById('faq_modal_title').innerText = 'Edit FAQ'; document.getElementById('m_faq_id').value = f.id; document.getElementById('m_faq_question').value = f.question; document.getElementById('m_faq_answer').value = f.answer; document.getElementById('m_faq_pub').value = f.is_published ? 'true' : 'false'; }
-async function saveFaq() { const payload = { question: document.getElementById('m_faq_question').value, answer: document.getElementById('m_faq_answer').value, is_published: document.getElementById('m_faq_pub').value === 'true' }; const id = document.getElementById('m_faq_id').value; if (id) await sb.from('faqs').update(payload).eq('id', id); else await sb.from('faqs').insert([payload]); document.getElementById('faqFormModal').style.display = 'none'; loadAdminFaqs(); }
+async function loadAdminBookings() {
+    const [c, p] = await Promise.all([sb.from('customers').select('*'), sb.from('packages').select('*')]);
+    document.getElementById('m_book_cust').innerHTML = (c.data||[]).map(c => '<option value="' + c.id + '">' + c.name + '</option>').join('');
+    document.getElementById('m_book_pkg').innerHTML = (p.data||[]).map(p => '<option value="' + p.id + '">' + p.title + '</option>').join('');
+    const { data } = await sb.from('bookings').select('*, customers(name), packages(title)').order('travel_date', { ascending: false });
+    document.getElementById('table_bookings').innerHTML = (data||[]).map(b => 
+        '<tr><td>' + (b.customers?.name||'N/A') + '</td><td>' + new Date(b.travel_date).toLocaleDateString() + '</td><td>₹' + b.total_amount + '<br>(Paid: ₹' + b.amount_paid + ')</td><td>' + b.booking_status + '</td></tr>'
+    ).join('');
+}
+function openBookModal() { 
+    document.getElementById('bookFormModal').style.display = 'block'; 
+    document.querySelectorAll('#bookFormModal input').forEach(i => i.value = ''); 
+}
+async function saveBooking() {
+    const payload = { 
+        customer_id: m_book_cust.value, 
+        package_id: m_book_pkg.value, 
+        travel_date: m_book_date.value, 
+        total_amount: parseFloat(m_book_total.value||0), 
+        amount_paid: parseFloat(m_book_paid.value||0), 
+        balance: parseFloat(m_book_total.value||0) - parseFloat(m_book_paid.value||0), 
+        booking_status: m_book_status.value 
+    };
+    await sb.from('bookings').insert([payload]);
+    document.getElementById('bookFormModal').style.display = 'none'; 
+    loadAdminBookings(); 
+    loadAdminStats();
+}
 
-async function loadAdminBlog() { const { data } = await sb.from('blog_posts').select('*').order('created_at', { ascending: false }); document.getElementById('table_blog').innerHTML = (data||[]).map(b => '<tr><td>' + b.title + '</td><td>' + (b.is_published ? 'Live' : 'Hidden') + '</td><td><button class="btn-blue" style="background:var(--brand-blue); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;" onclick="editBlog(\'' + b.id + '\')">Edit</button><button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem(\'blog_posts\', \'' + b.id + '\')">Delete</button></td></tr>').join(''); }
-function openBlogModal() { document.getElementById('blogFormModal').style.display = 'block'; document.getElementById('m_blog_id').value = ''; document.querySelectorAll('#blogFormModal input, #blogFormModal textarea').forEach(i => { if(i.type !== 'hidden') i.value = ''; }); }
-async function editBlog(id) { const { data: b } = await sb.from('blog_posts').select('*').eq('id', id).single(); if (!b) return; m_blog_id.value = b.id; m_blog_title.value = b.title; m_blog_slug.value = b.slug; m_blog_img.value = b.image_url; m_blog_excerpt.value = b.excerpt; m_blog_content.value = b.content; m_blog_meta_title.value = b.meta_title; m_blog_meta_desc.value = b.meta_description; m_blog_pub.value = b.is_published ? 'true' : 'false'; document.getElementById('blogFormModal').style.display = 'block'; }
-async function saveBlogPost() { const payload = { title: m_blog_title.value, slug: m_blog_slug.value, image_url: m_blog_img.value, excerpt: m_blog_excerpt.value, content: m_blog_content.value, meta_title: m_blog_meta_title.value, meta_description: m_blog_meta_desc.value, is_published: m_blog_pub.value === 'true' }; const id = m_blog_id.value; if (id) await sb.from('blog_posts').update(payload).eq('id', id); else await sb.from('blog_posts').insert([payload]); document.getElementById('blogFormModal').style.display = 'none'; loadAdminBlog(); }
-async function loadBlog() { const { data, error } = await sb.from('blog_posts').select('*').eq('is_published', true).order('created_at', { ascending: false }); if (error) { document.getElementById('list_blog').innerHTML = '<p class="text-center">Error loading blogs.</p>'; return; } document.getElementById('list_blog').innerHTML = (data||[]).length ? data.map(b => '<div class="card" onclick="navTo(\'blog-post\', \'' + (b.slug || b.id) + '\')"><img src="' + (b.image_url || '') + '"><div class="card-body"><span class="tag">' + new Date(b.created_at).toLocaleDateString() + '</span><h3>' + b.title + '</h3><p>' + (b.excerpt || '') + '</p><span style="color:var(--brand-blue); font-weight:600;">Read More</span></div></div>').join('') : '<p class="text-center">No blog posts yet.</p>'; }
-async function loadBlogPost(slug) { document.getElementById('blog_details_container').innerHTML = '<p>Loading...</p>'; const isUUID = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(slug); let query = sb.from('blog_posts').select('*').eq('is_published', true); if (isUUID) query = query.eq('id', slug); else query = query.eq('slug', slug); const { data: b, error } = await query.single(); if (error || !b) { document.getElementById('blog_details_container').innerHTML = '<p>Blog post not found.</p>'; return; } updateSEO(b.title + ' - Via Tours Blog', b.excerpt || ''); document.getElementById('blog_details_container').innerHTML = '<img src="' + (b.image_url || '') + '" style="width:100%; height:400px; object-fit:cover; border-radius:12px; margin-bottom:30px;"><span class="tag">' + new Date(b.created_at).toLocaleDateString() + '</span><h1>' + b.title + '</h1><div class="blog-content" style="margin-top:20px;">' + (b.content || '') + '</div><button class="btn btn-outline" style="margin-top:40px;" onclick="navTo(\'blog\')">Back to Blog</button>'; }
+async function loadAdminSettings() { 
+    const { data } = await sb.from('website_settings').select('*').eq('id', 1).single(); 
+    if (data) { 
+        set_name.value = data.business_name; 
+        set_email.value = data.email; 
+        set_phone.value = data.phone; 
+        set_whatsapp.value = data.whatsapp; 
+        set_address.value = data.address; 
+    } 
+}
+async function saveSettings() { 
+    await sb.from('website_settings').update({ business_name: set_name.value, email: set_email.value, phone: set_phone.value, whatsapp: set_whatsapp.value, address: set_address.value }).eq('id', 1); 
+    loadSettings(); 
+    alert('Settings Saved!'); 
+}
+
+async function changeStatus(table, id, status) { 
+    await sb.from(table).update({ status }).eq('id', id); 
+    loadAdminStats(); 
+    if(table==='enquiries') loadAdminEnquiries(); 
+}
+async function delItem(table, id) { 
+    if(!confirm('Delete this item?')) return; 
+    await sb.from(table).delete().eq('id', id); 
+    if(table==='packages') loadAdminPackages(); 
+    if(table==='destinations') loadAdminDestinations(); 
+    if(table==='blog_posts') loadAdminBlog(); 
+    if(table==='faqs') loadAdminFaqs();
+    if(table==='testimonials') loadAdminTestimonials(); 
+    loadAdminStats(); 
+}
+
+async function loadAdminTestimonials() { 
+    const { data } = await sb.from('testimonials').select('*').order('created_at', { ascending: false }); 
+    document.getElementById('table_testimonials').innerHTML = (data||[]).map(t => 
+        '<tr><td>' + t.name + '</td><td>' + (t.message ? t.message.substring(0, 50) + '...' : '') + '</td><td><button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem(\'testimonials\', \'' + t.id + '\')">Delete</button></td></tr>'
+    ).join(''); 
+}
+function openTestModal() { 
+    document.getElementById('testFormModal').style.display = 'block'; 
+    document.querySelectorAll('#testFormModal input, #testFormModal textarea').forEach(i => { if(i.type !== 'hidden') i.value = ''; }); 
+}
+async function saveTestimonial() { 
+    const payload = { name: m_test_name.value, location: m_test_loc.value, image_url: m_test_img.value, message: m_test_msg.value }; 
+    await sb.from('testimonials').insert([payload]); 
+    document.getElementById('testFormModal').style.display = 'none'; 
+    loadAdminTestimonials(); 
+}
+
+async function loadAdminFaqs() { 
+    const { data } = await sb.from('faqs').select('*').order('created_at', { ascending: false }); 
+    document.getElementById('table_faqs').innerHTML = (data||[]).map(f => 
+        '<tr><td>' + f.question + '</td><td>' + (f.answer ? f.answer.substring(0, 50) + '...' : '') + '</td><td><button style="background:#ef4444; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="delItem(\'faqs\', \'' + f.id + '\')">Delete</button></td></tr>'
+    ).join(''); 
+}
+function openBlogModal() { 
+    document.getElementById('blogFormModal').style.display = 'block'; 
+    document.getElementById('m_blog_id').value = ''; 
+    document.querySelectorAll('#blogFormModal input, #blogFormModal textarea').forEach(i => { if(i.type !== 'hidden') i.value = ''; }); 
+}
+async function editBlog(id) { 
+    const { data: b } = await sb.from('blog_posts').select('*').eq('id', id).single(); 
+    if (!b) return; 
+    m_blog_id.value = b.id; 
+    m_blog_title.value = b.title; 
+    m_blog_slug.value = b.slug; 
+    m_blog_img.value = b.image_url; 
+    m_blog_excerpt.value = b.excerpt; 
+    m_blog_content.value = b.content; 
+    m_blog_meta_title.value = b.meta_title; 
+    m_blog_meta_desc.value = b.meta_description; 
+    m_blog_pub.value = b.is_published ? 'true' : 'false'; 
+    document.getElementById('blogFormModal').style.display = 'block'; 
+}
+async function loadBlog() { 
+    const { data, error } = await sb.from('blog_posts').select('*').eq('is_published', true).order('created_at', { ascending: false });
+    if (error) {
+        document.getElementById('list_blog').innerHTML = '<p class="text-center" style="grid-column:1/-1;">Error loading blogs.</p>';
+        return;
+    }
+    document.getElementById('list_blog').innerHTML = (data||[]).length ? data.map(b => 
+        '<div class="card" onclick="navTo(\'blog-post\', \'' + (b.slug || b.id) + '\')">' +
+            '<img src="' + (b.image_url || 'https://via.placeholder.com/400x300') + '">' +
+            '<div class="card-body">' +
+                '<span class="tag">' + new Date(b.created_at).toLocaleDateString() + '</span>' +
+                '<h3>' + b.title + '</h3>' +
+                '<p class="blog-excerpt">' + (b.excerpt || '') + '</p>' +
+                '<span style="color:var(--brand-blue); font-weight:600;">Read More <i class="fas fa-arrow-right"></i></span>' +
+            '</div>' +
+        '</div>'
+    ).join('') : '<p class="text-center" style="grid-column:1/-1;">No blog posts yet.</p>'; 
+}
+async function saveBlogPost() { 
+    const payload = { 
+        title: document.getElementById('m_blog_title').value, 
+        slug: document.getElementById('m_blog_slug').value, 
+        image_url: document.getElementById('m_blog_img').value, 
+        excerpt: document.getElementById('m_blog_excerpt').value, 
+        content: document.getElementById('m_blog_content').value, 
+        meta_title: document.getElementById('m_blog_meta_title').value, 
+        meta_description: document.getElementById('m_blog_meta_desc').value, 
+        is_published: document.getElementById('m_blog_pub').value === 'true' 
+    }; 
+    const id = document.getElementById('m_blog_id').value; 
+    if (id) await sb.from('blog_posts').update(payload).eq('id', id); 
+    else await sb.from('blog_posts').insert([payload]); 
+    document.getElementById('blogFormModal').style.display = 'none'; 
+    loadAdminBlog(); 
+}
 </script>
 </body>
 </html>
