@@ -166,6 +166,13 @@ body.dark-mode .skeleton { background:linear-gradient(to right, #1e293b 8%, #334
   .pkg-gallery { grid-template-columns:1fr; }
   .form-grid-2 { grid-template-columns:1fr; }
 }
+@media (max-width: 480px) {
+    .hero h1 { font-size: 1.8rem; margin-bottom: 10px; }
+    .hero p { font-size: 0.9rem; margin-bottom: 20px; }
+    .mobile-toggle { z-index: 1000; }
+    .nav-menu.active { z-index: 999; }
+    .search-box { padding: 10px; }
+}
 </style>
 </head>
 <body>
@@ -185,7 +192,7 @@ body.dark-mode .skeleton { background:linear-gradient(to right, #1e293b 8%, #334
                 <img src="https://goqwtovltftehautxekh.supabase.co/storage/v1/object/public/package-images/Via%20tours%20&%20travels.png" alt="Via Tours Logo" style="height:70px;">
                 <div class="logo-txt"><strong>Via</strong><span>Tours & Travels</span></div>
             </div>
-            <button class="mobile-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+            <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Toggle navigation menu"><i class="fas fa-bars"></i></button>
             <nav class="nav-menu" id="navMenu">
                 <a onclick="navTo('home')">Home</a>
                 <a onclick="navTo('destinations')">Destinations</a>
@@ -201,7 +208,10 @@ body.dark-mode .skeleton { background:linear-gradient(to right, #1e293b 8%, #334
     <main id="app-main">
         <div id="page-home" class="page-view" style="padding:0;">
             <div class="hero">
-                <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1" alt="Travel">
+                <picture>
+    <source srcset="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=80&fm=webp" type="image/webp">
+    <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=60" alt="Travel" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+</picture>
                 <div class="hero-overlay"></div>
                 <div class="container">
                     <h1>Explore Your World</h1>
@@ -259,8 +269,11 @@ body.dark-mode .skeleton { background:linear-gradient(to right, #1e293b 8%, #334
             </div>
 
             <div class="hero" style="height:40vh; min-height:300px;">
-                <img src="https://images.unsplash.com/photo-1528127269322-539801943592" alt="CTA">
-                <div class="hero-overlay"></div>
+    <picture>
+        <source srcset="https://images.unsplash.com/photo-1528127269322-539801943592?w=1200&q=80&fm=webp" type="image/webp">
+        <img src="https://images.unsplash.com/photo-1528127269322-539801943592?w=1200&q=60" alt="Call to action" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+    </picture>
+    <div class="hero-overlay"></div>
                 <div class="container">
                     <h2 style="color:#fff;">Ready for your next adventure?</h2>
                     <p>Let us plan the perfect trip for you.</p>
@@ -319,6 +332,8 @@ body.dark-mode .skeleton { background:linear-gradient(to right, #1e293b 8%, #334
             <p class="text-center" style="margin-bottom:30px;">Tell us your dream vacation, and we will make it happen.</p>
             <form id="planTripForm" style="background:var(--bg-light); padding:30px; border-radius:12px;">
                 <input type="hidden" id="pt_pkg_id">
+                <!-- Honeypot field (spam trap) -->
+<input type="text" id="honeypot" name="honeypot" style="display:none" tabindex="-1" autocomplete="off">
                 <div class="form-grid-2">
                     <div class="form-sec"><label>Full Name</label><input type="text" id="pt_name" required></div>
                     <div class="form-sec"><label>Email</label><input type="email" id="pt_email" required></div>
@@ -411,14 +426,14 @@ body.dark-mode .skeleton { background:linear-gradient(to right, #1e293b 8%, #334
     </footer>
 </div>
 
-<div class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})"><i class="fas fa-arrow-up"></i></div>
-<div class="chat-bubble" onclick="toggleChat()"><i class="fas fa-robot"></i></div>
+<div class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})" role="button" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></div>
+<div class="chat-bubble" onclick="toggleChat()" role="button" aria-label="Open chat assistant"><i class="fas fa-robot"></i></div>
 <div class="chat-window" id="chatWindow">
-    <div class="chat-header">Via AI Assistant <button onclick="toggleChat()" style="background:none;border:none;color:white;font-size:20px;cursor:pointer;">&times;</button></div>
+    <div class="chat-header">Via AI Assistant <button onclick="toggleChat()" style="background:none;border:none;color:white;font-size:20px;cursor:pointer;" aria-label="Close chat">&times;</button>
     <div class="chat-body" id="chatBody"><div class="chat-msg bot">Hello! I'm the Via Tours AI assistant. How can I help you plan your trip today?</div></div>
     <div class="chat-input-area">
         <input type="text" id="chatInput" placeholder="Ask a question..." onkeypress="handleChat(event)">
-        <button class="chat-send-btn" onclick="handleChat(event)"><i class="fas fa-paper-plane"></i></button>
+        <button class="chat-send-btn" onclick="handleChat(event)" aria-label="Send message"><i class="fas fa-paper-plane"></i></button>
     </div>
 </div>
 
@@ -448,8 +463,12 @@ body.dark-mode .skeleton { background:linear-gradient(to right, #1e293b 8%, #334
             <div id="admin-login" style="max-width:400px; margin:50px auto; background:#fff; padding:30px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
                 <h2>Admin Login</h2>
                 <div class="form-sec"><label>Email</label><input type="email" id="loginEmail"></div>
-                <div class="form-sec"><label>Password</label><input type="password" id="loginPass"></div>
-                <button class="btn btn-blue" style="width:100%;" onclick="adminLogin()">Login</button>
+                <div class="form-sec">
+    <label>Password</label>
+    <input type="password" id="loginPass">
+</div>
+<button class="btn btn-blue" style="width:100%;" onclick="adminLogin()">Login</button>
+<a href="#" onclick="forgotPassword(); return false;" style="display:block; text-align:center; margin-top:10px; font-size:0.9rem; color:var(--brand-blue);">Forgot password?</a>
             </div>
             <div id="admin-dashboard" style="display:none;">
                 <div id="tab-dashboard" class="admin-tab">
@@ -644,6 +663,18 @@ function showToast(msg, type = 'success') {
     setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3000);
 }
 
+async function withLoading(button, fn) {
+    const originalText = button.textContent;
+    button.disabled = true;
+    button.textContent = 'Saving...';
+    try {
+        await fn();
+    } finally {
+        button.disabled = false;
+        button.textContent = originalText;
+    }
+}
+
 function showConfirm(message, onConfirm) {
     const modal = document.getElementById('confirmModal');
     document.getElementById('confirmMessage').textContent = message;
@@ -717,10 +748,10 @@ async function router() {
         case 'plan-trip': setupPlanForm(id); break;
         case 'package': if (id) loadPackageDetails(id); break;
         case 'blog-post': if (id) loadBlogPost(id); break;
-        case 'about': updateSEO('About Us - Via Tours', 'Learn about Via Tours & Travels.'); break;
-        case 'contact': updateSEO('Contact Us - Via Tours', 'Get in touch with Via Tours.'); break;
-        case 'terms': updateSEO('Terms & Conditions - Via Tours', 'Terms and conditions.'); break;
-        case 'privacy': updateSEO('Privacy Policy - Via Tours', 'Privacy policy.'); break;
+        case 'about': updateSEO('About Via Tours & Travels | Trusted Tour Operator', 'Learn about Via Tours & Travels, a premium travel agency with 15+ years of experience.'); break;
+        case 'contact': updateSEO('Contact Via Tours & Travels | Get in Touch', 'Reach our travel experts for custom packages, visa assistance, and 24/7 support.'); break;
+        case 'terms': updateSEO('Terms & Conditions - Via Tours & Travels', 'Read the terms and conditions for using Via Tours & Travels services.'); break;
+        case 'privacy': updateSEO('Privacy Policy - Via Tours & Travels', 'How Via Tours & Travels collects, uses, and protects your personal information.'); break;
     }
 }
 window.addEventListener('hashchange', router);
@@ -916,25 +947,62 @@ async function setupPlanForm(pkgId) {
 
 document.getElementById('planTripForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const payload = {
-        name: document.getElementById('pt_name').value,
-        email: document.getElementById('pt_email').value,
-        phone: document.getElementById('pt_phone').value,
-        destination: document.getElementById('pt_dest').value,
-        travel_dates: document.getElementById('pt_dates').value,
-        travelers: document.getElementById('pt_travelers').value,
-        budget: document.getElementById('pt_budget').value,
-        hotel_pref: document.getElementById('pt_hotel').value,
-        requirements: document.getElementById('pt_req').value,
-        package_id: document.getElementById('pt_pkg_id').value || null,
-        status: 'New'
-    };
-    const { error } = await sb.from('enquiries').insert([payload]);
-    if (error) { showToast('Error submitting request. Please try again.', 'error'); return; }
-    const { data: cust } = await sb.from('customers').select('id').eq('email', payload.email).maybeSingle();
-    if (!cust) { await sb.from('customers').insert([{ name: payload.name, email: payload.email, phone: payload.phone, whatsapp: payload.phone }]); }
-    showToast('Trip request submitted! We will contact you soon.', 'success');
-    navTo('home');
+
+    // Check honeypot
+    if (document.getElementById('honeypot').value) {
+        showToast('Spam detected.', 'error');
+        return;
+    }
+
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    try {
+        // Trim all text inputs to reject whitespace
+        const name = document.getElementById('pt_name').value.trim();
+        const email = document.getElementById('pt_email').value.trim();
+        const phone = document.getElementById('pt_phone').value.trim();
+        const destination = document.getElementById('pt_dest').value.trim();
+        const travelDates = document.getElementById('pt_dates').value.trim();
+        const travelers = document.getElementById('pt_travelers').value.trim();
+        const budget = document.getElementById('pt_budget').value.trim();
+        const requirements = document.getElementById('pt_req').value.trim();
+
+        if (!name || !email || !phone) {
+            showToast('Please fill all required fields.', 'error');
+            return;
+        }
+
+        const payload = {
+            name,
+            email,
+            phone,
+            destination,
+            travel_dates: travelDates,
+            travelers,
+            budget,
+            hotel_pref: document.getElementById('pt_hotel').value,
+            requirements,
+            package_id: document.getElementById('pt_pkg_id').value || null,
+            status: 'New'
+        };
+
+        const { error } = await sb.from('enquiries').insert([payload]);
+        if (error) {
+            showToast('Error submitting request. Please try again.', 'error');
+        } else {
+            const { data: cust } = await sb.from('customers').select('id').eq('email', payload.email).maybeSingle();
+            if (!cust) {
+                await sb.from('customers').insert([{ name: payload.name, email: payload.email, phone: payload.phone, whatsapp: payload.phone }]);
+            }
+            showToast('Trip request submitted! We will contact you soon.', 'success');
+            navTo('home');
+        }
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Enquiry';
+    }
 });
 
 async function loadBlog() {
@@ -1017,12 +1085,52 @@ function handleChat(e) {
 }
 
 // ===== ADMIN FUNCTIONS =====
+let loginAttempts = 0;
+let lockoutUntil = 0;
+
 async function adminLogin() {
-    const email = document.getElementById('loginEmail').value;
+    const now = Date.now();
+    if (now < lockoutUntil) {
+        showToast(`Too many attempts. Try again in ${Math.ceil((lockoutUntil - now) / 1000)}s`, 'error');
+        return;
+    }
+
+    const email = document.getElementById('loginEmail').value.trim();
     const password = document.getElementById('loginPass').value;
+
+    if (!email || !password) {
+        showToast('Please enter email and password.', 'error');
+        return;
+    }
+
     const { data, error } = await sb.auth.signInWithPassword({ email, password });
-    if (error) { showToast('Login failed: ' + error.message, 'error'); return; }
+    if (error) {
+        loginAttempts++;
+        if (loginAttempts >= 5) {
+            lockoutUntil = Date.now() + 60000; // 1 minute lockout
+            loginAttempts = 0;
+            showToast('Too many failed attempts. Locked for 1 minute.', 'error');
+        } else {
+            showToast(`Login failed (${loginAttempts}/5): ${error.message}`, 'error');
+        }
+        return;
+    }
+    loginAttempts = 0;
     initAdminDashboard();
+}
+
+async function forgotPassword() {
+    const email = document.getElementById('loginEmail').value.trim();
+    if (!email) {
+        showToast('Please enter your admin email address.', 'error');
+        return;
+    }
+    const { error } = await sb.auth.resetPasswordForEmail(email);
+    if (error) {
+        showToast('Error sending reset email: ' + error.message, 'error');
+    } else {
+        showToast('Password reset link sent to your email.', 'success');
+    }
 }
 
 async function logout() { await sb.auth.signOut(); window.location.hash = '#/home'; router(); }
@@ -1174,34 +1282,37 @@ async function editPackage(id) {
 }
 
 async function savePackage() {
-    const id = document.getElementById('m_pkg_id').value;
-    let imageUrl = document.getElementById('m_pkg_img').dataset.existing || '';
-    let galleryUrls = [...currentGallery];
-    const imgFile = document.getElementById('m_pkg_img').files[0];
-    if (imgFile) { imageUrl = await uploadImage(imgFile); if (!imageUrl) return; }
-    const galleryFiles = document.getElementById('m_pkg_gallery').files;
-    if (galleryFiles.length > 0) { for (let i = 0; i < galleryFiles.length; i++) { const url = await uploadImage(galleryFiles[i]); if (url) galleryUrls.push(url); } }
-    const payload = {
-        title: document.getElementById('m_pkg_title').value,
-        price: parseFloat(document.getElementById('m_pkg_price').value || 0),
-        duration: document.getElementById('m_pkg_duration').value,
-        category: document.getElementById('m_pkg_cat').value,
-        destination_id: document.getElementById('m_pkg_dest').value || null,
-        short_description: document.getElementById('m_pkg_short_desc').value,
-        description: document.getElementById('m_pkg_desc').value,
-        itinerary: currentItinerary,
-        inclusions: document.getElementById('m_pkg_inc').value.split('\n').filter(Boolean),
-        exclusions: document.getElementById('m_pkg_exc').value.split('\n').filter(Boolean),
-        important_info: document.getElementById('m_pkg_imp').value.split('\n').filter(Boolean),
-        image_url: imageUrl,
-        gallery_images: galleryUrls,
-        is_published: document.getElementById('m_pkg_pub').value === 'true',
-    };
-    const { error } = id ? await sb.from('packages').update(payload).eq('id', id) : await sb.from('packages').insert([payload]);
-    if (error) { showToast('Error saving package: ' + error.message, 'error'); return; }
-    document.getElementById('pkgFormModal').style.display = 'none';
-    showToast('Package saved successfully!');
-    loadAdminPackages(); loadAdminStats();
+    const btn = document.querySelector('#pkgFormModal .btn-blue');
+    await withLoading(btn, async () => {
+        const id = document.getElementById('m_pkg_id').value;
+        let imageUrl = document.getElementById('m_pkg_img').dataset.existing || '';
+        let galleryUrls = [...currentGallery];
+        const imgFile = document.getElementById('m_pkg_img').files[0];
+        if (imgFile) { imageUrl = await uploadImage(imgFile); if (!imageUrl) return; }
+        const galleryFiles = document.getElementById('m_pkg_gallery').files;
+        if (galleryFiles.length > 0) { for (let i = 0; i < galleryFiles.length; i++) { const url = await uploadImage(galleryFiles[i]); if (url) galleryUrls.push(url); } }
+        const payload = {
+            title: document.getElementById('m_pkg_title').value.trim(),
+            price: parseFloat(document.getElementById('m_pkg_price').value || 0),
+            duration: document.getElementById('m_pkg_duration').value.trim(),
+            category: document.getElementById('m_pkg_cat').value.trim(),
+            destination_id: document.getElementById('m_pkg_dest').value || null,
+            short_description: document.getElementById('m_pkg_short_desc').value.trim(),
+            description: document.getElementById('m_pkg_desc').value.trim(),
+            itinerary: currentItinerary,
+            inclusions: document.getElementById('m_pkg_inc').value.split('\n').map(s=>s.trim()).filter(Boolean),
+            exclusions: document.getElementById('m_pkg_exc').value.split('\n').map(s=>s.trim()).filter(Boolean),
+            important_info: document.getElementById('m_pkg_imp').value.split('\n').map(s=>s.trim()).filter(Boolean),
+            image_url: imageUrl,
+            gallery_images: galleryUrls,
+            is_published: document.getElementById('m_pkg_pub').value === 'true',
+        };
+        const { error } = id ? await sb.from('packages').update(payload).eq('id', id) : await sb.from('packages').insert([payload]);
+        if (error) { showToast('Error saving package: ' + error.message, 'error'); return; }
+        document.getElementById('pkgFormModal').style.display = 'none';
+        showToast('Package saved successfully!');
+        loadAdminPackages(); loadAdminStats();
+    });
 }
 
 function updateBulkBar(type) {
@@ -1260,26 +1371,38 @@ async function editDest(id) {
 }
 
 async function saveDestination() {
-    const id = document.getElementById('m_dest_id').value;
-    let imageUrl = document.getElementById('m_dest_img').dataset.existing || '';
-    const imgFile = document.getElementById('m_dest_img').files[0];
-    if (imgFile) { imageUrl = await uploadImage(imgFile); if (!imageUrl) return; }
-    const payload = {
-        name: document.getElementById('m_dest_name').value,
-        country: document.getElementById('m_dest_country').value,
-        region: document.getElementById('m_dest_region').value,
-        description: document.getElementById('m_dest_desc').value,
-        best_time: document.getElementById('m_dest_time').value,
-        attractions: document.getElementById('m_dest_attr').value.split(',').map(s => s.trim()).filter(Boolean),
-        travel_tips: document.getElementById('m_dest_tips').value.split(',').map(s => s.trim()).filter(Boolean),
-        image_url: imageUrl,
-        is_published: document.getElementById('m_dest_pub').value === 'true',
-    };
-    const { error } = id ? await sb.from('destinations').update(payload).eq('id', id) : await sb.from('destinations').insert([payload]);
-    if (error) { showToast('Error saving destination: ' + error.message, 'error'); return; }
-    document.getElementById('destFormModal').style.display = 'none';
-    showToast('Destination saved successfully!');
-    loadAdminDestinations(); loadAdminStats(); loadDestDropdown(); populateCountryFilter();
+    const btn = document.querySelector('#destFormModal .btn-blue');
+    await withLoading(btn, async () => {
+        const id = document.getElementById('m_dest_id').value;
+        let imageUrl = document.getElementById('m_dest_img').dataset.existing || '';
+        const imgFile = document.getElementById('m_dest_img').files[0];
+        if (imgFile) {
+            imageUrl = await uploadImage(imgFile);
+            if (!imageUrl) return;
+        }
+        const payload = {
+            name: document.getElementById('m_dest_name').value.trim(),
+            country: document.getElementById('m_dest_country').value.trim(),
+            region: document.getElementById('m_dest_region').value.trim(),
+            description: document.getElementById('m_dest_desc').value.trim(),
+            best_time: document.getElementById('m_dest_time').value.trim(),
+            attractions: document.getElementById('m_dest_attr').value.split(',').map(s => s.trim()).filter(Boolean),
+            travel_tips: document.getElementById('m_dest_tips').value.split(',').map(s => s.trim()).filter(Boolean),
+            image_url: imageUrl,
+            is_published: document.getElementById('m_dest_pub').value === 'true',
+        };
+        const { error } = id ? await sb.from('destinations').update(payload).eq('id', id) : await sb.from('destinations').insert([payload]);
+        if (error) {
+            showToast('Error saving destination: ' + error.message, 'error');
+            return;
+        }
+        document.getElementById('destFormModal').style.display = 'none';
+        showToast('Destination saved successfully!');
+        loadAdminDestinations();
+        loadAdminStats();
+        loadDestDropdown();
+        populateCountryFilter();
+    });
 }
 
 async function loadAdminEnquiries() {
@@ -1339,23 +1462,30 @@ function openBookModal() {
 }
 
 async function saveBooking() {
-    const total = parseFloat(document.getElementById('m_book_total').value || 0);
-    const paid = parseFloat(document.getElementById('m_book_paid').value || 0);
-    const payload = {
-        customer_name: document.getElementById('m_book_customer_name').value,
-        package_name: document.getElementById('m_book_package_name').value,
-        travel_date: document.getElementById('m_book_date').value,
-        travelers: parseInt(document.getElementById('m_book_travelers').value) || 1,
-        total_amount: total,
-        amount_paid: paid,
-        balance: total - paid,
-        booking_status: document.getElementById('m_book_status').value,
-    };
-    const { error } = await sb.from('bookings').insert([payload]);
-    if (error) { showToast('Error saving booking: ' + error.message, 'error'); return; }
-    document.getElementById('bookFormModal').style.display = 'none';
-    showToast('Booking saved successfully!');
-    loadAdminBookings(); loadAdminStats();
+    const btn = document.querySelector('#bookFormModal .btn-blue');
+    await withLoading(btn, async () => {
+        const total = parseFloat(document.getElementById('m_book_total').value || 0);
+        const paid = parseFloat(document.getElementById('m_book_paid').value || 0);
+        const payload = {
+            customer_name: document.getElementById('m_book_customer_name').value.trim(),
+            package_name: document.getElementById('m_book_package_name').value.trim(),
+            travel_date: document.getElementById('m_book_date').value,
+            travelers: parseInt(document.getElementById('m_book_travelers').value) || 1,
+            total_amount: total,
+            amount_paid: paid,
+            balance: total - paid,
+            booking_status: document.getElementById('m_book_status').value,
+        };
+        const { error } = await sb.from('bookings').insert([payload]);
+        if (error) {
+            showToast('Error saving booking: ' + error.message, 'error');
+            return;
+        }
+        document.getElementById('bookFormModal').style.display = 'none';
+        showToast('Booking saved successfully!');
+        loadAdminBookings();
+        loadAdminStats();
+    });
 }
 
 async function loadAdminBlog() {
@@ -1385,22 +1515,28 @@ async function editBlog(id) {
 }
 
 async function saveBlogPost() {
-    const payload = {
-        title: document.getElementById('m_blog_title').value,
-        slug: document.getElementById('m_blog_slug').value,
-        image_url: document.getElementById('m_blog_img').value,
-        excerpt: document.getElementById('m_blog_excerpt').value,
-        content: document.getElementById('m_blog_content').value,
-        meta_title: document.getElementById('m_blog_meta_title').value,
-        meta_description: document.getElementById('m_blog_meta_desc').value,
-        is_published: document.getElementById('m_blog_pub').value === 'true',
-    };
-    const id = document.getElementById('m_blog_id').value;
-    const { error } = id ? await sb.from('blog_posts').update(payload).eq('id', id) : await sb.from('blog_posts').insert([payload]);
-    if (error) { showToast('Error saving blog post: ' + error.message, 'error'); return; }
-    document.getElementById('blogFormModal').style.display = 'none';
-    showToast('Blog post saved!');
-    loadAdminBlog();
+    const btn = document.querySelector('#blogFormModal .btn-blue');
+    await withLoading(btn, async () => {
+        const payload = {
+            title: document.getElementById('m_blog_title').value.trim(),
+            slug: document.getElementById('m_blog_slug').value.trim(),
+            image_url: document.getElementById('m_blog_img').value.trim(),
+            excerpt: document.getElementById('m_blog_excerpt').value.trim(),
+            content: document.getElementById('m_blog_content').value.trim(),
+            meta_title: document.getElementById('m_blog_meta_title').value.trim(),
+            meta_description: document.getElementById('m_blog_meta_desc').value.trim(),
+            is_published: document.getElementById('m_blog_pub').value === 'true',
+        };
+        const id = document.getElementById('m_blog_id').value;
+        const { error } = id ? await sb.from('blog_posts').update(payload).eq('id', id) : await sb.from('blog_posts').insert([payload]);
+        if (error) {
+            showToast('Error saving blog post: ' + error.message, 'error');
+            return;
+        }
+        document.getElementById('blogFormModal').style.display = 'none';
+        showToast('Blog post saved!');
+        loadAdminBlog();
+    });
 }
 
 async function loadAdminTestimonials() {
@@ -1415,18 +1551,24 @@ function openTestModal() {
 }
 
 async function saveTestimonial() {
-    const payload = {
-        name: document.getElementById('m_test_name').value,
-        location: document.getElementById('m_test_loc').value,
-        rating: parseInt(document.getElementById('m_test_rating').value) || 5,
-        image_url: document.getElementById('m_test_img').value,
-        message: document.getElementById('m_test_msg').value,
-    };
-    const { error } = await sb.from('testimonials').insert([payload]);
-    if (error) { showToast('Error saving testimonial: ' + error.message, 'error'); return; }
-    document.getElementById('testFormModal').style.display = 'none';
-    showToast('Testimonial saved!');
-    loadAdminTestimonials();
+    const btn = document.querySelector('#testFormModal .btn-blue');
+    await withLoading(btn, async () => {
+        const payload = {
+            name: document.getElementById('m_test_name').value.trim(),
+            location: document.getElementById('m_test_loc').value.trim(),
+            rating: parseInt(document.getElementById('m_test_rating').value) || 5,
+            image_url: document.getElementById('m_test_img').value.trim(),
+            message: document.getElementById('m_test_msg').value.trim(),
+        };
+        const { error } = await sb.from('testimonials').insert([payload]);
+        if (error) {
+            showToast('Error saving testimonial: ' + error.message, 'error');
+            return;
+        }
+        document.getElementById('testFormModal').style.display = 'none';
+        showToast('Testimonial saved!');
+        loadAdminTestimonials();
+    });
 }
 
 async function loadAdminFaqs() {
@@ -1453,17 +1595,24 @@ async function editFaq(id) {
 }
 
 async function saveFaq() {
-    const payload = {
-        question: document.getElementById('m_faq_question').value,
-        answer: document.getElementById('m_faq_answer').value,
-        is_published: document.getElementById('m_faq_pub').value === 'true',
-    };
-    const id = document.getElementById('m_faq_id').value;
-    const { error } = id ? await sb.from('faqs').update(payload).eq('id', id) : await sb.from('faqs').insert([payload]);
-    if (error) { showToast('Error saving FAQ: ' + error.message, 'error'); return; }
-    document.getElementById('faqFormModal').style.display = 'none';
-    showToast('FAQ saved!');
-    loadAdminFaqs(); loadHomeFaqs();
+    const btn = document.querySelector('#faqFormModal .btn-blue');
+    await withLoading(btn, async () => {
+        const payload = {
+            question: document.getElementById('m_faq_question').value.trim(),
+            answer: document.getElementById('m_faq_answer').value.trim(),
+            is_published: document.getElementById('m_faq_pub').value === 'true',
+        };
+        const id = document.getElementById('m_faq_id').value;
+        const { error } = id ? await sb.from('faqs').update(payload).eq('id', id) : await sb.from('faqs').insert([payload]);
+        if (error) {
+            showToast('Error saving FAQ: ' + error.message, 'error');
+            return;
+        }
+        document.getElementById('faqFormModal').style.display = 'none';
+        showToast('FAQ saved!');
+        loadAdminFaqs();
+        loadHomeFaqs();
+    });
 }
 
 async function loadAdminSettings() {
@@ -1478,17 +1627,23 @@ async function loadAdminSettings() {
 }
 
 async function saveSettings() {
-    const payload = {
-        business_name: document.getElementById('set_name').value,
-        email: document.getElementById('set_email').value,
-        phone: document.getElementById('set_phone').value,
-        whatsapp: document.getElementById('set_whatsapp').value,
-        address: document.getElementById('set_address').value,
-    };
-    const { error } = await sb.from('website_settings').update(payload).eq('id', 1);
-    if (error) { showToast('Error saving settings: ' + error.message, 'error'); return; }
-    showToast('Settings saved successfully!');
-    loadSettings();
+    const btn = document.querySelector('#tab-settings .btn-blue');
+    await withLoading(btn, async () => {
+        const payload = {
+            business_name: document.getElementById('set_name').value.trim(),
+            email: document.getElementById('set_email').value.trim(),
+            phone: document.getElementById('set_phone').value.trim(),
+            whatsapp: document.getElementById('set_whatsapp').value.trim(),
+            address: document.getElementById('set_address').value.trim(),
+        };
+        const { error } = await sb.from('website_settings').update(payload).eq('id', 1);
+        if (error) {
+            showToast('Error saving settings: ' + error.message, 'error');
+            return;
+        }
+        showToast('Settings saved successfully!');
+        loadSettings();
+    });
 }
 
 async function delItem(table, id) {
