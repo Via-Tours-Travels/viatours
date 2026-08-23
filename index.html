@@ -184,6 +184,9 @@ body.dark-mode .skeleton { background:linear-gradient(to right, #1e293b 8%, #334
         <div class="loader-text">VIA TOURS</div>
     </div>
 </div>
+<script>
+setTimeout(function () { var p = document.getElementById('preloader'); if (p) p.classList.add('hidden'); }, 4000);
+</script>
 
 <div id="site-wrapper">
     <header class="header">
@@ -633,11 +636,13 @@ body.dark-mode .skeleton { background:linear-gradient(to right, #1e293b 8%, #334
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
 <script>
 const SUPABASE_URL = 'https://goqwtovltftehautxekh.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_bQXp8x_2x4ymx4_oxcOFUA_UTGsqF-5';
-const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+if (!sb) console.error('Supabase library failed to load. Check your internet connection or ad blocker.');
 
 let appSettings = { whatsapp: '919876543210' };
 let currentItinerary = [];
