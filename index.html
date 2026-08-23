@@ -462,13 +462,13 @@ body.dark-mode .skeleton { background:linear-gradient(to right, #1e293b 8%, #334
         </div>
         <div class="admin-main" id="adminMain">
             <div id="admin-login" style="max-width:400px; margin:50px auto; background:#fff; padding:30px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
-                <h2>Admin Login</h2>
-                <div class="form-sec"><label>Email</label><input type="email" id="loginEmail"></div>
-                <div class="form-sec">
-    <label>Password</label>
-    <input type="password" id="loginPass">
+    <h2>Admin Login</h2>
+    <form onsubmit="adminLogin(); return false;">
+        <div class="form-sec"><label>Email</label><input type="email" id="loginEmail"></div>
+        <div class="form-sec"><label>Password</label><input type="password" id="loginPass"></div>
+        <button type="submit" class="btn btn-blue" style="width:100%;">Login</button>
+    </form>
 </div>
-<button class="btn btn-blue" style="width:100%;" onclick="adminLogin()">Login</button>
 <a href="#" onclick="forgotPassword(); return false;" style="display:block; text-align:center; margin-top:10px; font-size:0.9rem; color:var(--brand-blue);">Forgot password?</a>
             </div>
             <div id="admin-dashboard" style="display:none;">
@@ -479,6 +479,8 @@ body.dark-mode .skeleton { background:linear-gradient(to right, #1e293b 8%, #334
                         <div class="stat-card"><h2 id="stat_new_enq">0</h2><p>New Enquiries</p></div>
                         <div class="stat-card"><h2 id="stat_pkg">0</h2><p>Active Packages</p></div>
                         <div class="stat-card"><h2 id="stat_cust">0</h2><p>Customers</p></div>
+                        <div class="stat-card"><h2 id="stat_revenue">₹0</h2><p>Revenue Collected</p></div>
+                        <div class="stat-card"><h2 id="stat_balance">₹0</h2><p>Outstanding Balance</p></div>
                     </div>
                     <div class="grid-3" style="margin-top:40px;">
                         <div style="grid-column:1 / span 2;"><h3>Recent Enquiries</h3><div class="admin-table" style="margin-top:15px;"><table><thead><tr><th>Name</th><th>Destination</th><th>Status</th></tr></thead><tbody id="table_recent_enq"></tbody></table></div></div>
@@ -581,7 +583,7 @@ body.dark-mode .skeleton { background:linear-gradient(to right, #1e293b 8%, #334
         <h3 style="margin-bottom:20px;">Add Booking</h3>
         <div class="form-sec"><label>Customer Name</label><input type="text" id="m_book_customer_name"></div>
         <div class="form-sec"><label>Package Name</label><input type="text" id="m_book_package_name"></div>
-        <div class="form-sec"><label>Travel Date</label><input type="date" id="m_book_date"></div>
+        <div class="form-sec"><label>Travel Date</label><input type="text" id="m_book_date" placeholder="e.g., 10 Dec - 20 Dec"></div>
         <div class="form-sec"><label>Travelers</label><input type="number" id="m_book_travelers" value="1" min="1"></div>
         <div class="form-sec"><label>Total Amount (₹)</label><input type="number" id="m_book_total"></div>
         <div class="form-sec"><label>Amount Paid (₹)</label><input type="number" id="m_book_paid"></div>
@@ -699,7 +701,10 @@ function toggleSidebar() {
     localStorage.setItem('sidebarCollapsed', isSidebarCollapsed);
 }
 
-if (isDarkMode) document.body.classList.add('dark-mode');
+if (isSidebarCollapsed) {
+    document.getElementById('adminSide')?.classList.add('collapsed');
+    document.getElementById('adminMain')?.classList.add('expanded');
+}
 
 function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
 function toggleChat() { document.getElementById('chatWindow').classList.toggle('active'); }
@@ -736,13 +741,15 @@ async function router() {
     siteWrapper.style.display = 'block';
     adminWrapper.style.display = 'none';
     document.querySelectorAll('.page-view').forEach(p => p.style.display = 'none');
-    const view = document.getElementById('page-' + page) || document.getElementById('page-home');
+        const view = document.getElementById('page-' + page) || document.getElementById('page-home');
     view.style.display = 'block';
-    if (view.id === 'page-home' && page !== 'home') loadHomeData();
     window.scrollTo(0, 0);
 
     switch(page) {
         case 'home': loadHomeData(); updateSEO('Via Tours & Travels', 'Premium travel agency.'); break;
+        default:
+            if (view.id === 'page-home') loadHomeData();
+            updateSEO('Via Tours & Travels', 'Premium travel agency.');
         case 'destinations': loadDestinations(); break;
         case 'packages': activeDestFilter = id || null; initPackageFilters(); loadPackages(); break;
         case 'blog': loadBlog(); break;
@@ -787,6 +794,13 @@ async function loadHomeData() {
 }
 
 function searchFromHero() {
+    const dest = document.getElementById('hero_dest').value.trim();
+    if (dest) {
+        // We don't have a direct name-based filter; we could store it globally
+        // and filter in loadPackages. For simplicity, we'll just show all packages.
+        // Or you could set a global variable and filter by name in loadPackages.
+        // We'll just navigate to packages for now.
+    }
     navTo('packages');
 }
 
@@ -853,13 +867,14 @@ function clearFilter() {
     document.getElementById('filter-max-price').value = '';
     document.getElementById('pkg_sort').value = 'new';
     window.location.hash = '#/packages';
+    loadPackages(); // Force reload because hash may not change
 }
 
 const debounceSearch = debounce(loadPackages, 400);
 
 async function initPackageFilters() {
     const destSelect = document.getElementById('filter-destination');
-    if (destSelect && !destSelect.options.length) {
+    if (destSelect && destSelect.options.length <= 1) {f
         const { data } = await sb.from('destinations').select('id, name').eq('is_published', true).order('name');
         destSelect.innerHTML = '<option value="">All Destinations</option>' + (data||[]).map(d => `<option value="${escapeHTML(d.id)}">${escapeHTML(d.name)}</option>`).join('');
     }
@@ -1017,7 +1032,7 @@ async function loadBlogPost(slugOrId) {
     const isUUID = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(slugOrId);
     let query = sb.from('blog_posts').select('*').eq('is_published', true);
     if (isUUID) query = query.eq('id', slugOrId); else query = query.eq('slug', slugOrId);
-    const { data: b, error } = await query.maybeSingle();
+    const { data: b, error } = await query.limit(1).maybeSingle();
 
     if (error || !b) { document.getElementById('blog_details_container').innerHTML = '<p>Blog post not found. <a onclick="navTo(\'blog\')" style="color:var(--brand-blue); cursor:pointer;">Back to Blog</a></p>'; return; }
 
@@ -1173,15 +1188,16 @@ function showAdminTab(tab, ev) {
 }
 
 async function loadAdminStats() {
-    const [e, p, b, c] = await Promise.all([
-        sb.from('enquiries').select('id, name, status, created_at, destination').order('created_at', { ascending: false }).limit(10),
+    const [enqTotalRes, newEnqRes, p, b, c] = await Promise.all([
+        sb.from('enquiries').select('id', { count: 'exact', head: true }),
+        sb.from('enquiries').select('id', { count: 'exact', head: true }).eq('status', 'New'),
         sb.from('packages').select('id', { count: 'exact', head: true }).eq('is_published', true),
         sb.from('bookings').select('amount_paid, balance, booking_status, travel_date, customer_name'),
         sb.from('customers').select('id', { count: 'exact', head: true })
     ]);
 
-    const totalEnq = e.data?.length || 0;
-    const newEnq = e.data?.filter(x => x.status === 'New').length || 0;
+    const totalEnq = enqTotalRes.count || 0;
+    const newEnq = newEnqRes.count || 0;
     const totalPkg = p.count || 0;
     const totalCust = c.count || 0;
     const rev = (b.data || []).reduce((sum, x) => sum + (x.amount_paid || 0), 0);
@@ -1191,9 +1207,15 @@ async function loadAdminStats() {
     document.getElementById('stat_new_enq').textContent = newEnq;
     document.getElementById('stat_pkg').textContent = totalPkg;
     document.getElementById('stat_cust').textContent = totalCust;
+    document.getElementById('stat_revenue').textContent = '₹' + rev.toLocaleString('en-IN');
+    document.getElementById('stat_balance').textContent = '₹' + bal.toLocaleString('en-IN'); 
 
-    const recentEnq = e.data?.slice(0, 5) || [];
-    document.getElementById('table_recent_enq').innerHTML = recentEnq.map(x => `<tr><td>${escapeHTML(x.name)}</td><td>${escapeHTML(x.destination || 'N/A')}</td><td>${escapeHTML(x.status || 'New')}</td></tr>`).join('');
+    // Recent enquiries (still need a separate fetch for display)
+    const { data: recentEnqData } = await sb.from('enquiries')
+        .select('name, destination, status')
+        .order('created_at', { ascending: false })
+        .limit(5);
+    document.getElementById('table_recent_enq').innerHTML = (recentEnqData || []).map(x => `<tr><td>${escapeHTML(x.name)}</td><td>${escapeHTML(x.destination || 'N/A')}</td><td>${escapeHTML(x.status || 'New')}</td></tr>`).join('');
 
     const now = new Date();
     const future = new Date();
@@ -1254,7 +1276,9 @@ function openPkgModal() {
     document.getElementById('pkgFormModal').style.display = 'block';
     document.getElementById('m_pkg_id').value = '';
     document.getElementById('pkg_modal_title').innerText = 'Add Package';
-    document.querySelectorAll('#pkgFormModal input, #pkgFormModal textarea').forEach(i => { if(i.type !== 'hidden' && i.type !== 'file') i.value = ''; });
+    document.querySelectorAll('#pkgFormModal input, #pkgFormModal textarea').forEach(i => { if(i.type !== 'hidden') i.value = ''; });
+    document.getElementById('m_pkg_img').value = '';
+    document.getElementById('m_pkg_gallery').value = '';
     document.getElementById('m_pkg_img').dataset.existing = '';
     currentGallery = []; renderGalleryPreview(); currentItinerary = []; renderItinEditor(); loadDestDropdown();
 }
@@ -1317,7 +1341,9 @@ async function savePackage() {
 }
 
 function updateBulkBar(type) {
-    const checkboxes = document.querySelectorAll(`.${type}-checkbox:checked`);
+    let selector = '.package-checkbox:checked';
+    if (type === 'destinations') selector = '.destination-checkbox:checked';
+    const checkboxes = document.querySelectorAll(selector);
     const bar = document.getElementById(type === 'packages' ? 'pkg-bulk-actions' : 'dest-bulk-actions');
     if (bar) bar.style.display = checkboxes.length > 0 ? 'flex' : 'none';
 }
@@ -1411,6 +1437,15 @@ async function loadAdminEnquiries() {
     document.getElementById('table_enquiries').innerHTML = (data||[]).map(e => `<tr><td>${escapeHTML(e.name)}<br>${escapeHTML(e.email)}<br>${escapeHTML(e.phone)}</td><td>Dest: ${escapeHTML(e.destination || 'N/A')}<br>Pkg: ${escapeHTML(e.packages?.title || 'N/A')}<br>Dates: ${escapeHTML(e.travel_dates || 'N/A')}<br>Budget: ₹${escapeHTML(e.budget || 'N/A')}</td><td><select class="status-dropdown" onchange="changeStatus('enquiries', '${escapeHTML(e.id)}', this.value)"><option ${e.status === 'New' ? 'selected' : ''}>New</option><option ${e.status === 'Contacted' ? 'selected' : ''}>Contacted</option><option ${e.status === 'Quotation Sent' ? 'selected' : ''}>Quotation Sent</option><option ${e.status === 'Follow-up' ? 'selected' : ''}>Follow-up</option><option ${e.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option><option ${e.status === 'Completed' ? 'selected' : ''}>Completed</option><option ${e.status === 'Lost' ? 'selected' : ''}>Lost</option></select><br><textarea placeholder="Internal Notes" onchange="saveNote('${escapeHTML(e.id)}', this.value)" style="margin-top:5px; width:100%; font-size:12px;">${escapeHTML(e.internal_notes || '')}</textarea></td><td><button class="btn btn-green" style="background:var(--green); color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-bottom:5px;" onclick="createBookingFromEnquiry('${escapeHTML(e.id)}')">Create Booking</button></td></tr>`).join('');
 }
 
+function csvCell(value) {
+    if (value === null || value === undefined) return '';
+    const str = String(value);
+    if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+        return '"' + str.replace(/"/g, '""') + '"';
+    }
+    return str;
+}
+
 function exportEnquiries() {
     const rows = [['Name', 'Email', 'Phone', 'Destination', 'Travel Dates', 'Budget', 'Status']];
     document.querySelectorAll('#table_enquiries tr').forEach(tr => {
@@ -1418,9 +1453,15 @@ function exportEnquiries() {
         if (tds.length < 3) return;
         const info = tds[0].innerText.split('\n');
         const details = tds[1].innerText.split('\n');
-        rows.push([info[0], info[1], info[2], details[0].replace('Dest: ', ''), details[2].replace('Dates: ', ''), details[3].replace('Budget: ₹', ''), tds[2].innerText.split('\n')[0]]);
+        rows.push([
+            info[0], info[1], info[2],
+            details[0].replace('Dest: ', ''),
+            details[2].replace('Dates: ', ''),
+            details[3].replace('Budget: ₹', ''),
+            tds[2].innerText.split('\n')[0]
+        ]);
     });
-    const csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
+    const csvContent = "data:text/csv;charset=utf-8," + rows.map(row => row.map(csvCell).join(",")).join("\n");
     const link = document.createElement("a");
     link.href = encodeURI(csvContent);
     link.download = "via_tours_enquiries.csv";
@@ -1431,12 +1472,16 @@ async function saveNote(id, text) { await sb.from('enquiries').update({ internal
 async function changeStatus(table, id, status) { await sb.from(table).update({ status }).eq('id', id); loadAdminStats(); if (table === 'enquiries') loadAdminEnquiries(); }
 
 async function createBookingFromEnquiry(enqId) {
-    const { data: enq, error } = await sb.from('enquiries').select('id, name, email, phone, destination, package_id, travel_dates').eq('id', enqId).single();
+    const { data: enq, error } = await sb.from('enquiries')
+        .select('id, name, email, phone, destination, package_id, travel_dates, travelers')
+        .eq('id', enqId)
+        .single();
     if (error || !enq) { showToast('Enquiry not found.', 'error'); return; }
     document.getElementById('bookFormModal').style.display = 'block';
     document.getElementById('m_book_date').value = enq.travel_dates || '';
     document.getElementById('m_book_customer_name').value = enq.name || '';
-    document.getElementById('m_book_travelers').value = parseInt(enq.travelers) || 1;
+    const travelers = parseInt(enq.travelers);
+    document.getElementById('m_book_travelers').value = (travelers > 0) ? travelers : 1;
     if (enq.package_id) {
         const { data: pkg } = await sb.from('packages').select('id, title').eq('id', enq.package_id).maybeSingle();
         if (pkg) document.getElementById('m_book_package_name').value = pkg.title;
@@ -1452,7 +1497,7 @@ async function saveCustNote(id, text) { await sb.from('customers').update({ note
 
 async function loadAdminBookings() {
     const { data } = await sb.from('bookings').select('id, travel_date, total_amount, amount_paid, balance, booking_status, customer_name, package_name').order('travel_date', { ascending: false });
-    document.getElementById('table_bookings').innerHTML = (data||[]).map(b => `<tr><td>${escapeHTML(b.customer_name || 'N/A')}</td><td>${escapeHTML(b.package_name || 'N/A')}</td><td>${new Date(b.travel_date).toLocaleDateString()}</td><td>₹${Number(b.total_amount).toLocaleString('en-IN')}<br>(Paid: ₹${Number(b.amount_paid).toLocaleString('en-IN')})</td><td>${escapeHTML(b.booking_status)}</td></tr>`).join('');
+    document.getElementById('table_bookings').innerHTML = (data||[]).map(b => `<tr><td>${escapeHTML(b.customer_name || 'N/A')}</td><td>${escapeHTML(b.package_name || 'N/A')}</td><td>${b.travel_date ? new Date(b.travel_date).toLocaleDateString() : 'N/A'}</td><td>₹${Number(b.total_amount).toLocaleString('en-IN')}<br>(Paid: ₹${Number(b.amount_paid).toLocaleString('en-IN')})</td><td>${escapeHTML(b.booking_status)}</td></tr>`).join('');
 }
 
 function openBookModal() {
