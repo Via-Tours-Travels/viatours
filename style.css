@@ -285,3 +285,27 @@ footer { margin-top:0 !important; }
 .article-body a { color:var(--brand-blue); text-decoration:underline; text-underline-offset:3px; }
 .article-body blockquote { margin:32px 0; padding:18px 24px; border-left:4px solid var(--brand-orange); background:#fff7ed; color:#334155; font-size:1.14rem; font-style:italic; }
 @media (max-width:768px) { .blog-index { padding-top:48px; } .blog-intro { margin-bottom:34px; } .article-header { text-align:left; } .article-header .blog-meta { justify-content:flex-start; } .article-hero-image { border-radius:14px; } .article-body { margin-top:32px; font-size:1rem; } }
+
+/* Rich long-form reading layout */
+.article-shell { padding:28px 0 86px; }
+.article-kicker { display:inline-flex; align-items:center; gap:8px; margin-bottom:15px; color:#c2410c; background:#fff7ed; padding:7px 11px; border-radius:999px; font-size:.72rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; }
+.article-reading-layout { display:grid; grid-template-columns:220px minmax(0,720px); justify-content:center; gap:56px; max-width:1020px; margin:42px auto 0; align-items:start; }
+.article-aside { position:sticky; top:112px; }
+.article-toc { border-left:2px solid #dbeafe; padding:4px 0 5px 17px; }
+.article-toc p { margin:0 0 12px; color:#172554; font-size:.78rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+.article-toc a { display:block; padding:6px 0; color:#64748b; font-size:.84rem; line-height:1.35; }
+.article-toc a:hover { color:var(--brand-blue); }
+.article-toc .toc-subitem { padding-left:10px; font-size:.79rem; }
+.trip-help-card { margin-top:28px; padding:21px; border-radius:16px; background:linear-gradient(145deg,#172554,#1e3a8a); color:#fff; box-shadow:0 18px 30px rgba(30,58,138,.2); }
+.trip-help-card > i { color:#fdba74; font-size:1.35rem; }
+.trip-help-card h3 { color:#fff; font-size:1.03rem; margin:13px 0 7px; }
+.trip-help-card p { color:#dbeafe; font-size:.84rem; line-height:1.55; margin-bottom:16px; }
+.trip-help-card .btn { width:100%; min-height:40px; padding:9px 12px; background:#fff; color:#1d4ed8; font-size:.8rem; }
+.article-main .article-body { max-width:none; margin:0; padding-bottom:2px; }
+.article-main .btn-outline { margin-top:34px; }
+.article-body > p:first-child { font-size:1.2rem; line-height:1.8; color:#334155; }
+.article-body strong { color:#172554; font-weight:800; }
+.article-body img { width:100%; border-radius:14px; margin:30px 0; }
+.article-body hr { border:0; border-top:1px solid #e2e8f0; margin:34px 0; }
+@media (max-width:900px) { .article-reading-layout { grid-template-columns:minmax(0,720px); max-width:720px; margin-top:32px; } .article-aside { position:static; display:grid; grid-template-columns:1fr 1fr; gap:16px; } .trip-help-card { margin-top:0; } }
+@media (max-width:600px) { .article-shell { padding-top:8px; } .article-reading-layout { margin-top:25px; } .article-aside { display:block; } .article-toc { margin-bottom:18px; } .article-header h1 { font-size:2.35rem; } .article-deck { font-size:1.04rem; } .article-body > p:first-child { font-size:1.08rem; } }

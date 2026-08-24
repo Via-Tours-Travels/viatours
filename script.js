@@ -461,14 +461,18 @@ async function loadBlogPost(slugOrId) {
     contentDiv.className = 'blog-content article-body';
     contentDiv.innerHTML = DOMPurify.sanitize(b.content || '');  // Render HTML because admin provides formatted content
 
-    document.getElementById('blog_details_container').innerHTML = `<article class="article-shell"><header class="article-header"><a class="article-back" onclick="navTo('blog')"><i class="fas fa-arrow-left"></i> All travel stories</a><div class="blog-meta"><span>Via Journal</span><time datetime="${escapeHTML(b.created_at || '')}">${new Date(b.created_at).toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' })}</time><span>5 min read</span></div><h1>${escapeHTML(b.title)}</h1><p class="article-deck">${escapeHTML(b.excerpt || '')}</p></header><img class="article-hero-image" src="${escapeHTML(b.image_url || 'https://via.placeholder.com/1200x675')}" alt="${escapeHTML(b.title)}"></article>`;
-    document.getElementById('blog_details_container').appendChild(contentDiv);
+    const headings = Array.from(contentDiv.querySelectorAll('h2, h3'));
+    headings.forEach((heading, index) => { heading.id = heading.id || `article-section-${index + 1}`; });
+    const tableOfContents = headings.length ? `<nav class="article-toc" aria-label="On this page"><p>In this guide</p>${headings.map(heading => `<a href="#${heading.id}" class="${heading.tagName === 'H3' ? 'toc-subitem' : ''}">${escapeHTML(heading.textContent)}</a>`).join('')}</nav>` : '';
+
+    document.getElementById('blog_details_container').innerHTML = `<article class="article-shell"><header class="article-header"><a class="article-back" onclick="navTo('blog')"><i class="fas fa-arrow-left"></i> All travel stories</a><span class="article-kicker"><i class="fas fa-compass"></i> Expert travel advice</span><div class="blog-meta"><span>Via Journal</span><time datetime="${escapeHTML(b.created_at || '')}">${new Date(b.created_at).toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' })}</time><span>5 min read</span></div><h1>${escapeHTML(b.title)}</h1><p class="article-deck">${escapeHTML(b.excerpt || '')}</p></header><img class="article-hero-image" src="${escapeHTML(b.image_url || 'https://via.placeholder.com/1200x675')}" alt="${escapeHTML(b.title)}"><div class="article-reading-layout"><aside class="article-aside">${tableOfContents}<div class="trip-help-card"><i class="fas fa-suitcase-rolling"></i><h3>Make this trip yours</h3><p>Get a tailored plan from a Via travel expert.</p><button class="btn btn-blue" onclick="navTo('plan-trip')">Plan my trip</button></div></aside><div class="article-main"></div></div></article>`;
+    document.querySelector('.article-main').appendChild(contentDiv);
     const backBtn = document.createElement('button');
     backBtn.className = 'btn btn-outline';
     backBtn.style.marginTop = '36px';
     backBtn.innerHTML = '<i class="fas fa-arrow-left"></i> Back to Blog';
     backBtn.onclick = () => navTo('blog');
-    document.getElementById('blog_details_container').appendChild(backBtn);
+    document.querySelector('.article-main').appendChild(backBtn);
 }
 
 async function loadHomeFaqs() {
