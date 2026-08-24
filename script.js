@@ -82,24 +82,60 @@ if (isSidebarCollapsed) {
 function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
 function toggleChat() { document.getElementById('chatWindow').classList.toggle('active'); }
 
+function setMeta(selector, attribute, value) {
+    let element = document.querySelector(selector);
+    if (!element) { element = document.createElement('meta'); document.head.appendChild(element); }
+    const [name, key] = attribute.split('=');
+    element.setAttribute(name, key);
+    element.content = value || '';
+}
+
 function updateSEO(title, desc) {
     document.title = title;
     let metaDesc = document.querySelector('meta[name="description"]');
     if (!metaDesc) { metaDesc = document.createElement('meta'); metaDesc.name = 'description'; document.head.appendChild(metaDesc); }
     metaDesc.content = desc;
+    setMeta('meta[property="og:title"]', 'property=og:title', title);
+    setMeta('meta[property="og:description"]', 'property=og:description', desc);
+    setMeta('meta[name="twitter:title"]', 'name=twitter:title', title);
+    setMeta('meta[name="twitter:description"]', 'name=twitter:description', desc);
+}
+
+function setArticleSchema(post, url) {
+    document.getElementById('article-schema')?.remove();
+    const schema = document.createElement('script');
+    schema.id = 'article-schema';
+    schema.type = 'application/ld+json';
+    schema.textContent = JSON.stringify({
+        '@context': 'https://schema.org', '@type': 'BlogPosting',
+        headline: post.title, description: post.meta_description || post.excerpt || '',
+        image: post.image_url ? [post.image_url] : undefined,
+        datePublished: post.created_at, dateModified: post.updated_at || post.created_at,
+        mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+        author: { '@type': 'Organization', name: 'Via Tours & Travels' },
+        publisher: { '@type': 'Organization', name: 'Via Tours & Travels' }
+    });
+    document.head.appendChild(schema);
 }
 
 function navTo(page, id = null) {
     document.getElementById('navMenu').classList.remove('active');
+    if (page === 'blog-post' && id) {
+        history.pushState({}, '', '/blog/' + encodeURIComponent(id));
+        router();
+        return;
+    }
     if (id) window.location.hash = '#/' + page + '/' + id;
     else window.location.hash = '#/' + page;
 }
 
 async function router() {
+    const pathParts = window.location.pathname.split('/').filter(Boolean);
+    const isBlogArticle = pathParts[0] === 'blog' && pathParts[1];
     const hash = window.location.hash || '#/home';
     const parts = hash.split('/');
-    const page = parts[1] || 'home';
-    const id = parts[2];
+    const page = isBlogArticle ? 'blog-post' : (parts[1] || 'home');
+    const id = isBlogArticle ? decodeURIComponent(pathParts.slice(1).join('/')) : parts[2];
     const siteWrapper = document.getElementById('site-wrapper');
     const adminWrapper = document.getElementById('admin-wrapper');
 
@@ -136,6 +172,7 @@ async function router() {
     }
 }
 window.addEventListener('hashchange', router);
+window.addEventListener('popstate', router);
 window.addEventListener('load', router);
 
 async function loadSettings() {
@@ -397,7 +434,7 @@ document.getElementById('planTripForm').addEventListener('submit', async (e) => 
 async function loadBlog() {
     const { data, error } = await sb.from('blog_posts').select('id, slug, title, excerpt, image_url, created_at').eq('is_published', true).order('created_at', { ascending: false });
     if (error) { document.getElementById('list_blog').innerHTML = '<p class="text-center" style="grid-column:1/-1;">Error loading blogs.</p>'; return; }
-    document.getElementById('list_blog').innerHTML = (data||[]).length ? data.map(b => `<div class="card" onclick="navTo('blog-post', '${escapeHTML(b.slug || b.id)}')"><img src="${escapeHTML(b.image_url || 'https://via.placeholder.com/400x300')}" alt="${escapeHTML(b.title)}"><div class="card-body"><span class="tag">${new Date(b.created_at).toLocaleDateString()}</span><h3>${escapeHTML(b.title)}</h3><p class="blog-excerpt">${escapeHTML(b.excerpt || '')}</p><span style="color:var(--brand-blue); font-weight:600;">Read More <i class="fas fa-arrow-right"></i></span></div></div>`).join('') : '<p class="text-center" style="grid-column:1/-1;">No blog posts yet.</p>';
+    document.getElementById('list_blog').innerHTML = (data||[]).length ? data.map(b => `<article class="card blog-card" onclick="navTo('blog-post', '${escapeHTML(b.slug || b.id)}')"><img src="${escapeHTML(b.image_url || 'https://via.placeholder.com/400x300')}" alt="${escapeHTML(b.title)}" loading="lazy"><div class="card-body"><div class="blog-meta"><span>Via Journal</span><time datetime="${escapeHTML(b.created_at || '')}">${new Date(b.created_at).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' })}</time></div><h2>${escapeHTML(b.title)}</h2><p class="blog-excerpt">${escapeHTML(b.excerpt || '')}</p><span class="read-story">Read the story <i class="fas fa-arrow-right"></i></span></div></article>`).join('') : '<p class="text-center" style="grid-column:1/-1;">No blog posts yet.</p>';
 }
 
 async function loadBlogPost(slugOrId) {
@@ -409,19 +446,26 @@ async function loadBlogPost(slugOrId) {
 
     if (error || !b) { document.getElementById('blog_details_container').innerHTML = '<p>Blog post not found. <a onclick="navTo(\'blog\')" style="color:var(--brand-blue); cursor:pointer;">Back to Blog</a></p>'; return; }
 
-    if (b.meta_title) updateSEO(b.meta_title, b.meta_description || b.excerpt);
-    else updateSEO(b.title + ' - Via Tours Blog', b.excerpt || 'Read our latest blog post.');
+    const articleUrl = window.location.origin + '/blog/' + encodeURIComponent(b.slug || b.id);
+    updateSEO(b.meta_title || (b.title + ' | Via Tours & Travels'), b.meta_description || b.excerpt || 'Travel advice from Via Tours & Travels.');
+    setMeta('meta[property="og:type"]', 'property=og:type', 'article');
+    setMeta('meta[property="og:url"]', 'property=og:url', articleUrl);
+    setMeta('meta[property="og:image"]', 'property=og:image', b.image_url || '');
+    setMeta('meta[name="twitter:card"]', 'name=twitter:card', 'summary_large_image');
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
+    canonical.href = articleUrl;
+    setArticleSchema(b, articleUrl);
 
     const contentDiv = document.createElement('div');
-    contentDiv.className = 'blog-content';
-    contentDiv.style.marginTop = '20px';
+    contentDiv.className = 'blog-content article-body';
     contentDiv.innerHTML = DOMPurify.sanitize(b.content || '');  // Render HTML because admin provides formatted content
 
-    document.getElementById('blog_details_container').innerHTML = `<img src="${escapeHTML(b.image_url || 'https://via.placeholder.com/800x400')}" style="width:100%; height:400px; object-fit:cover; border-radius:12px; margin-bottom:30px;"><span class="tag">${new Date(b.created_at).toLocaleDateString()}</span><h1>${escapeHTML(b.title)}</h1>`;
+    document.getElementById('blog_details_container').innerHTML = `<article class="article-shell"><header class="article-header"><a class="article-back" onclick="navTo('blog')"><i class="fas fa-arrow-left"></i> All travel stories</a><div class="blog-meta"><span>Via Journal</span><time datetime="${escapeHTML(b.created_at || '')}">${new Date(b.created_at).toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' })}</time><span>5 min read</span></div><h1>${escapeHTML(b.title)}</h1><p class="article-deck">${escapeHTML(b.excerpt || '')}</p></header><img class="article-hero-image" src="${escapeHTML(b.image_url || 'https://via.placeholder.com/1200x675')}" alt="${escapeHTML(b.title)}"></article>`;
     document.getElementById('blog_details_container').appendChild(contentDiv);
     const backBtn = document.createElement('button');
     backBtn.className = 'btn btn-outline';
-    backBtn.style.marginTop = '40px';
+    backBtn.style.marginTop = '36px';
     backBtn.innerHTML = '<i class="fas fa-arrow-left"></i> Back to Blog';
     backBtn.onclick = () => navTo('blog');
     document.getElementById('blog_details_container').appendChild(backBtn);
