@@ -527,20 +527,43 @@ footer { margin-top:0 !important; }
 
 /* Fixes for mobile CTA and hero spacing to avoid overlap */
 @media (max-width: 520px) {
-    .hero { height: auto; min-height: 360px; padding: 36px 0 24px; display:block; }
-    .hero h1 { font-size: 1.8rem; line-height:1.15; }
-    .hero p { font-size: 0.95rem; }
+    .hero { height: auto; min-height: 36vh; padding: 36px 0 24px; display:block; }
+    .hero h1 { font-size: clamp(1.4rem, 4.5vw, 1.9rem); line-height:1.15; }
+    .hero p { font-size: clamp(0.9rem, 2.3vw, 1rem); }
     .hero .search-box { grid-template-columns: 1fr; padding:14px; }
-    .cta-actions { flex-direction:column; gap:12px; margin-top: 18px; }
+    .cta-actions { flex-direction:column; gap:12px; margin-top: 18px; position: relative; }
     .cta-actions .btn { width: calc(100% - 32px); max-width: 420px; margin: 0 auto; }
     .btn-primary { padding:12px 18px; border-radius:10px; }
 }
 
 @media (max-width: 420px) {
-    .hero { min-height: 320px; padding-top:28px; }
-    .hero h1 { font-size:1.6rem; }
+    .hero { min-height: 32vh; padding-top:28px; }
+    .hero h1 { font-size: clamp(1.2rem, 5vw, 1.6rem); }
     .cta-actions .btn { width: calc(100% - 24px); }
 }
+
+/* Mobile sticky CTA when body has class set by JS */
+.mobile-cta-sticky .cta-actions {
+    position: fixed !important;
+    left: 12px;
+    right: 12px;
+    bottom: calc(env(safe-area-inset-bottom, 18px) + 84px);
+    z-index: 12000;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    background: transparent;
+}
+
+/* If site has chat bubble in corner, lift sticky CTA higher to avoid overlap */
+@media (max-width: 520px) {
+    .mobile-cta-sticky .cta-actions { bottom: calc(env(safe-area-inset-bottom, 18px) + 100px); }
+}
+
+@media (max-width: 380px) {
+    .mobile-cta-sticky .cta-actions { left: 8px; right: 8px; bottom: calc(env(safe-area-inset-bottom, 12px) + 100px); }
+}
+
 
 /* Rich long-form reading layout */
 .article-shell { padding:28px 0 86px; }

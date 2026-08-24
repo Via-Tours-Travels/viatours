@@ -221,9 +221,28 @@ async function router() {
 }
 window.addEventListener('hashchange', router);
 window.addEventListener('popstate', router);
+
+function adjustLayout() {
+    const header = document.querySelector('.header');
+    const siteWrapper = document.getElementById('site-wrapper');
+    const headerH = header ? header.offsetHeight : 0;
+    // Expose header height as CSS variable and ensure content isn't hidden under header
+    document.documentElement.style.setProperty('--header-height', headerH + 'px');
+    if (siteWrapper) siteWrapper.style.paddingTop = headerH + 'px';
+
+    // Decide when to show mobile sticky CTA automatically
+    const mobileThreshold = 520; // px
+    if (window.innerWidth <= mobileThreshold) document.body.classList.add('mobile-cta-sticky');
+    else document.body.classList.remove('mobile-cta-sticky');
+}
+
+window.addEventListener('resize', adjustLayout);
+window.addEventListener('orientationchange', () => setTimeout(adjustLayout, 200));
+
 window.addEventListener('load', () => {
     router();
     maybeShowTripModal();
+    adjustLayout();
 });
 
 const tripModalBackdrop = document.getElementById('tripModal');
