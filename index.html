@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Via Tours & Travels - Premium travel agency offering custom packages, flights, and hotels worldwide.">
+<title>Via Tours & Travels — Premium Travel Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="scrollProgress"></div>
+<div id="preloader">
+    <div style="text-align:center;">
+        <div class="loader-plane">✈️</div>
+        <div class="loader-text">VIA TOURS</div>
+    </div>
+</div>
+
+
+<div id="site-wrapper">
+    <header class="header">
+        <div class="container header-in">
+            <div class="logo-wrap" onclick="navTo('home')">
+                <img src="https://goqwtovltftehautxekh.supabase.co/storage/v1/object/public/package-images/Via%20tours%20&%20travels.png" alt="Via Tours Logo" style="height:70px;">
+                <div class="logo-txt"><strong>Via</strong><span>Tours & Travels</span></div>
+            </div>
+            <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Toggle navigation menu"><i class="fas fa-bars"></i></button>
+            <nav class="nav-menu" id="navMenu">
+                <a onclick="navTo('home')">Home</a>
+                <a onclick="navTo('destinations')">Destinations</a>
+                <a onclick="navTo('packages')">Packages</a>
+                <a onclick="navTo('blog')">Blog</a>
+                <a onclick="navTo('about')">About Us</a>
+                <a onclick="navTo('contact')">Contact</a>
+                <a onclick="navTo('plan-trip')" class="btn btn-primary" style="padding:8px 20px;">Plan My Trip</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="app-main">
+        <div id="page-home" class="page-view" style="padding:0;">
+            <div class="hero">
+                <picture>
+    <source srcset="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=80&fm=webp" type="image/webp">
+    <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=60" alt="Travel" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+</picture>
+                <div class="hero-overlay"></div>
+                <div class="container hero-content">
+                    <span class="eyebrow light">Curated journeys. Seamless travel.</span>
+                    <h1>Travel beautifully.<br>Leave the details to us.</h1>
+                    <p>Thoughtfully designed holidays, trusted local expertise, and support from the first idea to your return home.</p>
+                    <div class="search-box">
+                        <div class="form-sec" style="margin:0;"><label for="hero_dest">Destination</label><input type="text" placeholder="Where would you like to go?" id="hero_dest"></div>
+                        <div class="form-sec" style="margin:0;"><label for="hero_date">Departure date</label><input type="date" id="hero_date"></div>
+                        <div class="form-sec" style="margin:0;"><label for="hero_travellers">Travelers</label><select id="hero_travellers"><option>2 Adults</option><option>Family</option><option>Solo traveler</option><option>Group</option></select></div>
+                        <button class="btn btn-blue" style="align-self:flex-end;" onclick="searchFromHero()"><i class="fas fa-compass"></i> Explore</button>
+                    </div>
+                    <div class="hero-proof"><span><i class="fas fa-shield-heart"></i> Trusted travel planning</span><span><i class="fas fa-headset"></i> Dedicated support</span><span><i class="fas fa-star"></i> Tailor-made itineraries</span></div>
+                </div>
+            </div>
+
+            <div class="container section-pad">
+                <div class="section-heading text-center"><span class="eyebrow">Inspired escapes</span><h2>Places made for memorable stories</h2><p>Handpicked destinations, each with a journey worth taking.</p></div>
+                <div class="grid-4" id="home_destinations"><p class="text-center" style="grid-column:1/-1;">Loading...</p></div>
+            </div>
+
+            <div class="container section-pad" style="background:var(--bg-light);">
+                <div class="section-heading text-center"><span class="eyebrow">Travel with ease</span><h2>Featured journeys</h2><p>Beautifully planned packages with room to make them yours.</p></div>
+                <div class="grid-3" id="home_packages"><p class="text-center" style="grid-column:1/-1;">Loading...</p></div>
+            </div>
+
+            <div class="container section-pad">
+                <div class="grid-3 service-grid">
+                    <div class="service-item"><span class="service-icon"><i class="fas fa-medal"></i></span><h4>Travel with confidence</h4><p>Considered recommendations and experienced planning for every kind of trip.</p></div>
+                    <div class="service-item"><span class="service-icon"><i class="fas fa-headset"></i></span><h4>Real people, real support</h4><p>Your travel expert is on hand before, during, and after your journey.</p></div>
+                    <div class="service-item"><span class="service-icon"><i class="fas fa-map-marked-alt"></i></span><h4>Made around you</h4><p>Every route, stay, and experience can be shaped around what matters to you.</p></div>
+                </div>
+            </div>
+
+            <div class="container section-pad" style="background:var(--bg-light);">
+                <div class="section-heading text-center"><span class="eyebrow">Simple by design</span><h2>Your journey, expertly handled</h2></div>
+                <div class="grid-4 journey-steps">
+                    <div class="journey-step"><span>01</span><i class="fas fa-search"></i><h4>Share your idea</h4><p>Tell us where you want to go and how you like to travel.</p></div>
+                    <div class="journey-step"><span>02</span><i class="fas fa-file-signature"></i><h4>Receive your plan</h4><p>We shape a clear, personal itinerary around your needs.</p></div>
+                    <div class="journey-step"><span>03</span><i class="fas fa-check-circle"></i><h4>Confirm with ease</h4><p>Review everything, then book with a dedicated specialist.</p></div>
+                    <div class="journey-step"><span>04</span><i class="fas fa-plane-departure"></i><h4>Travel freely</h4><p>Enjoy the journey while we remain just a message away.</p></div>
+                </div>
+            </div>
+
+            <div class="container section-pad">
+                <div class="text-center" style="margin-bottom:40px;"><h2>Travel Blog</h2><p>Tips, stories, and inspiration.</p></div>
+                <div class="grid-3" id="home_blog"><p class="text-center" style="grid-column:1/-1;">Loading...</p></div>
+            </div>
+
+            <div class="container section-pad" style="background:var(--bg-light);">
+                <div class="text-center" style="margin-bottom:40px;"><h2>What Our Travelers Say</h2></div>
+                <div class="grid-3" id="home_testimonials"><p class="text-center" style="grid-column:1/-1;">Loading...</p></div>
+            </div>
+
+            <div class="container section-pad" style="background:var(--bg-light);">
+                <div class="text-center" style="margin-bottom:40px;"><h2>Frequently Asked Questions</h2></div>
+                <div id="home_faqs" style="max-width:800px; margin:0 auto;"><p class="text-center">Loading...</p></div>
+            </div>
+
+            <div class="hero cta-hero" style="height:40vh; min-height:300px;">
+    <picture>
+        <source srcset="https://images.unsplash.com/photo-1528127269322-539801943592?w=1200&q=80&fm=webp" type="image/webp">
+        <img src="https://images.unsplash.com/photo-1528127269322-539801943592?w=1200&q=60" alt="Call to action" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+    </picture>
+    <div class="hero-overlay"></div>
+                <div class="container">
+                    <span class="eyebrow light">Your next chapter starts here</span>
+                    <h2 style="color:#fff;">Ready to make the journey yours?</h2>
+                    <p>Tell us what you are dreaming of. We will take care of the rest.</p>
+                    <div class="cta-actions"><button class="btn btn-primary" onclick="navTo('plan-trip')">Plan My Trip <i class="fas fa-arrow-right"></i></button><button class="btn btn-glass" onclick="toggleChat()"><i class="fas fa-comment-dots"></i> Ask a question</button></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-destinations" class="page-view container">
+            <h2>Explore Destinations</h2>
+            <div class="filter-bar" style="margin-top:20px;">
+                <input type="text" id="dest-search" placeholder="Search destinations..." oninput="debounceDestSearch()">
+                <select id="dest-country-filter" onchange="loadDestinations()"><option value="">All Countries</option></select>
+                <select id="dest-sort" onchange="loadDestinations()">
+                    <option value="name_asc">Name A-Z</option>
+                    <option value="name_desc">Name Z-A</option>
+                    <option value="country_asc">Country A-Z</option>
+                </select>
+                <button class="btn btn-outline" onclick="resetDestFilters()">Reset</button>
+            </div>
+            <div id="list_destinations" style="margin-top:30px;"><p class="text-center">Loading...</p></div>
+        </div>
+
+        <div id="page-packages" class="page-view container">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:15px;">
+                <h2>Travel Packages</h2>
+                <input type="text" id="pkg_search" placeholder="Search packages..." oninput="debounceSearch()" style="padding:10px; border:1px solid var(--border); border-radius:8px; width:300px; max-width:100%;">
+            </div>
+            <div class="filter-bar">
+                <select id="filter-destination" onchange="loadPackages()"><option value="">All Destinations</option></select>
+                <select id="filter-category" onchange="loadPackages()">
+                    <option value="">All Categories</option>
+                    <option value="Adventure">Adventure</option>
+                    <option value="Family">Family</option>
+                    <option value="Honeymoon">Honeymoon</option>
+                    <option value="Luxury">Luxury</option>
+                </select>
+                <input type="number" id="filter-min-price" placeholder="Min ₹" oninput="debounceSearch()">
+                <input type="number" id="filter-max-price" placeholder="Max ₹" oninput="debounceSearch()">
+                <select id="pkg_sort" onchange="loadPackages()">
+                    <option value="new">Newest First</option>
+                    <option value="price_asc">Price: Low to High</option>
+                    <option value="price_desc">Price: High to Low</option>
+                </select>
+                <button class="btn btn-outline" onclick="clearFilter()">Clear</button>
+            </div>
+            <div class="grid-3" id="list_packages"></div>
+        </div>
+
+        <div id="page-package" class="page-view container"><div id="pkg_details_container">Loading...</div></div>
+        <div id="page-blog" class="page-view container blog-index"><div class="blog-intro"><span class="eyebrow">The Via Journal</span><h1>Travel better, before you even leave.</h1><p>Practical guides, destination inspiration, and thoughtful advice from the people who plan journeys every day.</p></div><div class="grid-3 blog-grid" id="list_blog"><p class="text-center" style="grid-column:1/-1;">Loading stories...</p></div></div>
+        <div id="page-blog-post" class="page-view container" style="max-width:800px;"><div id="blog_details_container">Loading...</div></div>
+
+        <div id="page-plan-trip" class="page-view container" style="max-width:800px;">
+            <h2 class="text-center">Plan My Trip</h2>
+            <p class="text-center" style="margin-bottom:30px;">Tell us your dream vacation, and we will make it happen.</p>
+            <form id="planTripForm" style="background:var(--bg-light); padding:30px; border-radius:12px;">
+                <input type="hidden" id="pt_pkg_id">
+                <!-- Honeypot field (spam trap) -->
+<input type="text" id="honeypot" name="honeypot" style="display:none" tabindex="-1" autocomplete="off">
+                <div class="form-grid-2">
+                    <div class="form-sec"><label>Full Name</label><input type="text" id="pt_name" required></div>
+                    <div class="form-sec"><label>Email</label><input type="email" id="pt_email" required></div>
+                    <div class="form-sec"><label>Phone</label><input type="text" id="pt_phone" required></div>
+                    <div class="form-sec"><label>Destination</label><input type="text" id="pt_dest"></div>
+                    <div class="form-sec"><label>Travel Date</label><input type="date" id="pt_dates"></div>
+                    <div class="form-sec"><label>Number of Travelers</label><input type="number" id="pt_travelers"></div>
+                    <div class="form-sec"><label>Budget (INR ₹)</label><input type="text" id="pt_budget"></div>
+                    <div class="form-sec"><label>Hotel Preference</label><select id="pt_hotel"><option>3 Star</option><option>4 Star</option><option>5 Star</option></select></div>
+                </div>
+                <div class="form-sec"><label>Specific Requirements</label><textarea id="pt_req" rows="4"></textarea></div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Submit Enquiry</button>
+            </form>
+        </div>
+
+        <div id="page-about" class="page-view container" style="max-width:800px; text-align:center;"><h2>About Via Tours & Travels</h2><p style="margin-top:20px;">We are a premium travel agency dedicated to creating unforgettable experiences. Since 2009, we have helped thousands of travelers explore the globe.</p></div>
+        <div id="page-contact" class="page-view container" style="max-width:800px; text-align:center;"><h2>Contact Us</h2><p style="margin-top:20px;" id="contact_info">Loading...</p></div>
+        <div id="page-terms" class="page-view container" style="max-width:800px;">
+            <h2>Terms & Conditions</h2>
+            <p style="margin-bottom:15px;"><strong>Last Updated: February 2025</strong></p>
+            <p>Welcome to Via Tours & Travels. By using our website and submitting enquiries, you agree to the following terms and conditions:</p>
+            <br><h4>1. Services Provided</h4>
+            <p>Via Tours & Travels provides travel consultation, itinerary planning, and booking assistance for domestic and international tours. We act as a facilitator between you and various travel service providers. We do not process online payments directly on our website at this time. All financial transactions will be handled directly between the client and our agency via verified bank transfers or payment links.</p>
+            <br><h4>2. Bookings & Enquiries</h4>
+            <p>When you submit a "Plan My Trip" enquiry, our team will contact you to discuss your requirements, provide a quotation, and finalize the itinerary. A booking is only considered confirmed after an advance payment is received and acknowledged by Via Tours & Travels.</p>
+            <br><h4>3. Pricing & Taxes</h4>
+            <p>All package prices are listed in Indian Rupees (INR ₹). Prices are subject to change based on hotel availability, flight fares, and seasonal surcharges. Applicable taxes will be included in your final quotation.</p>
+            <br><h4>4. Travel Documents</h4>
+            <p>It is the sole responsibility of the traveler to possess valid identification, passports, and required visas. Via Tours & Travels provides documentation assistance but is not liable for the rejection of visas or delays caused by government authorities.</p>
+            <br><h4>5. Cancellations & Refunds</h4>
+            <p>Cancellation policies vary depending on the specific hotels, airlines, and third-party vendors involved in your itinerary. The exact cancellation terms will be shared with you at the time of booking confirmation.</p>
+            <br><h4>6. Limitation of Liability</h4>
+            <p>Via Tours & Travels shall not be liable for any delays, injuries, losses, or damages resulting from third-party service providers, natural disasters, political unrest, or personal negligence during the trip. Travel insurance is highly recommended for all travelers.</p>
+        </div>
+        <div id="page-privacy" class="page-view container" style="max-width:800px;">
+            <h2>Privacy Policy</h2>
+            <p style="margin-bottom:15px;"><strong>Last Updated: February 2025</strong></p>
+            <p>Via Tours & Travels respects your privacy. This policy explains how we collect, use, and protect your personal information.</p>
+            <br><h4>1. Information We Collect</h4>
+            <p>When you use our "Plan My Trip" enquiry form or interact with our chatbot, we collect: Full Name, Email Address & Phone Number, Destination preferences, travel dates, budget, and hotel preferences.</p>
+            <br><h4>2. How We Use Your Information</h4>
+            <p>The information you provide is used strictly to contact you regarding your travel enquiry, create and manage your travel bookings, and provide customer support during your trip.</p>
+            <br><h4>3. Data Security</h4>
+            <p>Your data is securely stored using Supabase with strict Row-Level Security protocols. Only authorized administrators have access to your personal contact details. We do not sell, rent, or trade your personal information.</p>
+            <br><h4>4. Third-Party Service Providers</h4>
+            <p>To fulfill your travel plans, we may need to share specific details with trusted third-party service providers such as hotels, airlines, and ground transport companies.</p>
+            <br><h4>5. Your Rights</h4>
+            <p>You have the right to request access to the personal data we hold about you, or ask for it to be corrected or deleted. Contact us at <strong>hello@viatours.com</strong>.</p>
+        </div>
+    </main>
+
+    <footer style="background:#0f172a; color:#fff; padding:50px 0 20px 0; margin-top:40px;">
+        <div class="container">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:40px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:30px;">
+                <div>
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
+                        <img src="https://goqwtovltftehautxekh.supabase.co/storage/v1/object/public/package-images/Via%20tours%20&%20travels.png" alt="Logo" style="height:50px; border-radius:4px;">
+                        <div><strong style="display:block; font-family:'Poppins',sans-serif; font-size:1.2rem; color:#fff; line-height:1;">Via</strong><span style="font-size:0.65rem; color:#f97316; text-transform:uppercase; letter-spacing:1px;">Tours & Travels</span></div>
+                    </div>
+                    <p style="font-size:0.9rem; color:#94a3b8; max-width:300px;">Your trusted partner for unforgettable journeys. We make the world accessible, one destination at a time.</p>
+                </div>
+                <div>
+                    <h4 style="color:#fff; font-family:'Poppins',sans-serif; margin-bottom:15px; font-size:1rem;">Quick Links</h4>
+                    <ul style="display:flex; flex-direction:column; gap:10px;">
+                        <li><a onclick="navTo('home')" style="color:#94a3b8; cursor:pointer; font-size:0.9rem;">Home</a></li>
+                        <li><a onclick="navTo('packages')" style="color:#94a3b8; cursor:pointer; font-size:0.9rem;">Packages</a></li>
+                        <li><a onclick="navTo('destinations')" style="color:#94a3b8; cursor:pointer; font-size:0.9rem;">Destinations</a></li>
+                        <li><a onclick="navTo('blog')" style="color:#94a3b8; cursor:pointer; font-size:0.9rem;">Travel Blog</a></li>
+                        <li><a onclick="navTo('plan-trip')" style="color:#94a3b8; cursor:pointer; font-size:0.9rem;">Plan My Trip</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color:#fff; font-family:'Poppins',sans-serif; margin-bottom:15px; font-size:1rem;">Get In Touch</h4>
+                    <ul style="display:flex; flex-direction:column; gap:10px; color:#94a3b8; font-size:0.9rem;">
+                        <li><i class="fas fa-map-marker-alt" style="color:#f97316; width:20px;"></i> MG Road, Bengaluru, India</li>
+                        <li><i class="fas fa-envelope" style="color:#f97316; width:20px;"></i> hello@viatours.com</li>
+                        <li><i class="fas fa-phone" style="color:#f97316; width:20px;"></i> +91 98765 43210</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="padding-top:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;">
+                <p style="color:#64748b; font-size:0.85rem;">&copy; 2024 Via Tours & Travels. All Rights Reserved.</p>
+                <div style="display:flex; gap:20px;">
+                    <a onclick="navTo('terms')" style="color:#94a3b8; cursor:pointer; font-size:0.85rem;">Terms & Conditions</a>
+                    <span style="color:#475569;">|</span>
+                    <a onclick="navTo('privacy')" style="color:#94a3b8; cursor:pointer; font-size:0.85rem;">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<div class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})" role="button" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></div>
+<div class="chat-bubble" onclick="toggleChat()" role="button" aria-label="Open chat assistant"><i class="fas fa-robot"></i></div>
+<div class="chat-window" id="chatWindow">
+    <div class="chat-header">Via AI Assistant <button onclick="toggleChat()" style="background:none;border:none;color:white;font-size:20px;cursor:pointer;" aria-label="Close chat">&times;</button>
+    </div>
+    <div class="chat-body" id="chatBody"><div class="chat-msg bot">Hello! I'm the Via Tours AI assistant. How can I help you plan your trip today?</div></div>
+    <div class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="Ask a question..." onkeypress="handleChat(event)">
+        <button class="chat-send-btn" onclick="handleChat(event)" aria-label="Send message"><i class="fas fa-paper-plane"></i></button>
+    </div>
+</div>
+
+<div id="admin-wrapper" style="display:none;">
+    <div class="admin-layout">
+        <div class="admin-side" id="adminSide">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:0 20px 20px;">
+                <h3 style="margin:0;">Admin Panel</h3>
+                <button onclick="toggleSidebar()" style="background:none;border:none;color:white;font-size:20px;cursor:pointer;"><i class="fas fa-bars"></i></button>
+            </div>
+            <ul class="admin-menu">
+                <li class="active" onclick="showAdminTab('dashboard', event)"><i class="fas fa-tachometer-alt"></i><span class="nav-text"> Dashboard</span></li>
+                <li onclick="showAdminTab('packages', event)"><i class="fas fa-box"></i><span class="nav-text"> Packages</span></li>
+                <li onclick="showAdminTab('destinations', event)"><i class="fas fa-map-marked-alt"></i><span class="nav-text"> Destinations</span></li>
+                <li onclick="showAdminTab('enquiries', event)"><i class="fas fa-envelope"></i><span class="nav-text"> Enquiries</span></li>
+                <li onclick="showAdminTab('customers', event)"><i class="fas fa-users"></i><span class="nav-text"> Customers</span></li>
+                <li onclick="showAdminTab('bookings', event)"><i class="fas fa-calendar-check"></i><span class="nav-text"> Bookings</span></li>
+                <li onclick="showAdminTab('blog', event)"><i class="fas fa-blog"></i><span class="nav-text"> Blog Posts</span></li>
+                <li onclick="showAdminTab('testimonials', event)"><i class="fas fa-comment-dots"></i><span class="nav-text"> Testimonials</span></li>
+                <li onclick="showAdminTab('faqs', event)"><i class="fas fa-question-circle"></i><span class="nav-text"> FAQs</span></li>
+                <li onclick="showAdminTab('settings', event)"><i class="fas fa-cog"></i><span class="nav-text"> Settings</span></li>
+                <li onclick="toggleDarkMode()" style="margin-top:20px;"><i class="fas fa-moon"></i><span class="nav-text"> Dark Mode</span></li>
+                <li onclick="logout()" style="margin-top:20px; color:#ef4444;"><i class="fas fa-sign-out-alt"></i><span class="nav-text"> Logout</span></li>
+            </ul>
+        </div>
+        <div class="admin-main" id="adminMain">
+            <div id="admin-login" style="max-width:400px; margin:50px auto; background:#fff; padding:30px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+    <h2>Admin Login</h2>
+    <form onsubmit="adminLogin(); return false;">
+        <div class="form-sec"><label>Email</label><input type="email" id="loginEmail"></div>
+        <div class="form-sec"><label>Password</label><input type="password" id="loginPass"></div>
+        <button type="submit" class="btn btn-blue" style="width:100%;">Login</button>
+    </form>
+    <a href="#" onclick="forgotPassword(); return false;" style="display:block; text-align:center; margin-top:10px; font-size:0.9rem; color:var(--brand-blue);">Forgot password?</a>
+</div>
+            <div id="admin-dashboard" style="display:none;">
+                <div id="tab-dashboard" class="admin-tab">
+                    <h2>Dashboard</h2>
+                    <div class="grid-4" id="stats_grid">
+                        <div class="stat-card"><h2 id="stat_enq">0</h2><p>Total Enquiries</p></div>
+                        <div class="stat-card"><h2 id="stat_new_enq">0</h2><p>New Enquiries</p></div>
+                        <div class="stat-card"><h2 id="stat_pkg">0</h2><p>Active Packages</p></div>
+                        <div class="stat-card"><h2 id="stat_cust">0</h2><p>Customers</p></div>
+                        <div class="stat-card"><h2 id="stat_revenue">₹0</h2><p>Revenue Collected</p></div>
+                        <div class="stat-card"><h2 id="stat_balance">₹0</h2><p>Outstanding Balance</p></div>
+                    </div>
+                    <div class="grid-3" style="margin-top:40px;">
+                        <div style="grid-column:1 / span 2;"><h3>Recent Enquiries</h3><div class="admin-table" style="margin-top:15px;"><table><thead><tr><th>Name</th><th>Destination</th><th>Status</th></tr></thead><tbody id="table_recent_enq"></tbody></table></div></div>
+                        <div><h3>Upcoming Bookings</h3><div class="admin-table" style="margin-top:15px;"><table><thead><tr><th>Customer</th><th>Date</th></tr></thead><tbody id="table_upcoming_book"></tbody></table></div></div>
+                    </div>
+                </div>
+                <div id="tab-packages" class="admin-tab" style="display:none;">
+                    <div class="admin-header"><h2>Manage Packages</h2><button class="btn btn-primary" onclick="openPkgModal()">Add Package</button></div>
+                    <div class="bulk-actions" id="pkg-bulk-actions" style="display:none;">
+                        <select id="pkg-bulk-action"><option value="">Bulk Actions</option><option value="delete">Delete Selected</option><option value="publish">Publish</option><option value="unpublish">Unpublish</option></select>
+                        <button class="btn btn-blue" onclick="applyBulkAction('packages')">Apply</button>
+                    </div>
+                    <div class="admin-table"><table><thead><tr><th><input type="checkbox" id="select-all-packages" onchange="toggleAllCheckboxes('package', this)"></th><th>Image</th><th>Title</th><th>Price (₹)</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_packages"></tbody></table></div>
+                </div>
+                <div id="tab-destinations" class="admin-tab" style="display:none;">
+                    <div class="admin-header"><h2>Manage Destinations</h2><button class="btn btn-primary" onclick="openDestModal()">Add Destination</button></div>
+                    <div class="bulk-actions" id="dest-bulk-actions" style="display:none;">
+                        <select id="dest-bulk-action"><option value="">Bulk Actions</option><option value="delete">Delete Selected</option><option value="publish">Publish</option><option value="unpublish">Unpublish</option></select>
+                        <button class="btn btn-blue" onclick="applyBulkAction('destinations')">Apply</button>
+                    </div>
+                    <div class="admin-table"><table><thead><tr><th><input type="checkbox" id="select-all-destinations" onchange="toggleAllCheckboxes('destination', this)"></th><th>Name</th><th>Country</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_destinations"></tbody></table></div>
+                </div>
+                <div id="tab-enquiries" class="admin-tab" style="display:none;">
+                    <div class="admin-header"><h2>Enquiries</h2><button class="btn btn-green" onclick="exportEnquiries()"><i class="fas fa-file-csv"></i> Export CSV</button></div>
+                    <div class="admin-table" style="margin-top:20px;"><table><thead><tr><th>Customer</th><th>Details</th><th>Status & Notes</th><th>Actions</th></tr></thead><tbody id="table_enquiries"></tbody></table></div>
+                </div>
+                <div id="tab-customers" class="admin-tab" style="display:none;"><h2>Customers</h2><div class="admin-table" style="margin-top:20px;"><table><thead><tr><th>Name</th><th>Contact</th><th>Notes</th></tr></thead><tbody id="table_customers"></tbody></table></div></div>
+                <div id="tab-bookings" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Bookings</h2><button class="btn btn-primary" onclick="openBookModal()">Add Booking</button></div><div class="admin-table"><table><thead><tr><th>Customer</th><th>Package</th><th>Travel Date</th><th>Amount</th><th>Status</th></tr></thead><tbody id="table_bookings"></tbody></table></div></div>
+                <div id="tab-blog" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Manage Blog</h2><button class="btn btn-primary" onclick="openBlogModal()">Add Post</button></div><div class="admin-table"><table><thead><tr><th>Title</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_blog"></tbody></table></div></div>
+                <div id="tab-testimonials" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Manage Testimonials</h2><button class="btn btn-primary" onclick="openTestModal()">Add Testimonial</button></div><div class="admin-table"><table><thead><tr><th>Customer Name</th><th>Message</th><th>Actions</th></tr></thead><tbody id="table_testimonials"></tbody></table></div></div>
+                <div id="tab-faqs" class="admin-tab" style="display:none;"><div class="admin-header"><h2>Manage FAQs</h2><button class="btn btn-primary" onclick="openFaqModal()">Add FAQ</button></div><div class="admin-table"><table><thead><tr><th>Question</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table_faqs"></tbody></table></div></div>
+                <div id="tab-settings" class="admin-tab" style="display:none;"><h2>Website Settings</h2><div style="background:#fff; padding:30px; border-radius:8px; max-width:600px; margin-top:20px;"><div class="form-sec"><label>Business Name</label><input type="text" id="set_name"></div><div class="form-sec"><label>Contact Email</label><input type="email" id="set_email"></div><div class="form-sec"><label>Contact Phone</label><input type="text" id="set_phone"></div><div class="form-sec"><label>WhatsApp Number</label><input type="text" id="set_whatsapp"></div><div class="form-sec"><label>Address</label><input type="text" id="set_address"></div><button class="btn btn-blue" onclick="saveSettings()">Save Settings</button></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="pkgFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;">
+    <div style="background:#fff; max-width:600px; margin:auto; padding:30px; border-radius:12px; position:relative;">
+        <button onclick="document.getElementById('pkgFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button>
+        <h3 style="margin-bottom:20px;" id="pkg_modal_title">Add Package</h3>
+        <input type="hidden" id="m_pkg_id">
+        <div class="form-sec"><label>Title</label><input type="text" id="m_pkg_title"></div>
+        <div class="form-grid-2">
+            <div class="form-sec"><label>Price (INR ₹)</label><input type="number" id="m_pkg_price"></div>
+            <div class="form-sec"><label>Category</label><input type="text" id="m_pkg_cat"></div>
+        </div>
+        <div class="form-grid-2">
+            <div class="form-sec"><label>Duration</label><input type="text" id="m_pkg_duration" placeholder="5 Days / 4 Nights"></div>
+            <div class="form-sec"><label>Destination</label><select id="m_pkg_dest"></select></div>
+        </div>
+        <div class="form-sec"><label>Short Description</label><input type="text" id="m_pkg_short_desc"></div>
+        <div class="form-sec"><label>Full Description</label><textarea id="m_pkg_desc" rows="4"></textarea></div>
+        <div class="form-sec"><label>Featured Image Upload</label><input type="file" id="m_pkg_img" accept="image/*"></div>
+        <div class="form-sec"><label>Gallery Images (Multiple)</label><input type="file" id="m_pkg_gallery" multiple accept="image/*"><div id="gallery_preview" class="gallery-grid" style="margin-top:10px; display:none;"></div></div>
+        <div class="form-sec"><label>Itinerary</label><div id="itin_editor"></div><button type="button" class="btn btn-outline" style="margin-top:10px;" onclick="addItinDay()"><i class="fas fa-plus"></i> Add Day</button></div>
+        <div class="form-grid-2">
+            <div class="form-sec"><label>Inclusions (One per line)</label><textarea id="m_pkg_inc" rows="4"></textarea></div>
+            <div class="form-sec"><label>Exclusions (One per line)</label><textarea id="m_pkg_exc" rows="4"></textarea></div>
+        </div>
+        <div class="form-sec"><label>Important Information (One per line)</label><textarea id="m_pkg_imp" rows="4"></textarea></div>
+        <div class="form-sec"><label>Published?</label><select id="m_pkg_pub"><option value="true">Yes</option><option value="false">No</option></select></div>
+        <button class="btn btn-blue" onclick="savePackage()" style="width:100%; margin-top:15px;">Save Package</button>
+    </div>
+</div>
+
+<div id="faqFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;">
+    <div style="background:#fff; max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;">
+        <button onclick="document.getElementById('faqFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button>
+        <h3 style="margin-bottom:20px;" id="faq_modal_title">Add FAQ</h3>
+        <input type="hidden" id="m_faq_id">
+        <div class="form-sec"><label>Question</label><input type="text" id="m_faq_question"></div>
+        <div class="form-sec"><label>Answer</label><textarea id="m_faq_answer" rows="4"></textarea></div>
+        <div class="form-sec"><label>Published?</label><select id="m_faq_pub"><option value="true">Yes</option><option value="false">No</option></select></div>
+        <button class="btn btn-blue" onclick="saveFaq()" style="width:100%; margin-top:15px;">Save FAQ</button>
+    </div>
+</div>
+
+<div id="destFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;">
+    <div style="background:#fff; max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;">
+        <button onclick="document.getElementById('destFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button>
+        <h3 style="margin-bottom:20px;">Add Destination</h3>
+        <input type="hidden" id="m_dest_id">
+        <div class="form-sec"><label>Name</label><input type="text" id="m_dest_name"></div>
+        <div class="form-sec"><label>Country</label><input type="text" id="m_dest_country"></div>
+        <div class="form-sec"><label>Region</label><input type="text" id="m_dest_region"></div>
+        <div class="form-sec"><label>Cover Image Upload</label><input type="file" id="m_dest_img" accept="image/*"></div>
+        <div class="form-sec"><label>Description</label><textarea id="m_dest_desc" rows="3"></textarea></div>
+        <div class="form-sec"><label>Best Time to Visit</label><input type="text" id="m_dest_time"></div>
+        <div class="form-sec"><label>Popular Attractions (Comma separated)</label><input type="text" id="m_dest_attr"></div>
+        <div class="form-sec"><label>Travel Tips (Comma separated)</label><input type="text" id="m_dest_tips"></div>
+        <div class="form-sec"><label>Published?</label><select id="m_dest_pub"><option value="true">Yes</option><option value="false">No</option></select></div>
+        <button class="btn btn-blue" onclick="saveDestination()" style="width:100%; margin-top:15px;">Save</button>
+    </div>
+</div>
+
+<div id="bookFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;">
+    <div style="background:#fff; max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;">
+        <button onclick="document.getElementById('bookFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button>
+        <h3 style="margin-bottom:20px;">Add Booking</h3>
+        <div class="form-sec"><label>Customer Name</label><input type="text" id="m_book_customer_name"></div>
+        <div class="form-sec"><label>Package Name</label><input type="text" id="m_book_package_name"></div>
+        <div class="form-sec"><label>Travel Date</label><input type="date" id="m_book_date"></div>
+        <div class="form-sec"><label>Travelers</label><input type="number" id="m_book_travelers" value="1" min="1"></div>
+        <div class="form-sec"><label>Total Amount (₹)</label><input type="number" id="m_book_total"></div>
+        <div class="form-sec"><label>Amount Paid (₹)</label><input type="number" id="m_book_paid"></div>
+        <div class="form-sec"><label>Booking Status</label><select id="m_book_status"><option>Pending</option><option>Confirmed</option><option>Completed</option><option>Cancelled</option></select></div>
+        <button class="btn btn-blue" onclick="saveBooking()" style="width:100%; margin-top:15px;">Save Booking</button>
+    </div>
+</div>
+
+<div id="testFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;">
+    <div style="background:#fff; max-width:500px; margin:auto; padding:30px; border-radius:12px; position:relative;">
+        <button onclick="document.getElementById('testFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button>
+        <h3 style="margin-bottom:20px;">Add Testimonial</h3>
+        <div class="form-sec"><label>Customer Name</label><input type="text" id="m_test_name"></div>
+        <div class="form-sec"><label>Location</label><input type="text" id="m_test_loc"></div>
+        <div class="form-sec"><label>Rating (1-5)</label><input type="number" id="m_test_rating" min="1" max="5" value="5"></div>
+        <div class="form-sec"><label>Image URL</label><input type="text" id="m_test_img"></div>
+        <div class="form-sec"><label>Message</label><textarea id="m_test_msg" rows="4"></textarea></div>
+        <button class="btn btn-blue" onclick="saveTestimonial()" style="width:100%; margin-top:15px;">Save</button>
+    </div>
+</div>
+
+<div id="blogFormModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:999; padding:20px; overflow-y:auto;">
+    <div style="background:#fff; max-width:700px; margin:auto; padding:30px; border-radius:12px; position:relative;">
+        <button onclick="document.getElementById('blogFormModal').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button>
+        <h3 style="margin-bottom:20px;" id="blog_modal_title">Add Blog Post</h3>
+        <input type="hidden" id="m_blog_id">
+        <div class="form-sec"><label>Title</label><input type="text" id="m_blog_title"></div>
+        <div class="form-sec"><label>URL Slug</label><input type="text" id="m_blog_slug"></div>
+        <div class="form-sec"><label>Cover Image URL</label><input type="text" id="m_blog_img"></div>
+        <div class="form-sec"><label>Short Excerpt</label><textarea id="m_blog_excerpt" rows="2"></textarea></div>
+        <div class="form-sec"><label>Full Article Content</label><textarea id="m_blog_content" rows="10"></textarea></div>
+        <div class="form-sec"><label>SEO Meta Title</label><input type="text" id="m_blog_meta_title"></div>
+        <div class="form-sec"><label>SEO Meta Description</label><input type="text" id="m_blog_meta_desc"></div>
+        <div class="form-sec"><label>Published?</label><select id="m_blog_pub"><option value="true">Yes</option><option value="false">No</option></select></div>
+        <button class="btn btn-blue" onclick="saveBlogPost()" style="width:100%; margin-top:15px;">Save Post</button>
+    </div>
+</div>
+
+<div id="confirmModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:10000; align-items:center; justify-content:center;">
+    <div style="background:#fff; max-width:400px; margin:auto; padding:30px; border-radius:12px; text-align:center;">
+        <h3>Are you sure?</h3>
+        <p id="confirmMessage"></p>
+        <div style="display:flex; gap:10px; justify-content:center; margin-top:20px;">
+            <button class="btn btn-danger" id="confirmYes">Yes</button>
+            <button class="btn btn-outline" id="confirmNo">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
