@@ -1,0 +1,17 @@
+{
+  "name": "viatours",
+  "version": "1.0.0",
+  "description": "Via Tours & Travels - Premium travel agency website",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'Static site - no build needed'",
+    "lint": "echo 'No linter configured'"
+  },
+  "keywords": ["travel", "tours", "tourism"],
+  "author": "Via Tours & Travels",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/analytics": "^1.3.1"
+  }
+}
