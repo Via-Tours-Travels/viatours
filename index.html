@@ -187,7 +187,45 @@
             </form>
         </div>
 
-        <div id="page-about" class="page-view container" style="max-width:800px; text-align:center;"><h2>About Via Tours & Travels</h2><p style="margin-top:20px;">We are a premium travel agency dedicated to creating unforgettable experiences. Since 2009, we have helped thousands of travelers explore the globe.</p></div>
+       <div id="tripModal" class="trip-modal-backdrop" aria-hidden="true">
+           <div class="trip-modal" role="dialog" aria-modal="true" aria-labelledby="tripModalTitle">
+               <button class="trip-modal-close" type="button" onclick="hideTripModal()" aria-label="Close plan trip popup">&times;</button>
+               <div class="trip-modal-visual">
+                   <span class="trip-modal-badge">Tailored escapes</span>
+                   <h3>Let us design your next unforgettable holiday.</h3>
+                   <p>From serene beaches to thrilling mountain adventures, we’ll shape a custom itinerary around your style, dates, and budget.</p>
+                   <ul>
+                       <li><i class="fas fa-check-circle"></i> Personalized itinerary</li>
+                       <li><i class="fas fa-check-circle"></i> Handpicked stays & experiences</li>
+                       <li><i class="fas fa-check-circle"></i> Expert guidance from start to finish</li>
+                   </ul>
+               </div>
+               <div class="trip-modal-form-wrap">
+                   <div class="trip-modal-header">
+                       <span class="eyebrow">Plan My Trip</span>
+                       <h2 id="tripModalTitle">Tell us where you want to go</h2>
+                   </div>
+                   <form id="tripModalForm" class="trip-modal-form">
+                       <input type="hidden" id="modal_pt_pkg_id">
+                       <input type="text" id="modal_honeypot" name="honeypot" style="display:none" tabindex="-1" autocomplete="off">
+                       <div class="form-grid-2">
+                           <div class="form-sec"><label>Full Name</label><input type="text" id="modal_pt_name" required></div>
+                           <div class="form-sec"><label>Email</label><input type="email" id="modal_pt_email" required></div>
+                           <div class="form-sec"><label>Phone</label><input type="text" id="modal_pt_phone" required></div>
+                           <div class="form-sec"><label>Destination</label><input type="text" id="modal_pt_dest"></div>
+                           <div class="form-sec"><label>Travel Date</label><input type="date" id="modal_pt_dates"></div>
+                           <div class="form-sec"><label>Travelers</label><input type="number" id="modal_pt_travelers" min="1"></div>
+                           <div class="form-sec"><label>Budget (INR)</label><input type="text" id="modal_pt_budget" placeholder="e.g. ₹75,000"></div>
+                           <div class="form-sec"><label>Hotel Style</label><select id="modal_pt_hotel"><option>3 Star</option><option>4 Star</option><option>5 Star</option><option>Luxury</option></select></div>
+                       </div>
+                       <div class="form-sec"><label>Specific Requirements</label><textarea id="modal_pt_req" rows="3" placeholder="Preferred experiences, activities, or must-haves..."></textarea></div>
+                       <button type="submit" class="btn btn-primary" style="width:100%;">Get My Custom Quote</button>
+                   </form>
+               </div>
+           </div>
+       </div>
+
+       <div id="page-about" class="page-view container" style="max-width:800px; text-align:center;"><h2>About Via Tours & Travels</h2><p style="margin-top:20px;">We are a premium travel agency dedicated to creating unforgettable experiences. Since 2009, we have helped thousands of travelers explore the globe.</p></div>
         <div id="page-contact" class="page-view container" style="max-width:800px; text-align:center;"><h2>Contact Us</h2><p style="margin-top:20px;" id="contact_info">Loading...</p></div>
         <div id="page-terms" class="page-view container" style="max-width:800px;">
             <h2>Terms & Conditions</h2>

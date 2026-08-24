@@ -82,6 +82,30 @@ if (isSidebarCollapsed) {
 function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
 function toggleChat() { document.getElementById('chatWindow').classList.toggle('active'); }
 
+function showTripModal() {
+    const tripModal = document.getElementById('tripModal');
+    if (!tripModal) return;
+    tripModal.classList.add('active');
+    tripModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+}
+
+function hideTripModal() {
+    const tripModal = document.getElementById('tripModal');
+    if (!tripModal) return;
+    tripModal.classList.remove('active');
+    tripModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    sessionStorage.setItem('viaTripModalDismissed', 'true');
+}
+
+function maybeShowTripModal() {
+    if (sessionStorage.getItem('viaTripModalDismissed') === 'true') return;
+    setTimeout(() => {
+        if (sessionStorage.getItem('viaTripModalDismissed') !== 'true') showTripModal();
+    }, 1500);
+}
+
 function setMeta(selector, attribute, value) {
     let element = document.querySelector(selector);
     if (!element) { element = document.createElement('meta'); document.head.appendChild(element); }
@@ -173,7 +197,22 @@ async function router() {
 }
 window.addEventListener('hashchange', router);
 window.addEventListener('popstate', router);
-window.addEventListener('load', router);
+window.addEventListener('load', () => {
+    router();
+    maybeShowTripModal();
+});
+
+const tripModalBackdrop = document.getElementById('tripModal');
+if (tripModalBackdrop) {
+    tripModalBackdrop.addEventListener('click', (event) => {
+        if (event.target === tripModalBackdrop) hideTripModal();
+    });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && tripModalBackdrop.classList.contains('active')) {
+            hideTripModal();
+        }
+    });
+}
 
 async function loadSettings() {
     const { data } = await sb.from('website_settings').select('*').eq('id', 1).single();
@@ -365,35 +404,41 @@ function renderTabContent(pkg, tab) {
 async function setupPlanForm(pkgId) {
     document.getElementById('pt_pkg_id').value = '';
     document.getElementById('pt_dest').value = '';
+    document.getElementById('modal_pt_pkg_id').value = '';
+    document.getElementById('modal_pt_dest').value = '';
     if (pkgId) {
         const { data: p } = await sb.from('packages').select('id, title, destination_id, destinations(name)').eq('id', pkgId).maybeSingle();
-        if (p) { document.getElementById('pt_pkg_id').value = p.id; document.getElementById('pt_dest').value = p.destinations?.name || p.title; }
+        if (p) {
+            const destinationName = p.destinations?.name || p.title;
+            document.getElementById('pt_pkg_id').value = p.id;
+            document.getElementById('pt_dest').value = destinationName;
+            document.getElementById('modal_pt_pkg_id').value = p.id;
+            document.getElementById('modal_pt_dest').value = destinationName;
+        }
     }
 }
 
-document.getElementById('planTripForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    // Check honeypot
-    if (document.getElementById('honeypot').value) {
+async function submitTripRequest(form, formType) {
+    const honeypotId = formType === 'modal' ? 'modal_honeypot' : 'honeypot';
+    if (document.getElementById(honeypotId)?.value) {
         showToast('Spam detected.', 'error');
         return;
     }
 
-    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const submitBtn = form.querySelector('button[type="submit"]');
     submitBtn.disabled = true;
     submitBtn.textContent = 'Submitting...';
 
     try {
-        // Trim all text inputs to reject whitespace
-        const name = document.getElementById('pt_name').value.trim();
-        const email = document.getElementById('pt_email').value.trim();
-        const phone = document.getElementById('pt_phone').value.trim();
-        const destination = document.getElementById('pt_dest').value.trim();
-        const travelDates = document.getElementById('pt_dates').value.trim();
-        const travelers = document.getElementById('pt_travelers').value.trim();
-        const budget = document.getElementById('pt_budget').value.trim();
-        const requirements = document.getElementById('pt_req').value.trim();
+        const prefix = formType === 'modal' ? 'modal_pt_' : 'pt_';
+        const name = document.getElementById(prefix + 'name').value.trim();
+        const email = document.getElementById(prefix + 'email').value.trim();
+        const phone = document.getElementById(prefix + 'phone').value.trim();
+        const destination = document.getElementById(prefix + 'dest').value.trim();
+        const travelDates = document.getElementById(prefix + 'dates').value.trim();
+        const travelers = document.getElementById(prefix + 'travelers').value.trim();
+        const budget = document.getElementById(prefix + 'budget').value.trim();
+        const requirements = document.getElementById(prefix + 'req').value.trim();
 
         if (!name || !email || !phone) {
             showToast('Please fill all required fields.', 'error');
@@ -408,9 +453,9 @@ document.getElementById('planTripForm').addEventListener('submit', async (e) => 
             travel_dates: travelDates,
             travelers,
             budget,
-            hotel_pref: document.getElementById('pt_hotel').value,
+            hotel_pref: document.getElementById(prefix + 'hotel').value,
             requirements,
-            package_id: document.getElementById('pt_pkg_id').value || null,
+            package_id: document.getElementById(prefix === 'modal_pt_' ? 'modal_pt_pkg_id' : 'pt_pkg_id').value || null,
             status: 'New'
         };
 
@@ -423,13 +468,30 @@ document.getElementById('planTripForm').addEventListener('submit', async (e) => 
                 await sb.from('customers').insert([{ name: payload.name, email: payload.email, phone: payload.phone, whatsapp: payload.phone }]);
             }
             showToast('Trip request submitted! We will contact you soon.', 'success');
+            if (formType === 'modal') hideTripModal();
             navTo('home');
         }
     } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Submit Enquiry';
+        submitBtn.textContent = formType === 'modal' ? 'Get My Custom Quote' : 'Submit Enquiry';
     }
-});
+}
+
+const planTripForm = document.getElementById('planTripForm');
+if (planTripForm) {
+    planTripForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await submitTripRequest(e.target, 'default');
+    });
+}
+
+const tripModalForm = document.getElementById('tripModalForm');
+if (tripModalForm) {
+    tripModalForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await submitTripRequest(e.target, 'modal');
+    });
+}
 
 async function loadBlog() {
     const { data, error } = await sb.from('blog_posts').select('id, slug, title, excerpt, image_url, created_at').eq('is_published', true).order('created_at', { ascending: false });
