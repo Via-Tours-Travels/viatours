@@ -82,12 +82,32 @@ if (isSidebarCollapsed) {
 function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
 function toggleChat() { document.getElementById('chatWindow').classList.toggle('active'); }
 
+let _previousActiveElement = null;
+let _focusTrapHandler = null;
+
 function showTripModal() {
     const tripModal = document.getElementById('tripModal');
     if (!tripModal) return;
+    _previousActiveElement = document.activeElement;
     tripModal.classList.add('active');
     tripModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
+
+    // focus first input for quick entry
+    const firstInput = tripModal.querySelector('input, textarea, select, button');
+    if (firstInput) setTimeout(() => firstInput.focus(), 40);
+
+    // Basic focus trap: keep focus inside modal while open
+    _focusTrapHandler = function(e) {
+        if (e.key !== 'Tab') return;
+        const focusable = Array.from(tripModal.querySelectorAll('a[href], button:not([disabled]), textarea, input, select')).filter(el => el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    };
+    document.addEventListener('keydown', _focusTrapHandler);
 }
 
 function hideTripModal() {
@@ -97,6 +117,10 @@ function hideTripModal() {
     tripModal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('modal-open');
     sessionStorage.setItem('viaTripModalDismissed', 'true');
+
+    // restore focus
+    try { if (_previousActiveElement && typeof _previousActiveElement.focus === 'function') _previousActiveElement.focus(); } catch (e) {}
+    if (_focusTrapHandler) { document.removeEventListener('keydown', _focusTrapHandler); _focusTrapHandler = null; }
 }
 
 function maybeShowTripModal() {
