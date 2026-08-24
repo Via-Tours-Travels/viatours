@@ -48,43 +48,45 @@
     <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=60" alt="Travel" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
 </picture>
                 <div class="hero-overlay"></div>
-                <div class="container">
-                    <h1>Explore Your World</h1>
-                    <p>Discover breathtaking destinations with our premium travel packages.</p>
+                <div class="container hero-content">
+                    <span class="eyebrow light">Curated journeys. Seamless travel.</span>
+                    <h1>Travel beautifully.<br>Leave the details to us.</h1>
+                    <p>Thoughtfully designed holidays, trusted local expertise, and support from the first idea to your return home.</p>
                     <div class="search-box">
-                        <div class="form-sec" style="margin:0;"><label>Destination</label><input type="text" placeholder="Where to?" id="hero_dest"></div>
-                        <div class="form-sec" style="margin:0;"><label>Date</label><input type="date" id="hero_date"></div>
-                        <div class="form-sec" style="margin:0;"><label>Travelers</label><select id="hero_travellers"><option>2 Adults</option><option>Family</option></select></div>
-                        <button class="btn btn-blue" style="align-self:flex-end;" onclick="searchFromHero()">Search</button>
+                        <div class="form-sec" style="margin:0;"><label for="hero_dest">Destination</label><input type="text" placeholder="Where would you like to go?" id="hero_dest"></div>
+                        <div class="form-sec" style="margin:0;"><label for="hero_date">Departure date</label><input type="date" id="hero_date"></div>
+                        <div class="form-sec" style="margin:0;"><label for="hero_travellers">Travelers</label><select id="hero_travellers"><option>2 Adults</option><option>Family</option><option>Solo traveler</option><option>Group</option></select></div>
+                        <button class="btn btn-blue" style="align-self:flex-end;" onclick="searchFromHero()"><i class="fas fa-compass"></i> Explore</button>
                     </div>
+                    <div class="hero-proof"><span><i class="fas fa-shield-heart"></i> Trusted travel planning</span><span><i class="fas fa-headset"></i> Dedicated support</span><span><i class="fas fa-star"></i> Tailor-made itineraries</span></div>
                 </div>
             </div>
 
             <div class="container section-pad">
-                <div class="text-center" style="margin-bottom:40px;"><h2>Popular Destinations</h2><p>Handpicked places you must visit.</p></div>
+                <div class="section-heading text-center"><span class="eyebrow">Inspired escapes</span><h2>Places made for memorable stories</h2><p>Handpicked destinations, each with a journey worth taking.</p></div>
                 <div class="grid-4" id="home_destinations"><p class="text-center" style="grid-column:1/-1;">Loading...</p></div>
             </div>
 
             <div class="container section-pad" style="background:var(--bg-light);">
-                <div class="text-center" style="margin-bottom:40px;"><h2>Featured Packages</h2><p>Best deals curated just for you.</p></div>
+                <div class="section-heading text-center"><span class="eyebrow">Travel with ease</span><h2>Featured journeys</h2><p>Beautifully planned packages with room to make them yours.</p></div>
                 <div class="grid-3" id="home_packages"><p class="text-center" style="grid-column:1/-1;">Loading...</p></div>
             </div>
 
             <div class="container section-pad">
-                <div class="grid-3">
-                    <div class="text-center"><i class="fas fa-medal" style="font-size:2rem; color:var(--brand-orange);"></i><h4>Award Winning</h4><p>Recognized for excellence in travel planning.</p></div>
-                    <div class="text-center"><i class="fas fa-headset" style="font-size:2rem; color:var(--brand-orange);"></i><h4>24/7 Support</h4><p>We are always here for you, anywhere in the world.</p></div>
-                    <div class="text-center"><i class="fas fa-map-marked-alt" style="font-size:2rem; color:var(--brand-orange);"></i><h4>Custom Itineraries</h4><p>Tailor-made trips crafted to perfection.</p></div>
+                <div class="grid-3 service-grid">
+                    <div class="service-item"><span class="service-icon"><i class="fas fa-medal"></i></span><h4>Travel with confidence</h4><p>Considered recommendations and experienced planning for every kind of trip.</p></div>
+                    <div class="service-item"><span class="service-icon"><i class="fas fa-headset"></i></span><h4>Real people, real support</h4><p>Your travel expert is on hand before, during, and after your journey.</p></div>
+                    <div class="service-item"><span class="service-icon"><i class="fas fa-map-marked-alt"></i></span><h4>Made around you</h4><p>Every route, stay, and experience can be shaped around what matters to you.</p></div>
                 </div>
             </div>
 
             <div class="container section-pad" style="background:var(--bg-light);">
-                <h2 class="text-center">How It Works</h2>
-                <div class="grid-4" style="margin-top:30px;">
-                    <div class="text-center"><i class="fas fa-search" style="font-size:1.5rem; color:var(--brand-blue);"></i><h4>1. Choose Destination</h4></div>
-                    <div class="text-center"><i class="fas fa-file-signature" style="font-size:1.5rem; color:var(--brand-blue);"></i><h4>2. Plan Your Trip</h4></div>
-                    <div class="text-center"><i class="fas fa-check-circle" style="font-size:1.5rem; color:var(--brand-blue);"></i><h4>3. Confirm Booking</h4></div>
-                    <div class="text-center"><i class="fas fa-plane-departure" style="font-size:1.5rem; color:var(--brand-blue);"></i><h4>4. Travel Safe</h4></div>
+                <div class="section-heading text-center"><span class="eyebrow">Simple by design</span><h2>Your journey, expertly handled</h2></div>
+                <div class="grid-4 journey-steps">
+                    <div class="journey-step"><span>01</span><i class="fas fa-search"></i><h4>Share your idea</h4><p>Tell us where you want to go and how you like to travel.</p></div>
+                    <div class="journey-step"><span>02</span><i class="fas fa-file-signature"></i><h4>Receive your plan</h4><p>We shape a clear, personal itinerary around your needs.</p></div>
+                    <div class="journey-step"><span>03</span><i class="fas fa-check-circle"></i><h4>Confirm with ease</h4><p>Review everything, then book with a dedicated specialist.</p></div>
+                    <div class="journey-step"><span>04</span><i class="fas fa-plane-departure"></i><h4>Travel freely</h4><p>Enjoy the journey while we remain just a message away.</p></div>
                 </div>
             </div>
 
@@ -103,16 +105,17 @@
                 <div id="home_faqs" style="max-width:800px; margin:0 auto;"><p class="text-center">Loading...</p></div>
             </div>
 
-            <div class="hero" style="height:40vh; min-height:300px;">
+            <div class="hero cta-hero" style="height:40vh; min-height:300px;">
     <picture>
         <source srcset="https://images.unsplash.com/photo-1528127269322-539801943592?w=1200&q=80&fm=webp" type="image/webp">
         <img src="https://images.unsplash.com/photo-1528127269322-539801943592?w=1200&q=60" alt="Call to action" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
     </picture>
     <div class="hero-overlay"></div>
                 <div class="container">
-                    <h2 style="color:#fff;">Ready for your next adventure?</h2>
-                    <p>Let us plan the perfect trip for you.</p>
-                    <button class="btn btn-primary" onclick="navTo('plan-trip')">Plan Your Trip Now</button>
+                    <span class="eyebrow light">Your next chapter starts here</span>
+                    <h2 style="color:#fff;">Ready to make the journey yours?</h2>
+                    <p>Tell us what you are dreaming of. We will take care of the rest.</p>
+                    <div class="cta-actions"><button class="btn btn-primary" onclick="navTo('plan-trip')">Plan My Trip <i class="fas fa-arrow-right"></i></button><button class="btn btn-glass" onclick="toggleChat()"><i class="fas fa-comment-dots"></i> Ask a question</button></div>
                 </div>
             </div>
         </div>

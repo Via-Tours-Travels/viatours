@@ -1,4 +1,9 @@
-setTimeout(function () { var p = document.getElementById('preloader'); if (p) p.classList.add('hidden'); }, 4000);
+function hidePreloader() {
+    const preloader = document.getElementById('preloader');
+    if (preloader) preloader.classList.add('hidden');
+}
+
+setTimeout(hidePreloader, 1200);
 
 const SUPABASE_URL = 'https://goqwtovltftehautxekh.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_bQXp8x_2x4ymx4_oxcOFUA_UTGsqF-5';
@@ -1102,7 +1107,7 @@ window.addEventListener('scroll', () => {
 });
 
 window.addEventListener('load', () => {
-    setTimeout(() => { document.getElementById('preloader').classList.add('hidden'); }, 800);
+    setTimeout(hidePreloader, 250);
 });
 
 loadSettings();
