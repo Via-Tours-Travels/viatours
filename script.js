@@ -226,14 +226,37 @@ function adjustLayout() {
     const header = document.querySelector('.header');
     const siteWrapper = document.getElementById('site-wrapper');
     const headerH = header ? header.offsetHeight : 0;
-    // Expose header height as CSS variable and ensure content isn't hidden under header
+    // Expose header height as CSS variable for CSS-only rules (sticky sidebars, offsets)
     document.documentElement.style.setProperty('--header-height', headerH + 'px');
-    if (siteWrapper) siteWrapper.style.paddingTop = headerH + 'px';
+    // Only apply padding-top to the site wrapper when the header is fixed and not inside the wrapper
+    // (If header is inside the wrapper, adding padding will push the header down and create an empty gap)
+    try {
+        const headerPos = header ? getComputedStyle(header).position : '';
+        if (siteWrapper) {
+            // apply padding only when header is fixed (out of normal flow) OR the header isn't contained inside the site wrapper
+            if (header && (headerPos === 'fixed' || !siteWrapper.contains(header))) {
+                siteWrapper.style.paddingTop = headerH + 'px';
+            } else {
+                // clear any previously applied padding
+                siteWrapper.style.paddingTop = '';
+            }
+        }
+    } catch (e) { /* ignore in old browsers */ }
 
     // Decide when to show mobile sticky CTA automatically
     const mobileThreshold = 520; // px
-    if (window.innerWidth <= mobileThreshold) document.body.classList.add('mobile-cta-sticky');
-    else document.body.classList.remove('mobile-cta-sticky');
+    const isMobile = window.innerWidth <= mobileThreshold;
+    document.body.classList.toggle('mobile-cta-sticky', isMobile);
+
+    // Measure any site-level floating CTA to avoid overlap and expose its height to CSS
+    const floating = document.querySelector('.cta-actions, .important-btn, .trip-modal-form button[type="submit"]');
+    let ctaHeight = 0;
+    if (floating && isMobile) {
+        ctaHeight = floating.offsetHeight || floating.clientHeight || 0;
+        // add a small buffer for spacing
+        ctaHeight = Math.max(ctaHeight + 18, 64);
+    }
+    document.documentElement.style.setProperty('--mobile-cta-height', ctaHeight + 'px');
 }
 
 window.addEventListener('resize', adjustLayout);
@@ -413,9 +436,43 @@ async function loadPackageDetails(id) {
     updateSEO(p.title + ' - Via Tours', p.short_description || p.description);
 
     const allImages = [p.image_url, ...(p.gallery_images || [])].filter(Boolean);
-    const galleryHTML = allImages.length > 0 ? `<img src="${escapeHTML(allImages[0])}" id="main-image" class="main-image" alt="${escapeHTML(p.title)}"><div class="thumbnail-container">${allImages.map((img, i) => `<img src="${escapeHTML(img)}" class="thumbnail ${i===0?'active':''}" onclick="changeMainImage(this, '${escapeHTML(img)}')" alt="Thumbnail">`).join('')}</div>` : '';
+    const galleryHTML = allImages.length > 0 ? `
+        <div class="pkg-media">
+            <div class="pkg-main-wrap">
+                <img src="${escapeHTML(allImages[0])}" id="main-image" class="main-image" alt="${escapeHTML(p.title)}">
+            </div>
+            <div class="thumbnail-container" role="list">
+                ${allImages.map((img, i) => `<button type="button" class="thumbnail ${i===0?'active':''}" onclick="changeMainImage(this, '${escapeHTML(img)}')" aria-label="Show image ${i+1}" style="background-image:url('${escapeHTML(img)}')"></button>`).join('')}
+            </div>
+        </div>
+    ` : '';
 
-    document.getElementById('pkg_details_container').innerHTML = `<div class="pkg-gallery"><div>${galleryHTML}<h1>${escapeHTML(p.title)}</h1><p style="color:var(--text-muted); margin-bottom:20px;"><i class="fas fa-clock"></i> ${escapeHTML(p.duration || 'N/A')} | <i class="fas fa-map-marker-alt"></i> ${escapeHTML(p.destinations?.name || 'Various')}</p><div class="info-tabs"><button class="tab-btn active" onclick="switchTab(event, 'itinerary')">Itinerary</button><button class="tab-btn" onclick="switchTab(event, 'inclusions')">Inclusions</button><button class="tab-btn" onclick="switchTab(event, 'exclusions')">Exclusions</button>${p.important_info && p.important_info.length ? '<button class="tab-btn" onclick="switchTab(event, \'important\')">Important Info</button>' : ''}</div><div id="tab-content"></div></div><div><div style="background:var(--bg-light); padding:30px; border-radius:12px; position:sticky; top:100px; text-align:center;"><h2 class="price-tag" style="font-size:2.5rem; margin-bottom:0;">₹${Number(p.price).toLocaleString('en-IN')}</h2><p style="margin-bottom:20px; color:var(--text-muted);">Per person</p><a href="https://wa.me/${escapeHTML(appSettings.whatsapp)}?text=${encodeURIComponent('I am interested in ' + p.title)}" target="_blank" class="btn btn-green" style="width:100%; margin-bottom:10px;">WhatsApp</a><button class="btn btn-primary" style="width:100%;" onclick="navTo('plan-trip', '${escapeHTML(p.id)}')">Enquire Now</button></div></div></div>`;
+    document.getElementById('pkg_details_container').innerHTML = `
+    <div class="pkg-gallery">
+        <div class="pkg-main">
+            ${galleryHTML}
+            <div class="pkg-meta">
+                <h1 class="pkg-title">${escapeHTML(p.title)}</h1>
+                <p class="pkg-submeta"><i class="fas fa-clock"></i> ${escapeHTML(p.duration || 'N/A')} &nbsp; | &nbsp; <i class="fas fa-map-marker-alt"></i> ${escapeHTML(p.destinations?.name || 'Various')}</p>
+            </div>
+            <div class="info-tabs">
+                <button class="tab-btn active" onclick="switchTab(event, 'itinerary')">Itinerary</button>
+                <button class="tab-btn" onclick="switchTab(event, 'inclusions')">Inclusions</button>
+                <button class="tab-btn" onclick="switchTab(event, 'exclusions')">Exclusions</button>
+                ${p.important_info && p.important_info.length ? '<button class="tab-btn" onclick="switchTab(event, \'important\')">Important Info</button>' : ''}
+            </div>
+            <div id="tab-content"></div>
+        </div>
+        <aside class="pkg-aside">
+            <div class="pkg-aside-card">
+                <div class="price-row"><h2 class="price-tag">₹${Number(p.price).toLocaleString('en-IN')}</h2><p class="price-note">Per person</p></div>
+                <a href="https://wa.me/${escapeHTML(appSettings.whatsapp)}?text=${encodeURIComponent('I am interested in ' + p.title)}" target="_blank" class="btn btn-green" style="width:100%; margin-bottom:10px;">WhatsApp</a>
+                <button class="btn btn-primary" style="width:100%;" onclick="navTo('plan-trip', '${escapeHTML(p.id)}')">Enquire Now</button>
+            </div>
+        </aside>
+    </div>
+    `;
+
     renderTabContent(p, 'itinerary');
 }
 
