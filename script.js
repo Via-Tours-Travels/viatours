@@ -1931,9 +1931,9 @@ function renderItinEditor() {
     const editor = document.getElementById('itin_editor');
     if (!editor) return;
     editor.innerHTML = currentItinerary.map((d, i) => `
-        <div style="background:#070b1a; border:1px solid #1e293b; padding:12px; border-radius:8px; margin-bottom:10px;">
-            <input type="text" value="${escapeHTML(d.title)}" placeholder="Day Title" oninput="currentItinerary[${i}].title = this.value" style="margin-bottom:6px; background:#0a0f24; color:#fff;">
-            <textarea placeholder="Day Description" rows="2" oninput="currentItinerary[${i}].desc = this.value" style="background:#0a0f24; color:#fff;">${escapeHTML(d.desc || d.description || '')}</textarea>
+        <div style="background:#081535; border:1px solid #1c3060; padding:12px; border-radius:8px; margin-bottom:10px;">
+            <input type="text" value="${escapeHTML(d.title)}" placeholder="Day Title" oninput="currentItinerary[${i}].title = this.value" style="margin-bottom:6px; background:#0c1a3d; color:#fff;">
+            <textarea placeholder="Day Description" rows="2" oninput="currentItinerary[${i}].desc = this.value" style="background:#0c1a3d; color:#fff;">${escapeHTML(d.desc || d.description || '')}</textarea>
             <button type="button" class="btn btn-danger btn-sm" onclick="currentItinerary.splice(${i}, 1); renderItinEditor();" style="margin-top:6px;"><i class="fas fa-trash"></i> Remove Day</button>
         </div>
     `).join('');
@@ -2067,14 +2067,14 @@ async function loadAdminEnquiries() {
             <td><strong>${escapeHTML(e.name)}</strong><br>${escapeHTML(e.email)}<br>${escapeHTML(e.phone)}</td>
             <td>Dest: ${escapeHTML(e.destination || 'N/A')}<br>Dates: ${escapeHTML(e.travel_dates || 'N/A')}<br>Budget: ${escapeHTML(e.budget || 'N/A')}</td>
             <td>
-                <select class="status-dropdown" onchange="changeStatus('enquiries', '${escapeHTML(e.id)}', this.value)" style="background:#070b1a; color:#fff; padding:4px 8px; border-radius:4px;">
+                <select class="status-dropdown" onchange="changeStatus('enquiries', '${escapeHTML(e.id)}', this.value)" style="background:#081535; color:#fff; padding:4px 8px; border-radius:4px;">
                     <option ${e.status === 'New' ? 'selected' : ''}>New</option>
                     <option ${e.status === 'Contacted' ? 'selected' : ''}>Contacted</option>
                     <option ${e.status === 'Quotation Sent' ? 'selected' : ''}>Quotation Sent</option>
                     <option ${e.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
                     <option ${e.status === 'Completed' ? 'selected' : ''}>Completed</option>
                 </select>
-                <textarea placeholder="VIP internal notes" onchange="saveNote('${escapeHTML(e.id)}', this.value)" style="width:100%; margin-top:6px; font-size:12px; background:#070b1a; color:#fff;">${escapeHTML(e.internal_notes || '')}</textarea>
+                <textarea placeholder="VIP internal notes" onchange="saveNote('${escapeHTML(e.id)}', this.value)" style="width:100%; margin-top:6px; font-size:12px; background:#081535; color:#fff;">${escapeHTML(e.internal_notes || '')}</textarea>
             </td>
             <td>
                 <button class="btn btn-danger btn-sm" onclick="delItem('enquiries', '${escapeHTML(e.id)}')"><i class="fas fa-trash"></i></button>
@@ -2138,7 +2138,7 @@ async function loadAdminCustomers() {
         <tr>
             <td><strong>${escapeHTML(c.name)}</strong></td>
             <td>${escapeHTML(c.email)}<br>${escapeHTML(c.phone)}</td>
-            <td><textarea style="background:#070b1a; color:#fff; width:100%; font-size:12px;">${escapeHTML(c.notes || '')}</textarea></td>
+            <td><textarea style="background:#081535; color:#fff; width:100%; font-size:12px;">${escapeHTML(c.notes || '')}</textarea></td>
         </tr>
     `).join('');
 }

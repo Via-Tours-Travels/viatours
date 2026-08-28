@@ -66,7 +66,7 @@
     <header class="header" id="mainHeader">
         <div class="container header-in">
             <div class="logo-wrap" onclick="navTo('home')">
-                <img src="https://goqwtovltftehautxekh.supabase.co/storage/v1/object/public/package-images/Via%20tours%20&%20travels.png" alt="Via Tours and Travels Logo" onerror="this.src='https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=100&q=80'">
+                <img src="https://goqwtovltftehautxekh.supabase.co/storage/v1/object/public/package-images/Via%20tours%20&%20travels.png" alt="Via Tours and Travels Logo" onerror="this.style.display='none'">
                 <div class="logo-txt">
                     <strong>Via</strong>
                     <span>Tours & Travels</span>
@@ -257,11 +257,11 @@
             <!-- HANDPICKED DESTINATIONS SHOWCASE -->
             <div style="background:var(--surface-soft);" class="section-pad">
                 <div class="container">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:40px; flex-wrap:wrap; gap:20px;">
+                    <div class="section-header-flex">
                         <div>
                             <span class="eyebrow"><i class="fas fa-map-marked-alt"></i> Inspiring Destinations</span>
                             <h2>Worlds Waiting to be Explored</h2>
-                            <p style="color:var(--text-muted);">From tropical atolls to snow-capped peaks, discover where luxury meets authenticity.</p>
+                            <p>From tropical atolls to snow-capped peaks, discover where luxury meets authenticity.</p>
                         </div>
                         <button class="btn btn-outline" onclick="navTo('destinations')">View All Destinations <i class="fas fa-arrow-right"></i></button>
                     </div>
@@ -290,49 +290,51 @@
             </div>
 
             <!-- THE VIA VIP DIFFERENCE (WHY CHOOSE US) -->
-            <div style="background:linear-gradient(135deg, #070b1a 0%, #111836 100%); color:#ffffff;" class="section-pad">
+            <div class="why-choose-section section-pad">
                 <div class="container">
                     <div class="section-heading text-center">
                         <span class="eyebrow light"><i class="fas fa-crown"></i> The Via VIP Standard</span>
+                        <div class="section-divider"></div>
                         <h2 style="color:#ffffff;">Why Discerning Travelers Choose Via</h2>
                         <p style="color:#cbd5e1;">We don't just book trips; we architect seamless, unforgettable travel memories tailored precisely to your taste.</p>
                     </div>
                     
                     <div class="grid-4">
-                        <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(212,175,55,0.25); border-radius:var(--radius-lg); padding:32px 24px; text-align:center; transition:transform 0.3s;" onmouseenter="this.style.transform='translateY(-6px)'" onmouseleave="this.style.transform='translateY(0)'">
-                            <div style="width:60px; height:60px; border-radius:50%; background:var(--gold-gradient); color:#080c1d; display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin:0 auto 20px;">
+                        <div class="why-choose-card animate-in">
+                            <div class="why-choose-icon">
                                 <i class="fas fa-user-tie"></i>
                             </div>
-                            <h3 style="color:#ffffff; font-size:1.2rem; margin-bottom:10px;">Dedicated Concierge</h3>
-                            <p style="color:#94a3b8; font-size:0.9rem;">A single dedicated luxury travel specialist handles your trip from initial sketch to your safe return home.</p>
+                            <h3>Dedicated Concierge</h3>
+                            <p>A single dedicated luxury travel specialist handles your trip from initial sketch to your safe return home.</p>
                         </div>
 
-                        <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(212,175,55,0.25); border-radius:var(--radius-lg); padding:32px 24px; text-align:center; transition:transform 0.3s;" onmouseenter="this.style.transform='translateY(-6px)'" onmouseleave="this.style.transform='translateY(0)'">
-                            <div style="width:60px; height:60px; border-radius:50%; background:var(--gold-gradient); color:#080c1d; display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin:0 auto 20px;">
+                        <div class="why-choose-card animate-in">
+                            <div class="why-choose-icon">
                                 <i class="fas fa-hotel"></i>
                             </div>
-                            <h3 style="color:#ffffff; font-size:1.2rem; margin-bottom:10px;">Handpicked 5-Star Stays</h3>
-                            <p style="color:#94a3b8; font-size:0.9rem;">Exclusive partnerships with world-renowned luxury resort brands, private villas, and heritage boutique lodges.</p>
+                            <h3>Handpicked 5-Star Stays</h3>
+                            <p>Exclusive partnerships with world-renowned luxury resort brands, private villas, and heritage boutique lodges.</p>
                         </div>
 
-                        <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(212,175,55,0.25); border-radius:var(--radius-lg); padding:32px 24px; text-align:center; transition:transform 0.3s;" onmouseenter="this.style.transform='translateY(-6px)'" onmouseleave="this.style.transform='translateY(0)'">
-                            <div style="width:60px; height:60px; border-radius:50%; background:var(--gold-gradient); color:#080c1d; display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin:0 auto 20px;">
+                        <div class="why-choose-card animate-in">
+                            <div class="why-choose-icon">
                                 <i class="fas fa-car"></i>
                             </div>
-                            <h3 style="color:#ffffff; font-size:1.2rem; margin-bottom:10px;">Private Chauffeured Fleet</h3>
-                            <p style="color:#94a3b8; font-size:0.9rem;">Premium airport transfers, executive cars, and private yacht charters so you never wait in queues.</p>
+                            <h3>Private Chauffeured Fleet</h3>
+                            <p>Premium airport transfers, executive cars, and private yacht charters so you never wait in queues.</p>
                         </div>
 
-                        <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(212,175,55,0.25); border-radius:var(--radius-lg); padding:32px 24px; text-align:center; transition:transform 0.3s;" onmouseenter="this.style.transform='translateY(-6px)'" onmouseleave="this.style.transform='translateY(0)'">
-                            <div style="width:60px; height:60px; border-radius:50%; background:var(--gold-gradient); color:#080c1d; display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin:0 auto 20px;">
+                        <div class="why-choose-card animate-in">
+                            <div class="why-choose-icon">
                                 <i class="fas fa-shield-heart"></i>
                             </div>
-                            <h3 style="color:#ffffff; font-size:1.2rem; margin-bottom:10px;">Flexible & Guaranteed</h3>
-                            <p style="color:#94a3b8; font-size:0.9rem;">Best value guarantee, transparent pricing with no hidden charges, and flexible date change options.</p>
+                            <h3>Flexible &amp; Guaranteed</h3>
+                            <p>Best value guarantee, transparent pricing with no hidden charges, and flexible date change options.</p>
                         </div>
                     </div>
                 </div>
             </div>
+
 
             <!-- HOW WE CRAFT YOUR JOURNEY (JOURNEY STEPS) -->
             <div class="container section-pad">
@@ -342,29 +344,29 @@
                     <p>From the first conversation to touching down back home, your holiday is managed with effortless precision.</p>
                 </div>
                 
-                <div class="grid-4" style="text-align:center;">
-                    <div style="padding:20px;">
-                        <span style="display:inline-block; font-size:2.8rem; font-weight:800; font-family:var(--font-heading); color:var(--gold-500); opacity:0.85;">01</span>
-                        <h4 style="margin:10px 0 8px;">Share Your Vision</h4>
-                        <p style="color:var(--text-muted); font-size:0.9rem;">Tell us your dream destination, preferred dates, traveler styles, and special wishes.</p>
+                <div class="grid-4 process-steps">
+                    <div class="process-step animate-in">
+                        <span class="process-number">01</span>
+                        <h4>Share Your Vision</h4>
+                        <p>Tell us your dream destination, preferred dates, traveler styles, and special wishes.</p>
                     </div>
 
-                    <div style="padding:20px;">
-                        <span style="display:inline-block; font-size:2.8rem; font-weight:800; font-family:var(--font-heading); color:var(--gold-500); opacity:0.85;">02</span>
-                        <h4 style="margin:10px 0 8px;">Bespoke Design</h4>
-                        <p style="color:var(--text-muted); font-size:0.9rem;">Our specialists hand-craft a customized itinerary with resort options and exclusive activities.</p>
+                    <div class="process-step animate-in">
+                        <span class="process-number">02</span>
+                        <h4>Bespoke Design</h4>
+                        <p>Our specialists hand-craft a customized itinerary with resort options and exclusive activities.</p>
                     </div>
 
-                    <div style="padding:20px;">
-                        <span style="display:inline-block; font-size:2.8rem; font-weight:800; font-family:var(--font-heading); color:var(--gold-500); opacity:0.85;">03</span>
-                        <h4 style="margin:10px 0 8px;">Seamless Booking</h4>
-                        <p style="color:var(--text-muted); font-size:0.9rem;">Review and refine every detail. Confirm with full transparency and dedicated manager assistance.</p>
+                    <div class="process-step animate-in">
+                        <span class="process-number">03</span>
+                        <h4>Seamless Booking</h4>
+                        <p>Review and refine every detail. Confirm with full transparency and dedicated manager assistance.</p>
                     </div>
 
-                    <div style="padding:20px;">
-                        <span style="display:inline-block; font-size:2.8rem; font-weight:800; font-family:var(--font-heading); color:var(--gold-500); opacity:0.85;">04</span>
-                        <h4 style="margin:10px 0 8px;">Travel In Bliss</h4>
-                        <p style="color:var(--text-muted); font-size:0.9rem;">Relax and enjoy every moment knowing your 24/7 personal concierge is only a WhatsApp message away.</p>
+                    <div class="process-step animate-in">
+                        <span class="process-number">04</span>
+                        <h4>Travel In Bliss</h4>
+                        <p>Relax and enjoy every moment knowing your 24/7 personal concierge is only a WhatsApp message away.</p>
                     </div>
                 </div>
             </div>
@@ -372,10 +374,10 @@
             <!-- TRAVEL JOURNAL (BLOG POSTS) -->
             <div style="background:var(--surface-soft);" class="section-pad">
                 <div class="container">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:40px; flex-wrap:wrap; gap:20px;">
+                    <div class="section-header-flex">
                         <div>
                             <span class="eyebrow"><i class="fas fa-feather-alt"></i> The Via Journal</span>
-                            <h2>Inspiration & Insider Guides</h2>
+                            <h2>Inspiration &amp; Insider Guides</h2>
                             <p style="color:var(--text-muted);">Expert destination tips, packing advice, and curated stories from the world's most breathtaking places.</p>
                         </div>
                         <button class="btn btn-outline" onclick="navTo('blog')">View All Stories <i class="fas fa-arrow-right"></i></button>
@@ -415,8 +417,8 @@
                 </div>
             </div>
 
-            <!-- GRAND LUXURY CTA BANNER -->
-            <div class="hero" style="min-height:480px; padding:60px 24px;">
+            <!-- GRAND CTA BANNER -->
+            <div class="hero cta-banner">
                 <div class="hero-media">
                     <picture>
                         <source srcset="https://images.unsplash.com/photo-1528127269322-539801943592?w=1600&q=80&fm=webp" type="image/webp">
@@ -427,10 +429,10 @@
                 
                 <div class="container hero-content">
                     <span class="eyebrow light"><i class="fas fa-paper-plane"></i> Your Next Chapter Awaits</span>
-                    <h2 style="color:#ffffff; font-size:clamp(2.2rem, 4vw, 3.4rem); margin-bottom:16px;">Ready to Craft Your Next Unforgettable Story?</h2>
-                    <p class="hero-subtitle" style="margin-bottom:30px;">Speak with our senior travel specialists today and receive a personalized itinerary tailored to your dreams within 24 hours.</p>
+                    <h2>Ready to Craft Your Next Unforgettable Story?</h2>
+                    <p class="hero-subtitle">Speak with our senior travel specialists today and receive a personalized itinerary tailored to your dreams within 24 hours.</p>
                     
-                    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+                    <div class="cta-actions">
                         <button class="btn btn-gold btn-lg" onclick="navTo('plan-trip')"><i class="fas fa-compass"></i> Plan My Bespoke Trip</button>
                         <button class="btn btn-glass btn-lg" onclick="toggleChat()"><i class="fas fa-comments"></i> Chat with AI Assistant</button>
                     </div>
@@ -785,7 +787,7 @@
 
                 <div style="display:flex; flex-direction:column; gap:20px; justify-content:center;">
                     <div style="background:var(--surface-card); border:1px solid var(--border-light); border-radius:var(--radius-lg); padding:28px; display:flex; align-items:center; gap:20px;">
-                        <div style="width:50px; height:50px; border-radius:50%; background:var(--gold-gradient); color:#080c1d; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0;">
+                        <div style="width:50px; height:50px; border-radius:50%; background:var(--gold-gradient); color:#061029; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0;">
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
                         <div>
@@ -795,7 +797,7 @@
                     </div>
 
                     <div style="background:var(--surface-card); border:1px solid var(--border-light); border-radius:var(--radius-lg); padding:28px; display:flex; align-items:center; gap:20px;">
-                        <div style="width:50px; height:50px; border-radius:50%; background:var(--gold-gradient); color:#080c1d; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0;">
+                        <div style="width:50px; height:50px; border-radius:50%; background:var(--gold-gradient); color:#061029; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0;">
                             <i class="fas fa-envelope"></i>
                         </div>
                         <div>
@@ -805,7 +807,7 @@
                     </div>
 
                     <div style="background:var(--surface-card); border:1px solid var(--border-light); border-radius:var(--radius-lg); padding:28px; display:flex; align-items:center; gap:20px;">
-                        <div style="width:50px; height:50px; border-radius:50%; background:var(--gold-gradient); color:#080c1d; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0;">
+                        <div style="width:50px; height:50px; border-radius:50%; background:var(--gold-gradient); color:#061029; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0;">
                             <i class="fab fa-whatsapp"></i>
                         </div>
                         <div>
@@ -1076,7 +1078,7 @@
         
         <div class="admin-main" id="adminMain">
             <!-- Admin Login Box -->
-            <div id="admin-login" style="max-width:440px; margin:60px auto; background:#0f1838; padding:36px; border-radius:var(--radius-xl); border:1px solid var(--border-gold); box-shadow:0 20px 50px rgba(0,0,0,0.5);">
+            <div id="admin-login" style="max-width:440px; margin:60px auto; background:#112050; padding:36px; border-radius:var(--radius-xl); border:1px solid var(--border-gold); box-shadow:0 20px 50px rgba(0,0,0,0.5);">
                 <div style="text-align:center; margin-bottom:24px;">
                     <i class="fas fa-lock" style="font-size:2.2rem; color:var(--gold-400); margin-bottom:10px;"></i>
                     <h2 style="color:#ffffff;">Staff Portal</h2>
@@ -1086,11 +1088,11 @@
                 <form onsubmit="adminLogin(); return false;">
                     <div class="form-sec">
                         <label style="color:#cbd5e1;">Email Address</label>
-                        <input type="email" id="loginEmail" required style="background:#070b1a; border-color:#243260; color:#fff;">
+                        <input type="email" id="loginEmail" required style="background:#081535; border-color:#243260; color:#fff;">
                     </div>
                     <div class="form-sec">
                         <label style="color:#cbd5e1;">Password</label>
-                        <input type="password" id="loginPass" required style="background:#070b1a; border-color:#243260; color:#fff;">
+                        <input type="password" id="loginPass" required style="background:#081535; border-color:#243260; color:#fff;">
                     </div>
                     <button type="submit" class="btn btn-gold" id="loginBtn" style="width:100%; margin-top:10px;"><i class="fas fa-sign-in-alt"></i> Secure Login</button>
                 </form>
@@ -1283,7 +1285,7 @@
                 <!-- Settings Tab -->
                 <div id="tab-settings" class="admin-tab" style="display:none;">
                     <h2 style="margin-bottom:20px;">Website & Agency Settings</h2>
-                    <div style="background:#0f1838; padding:32px; border-radius:var(--radius-lg); max-width:640px; border:1px solid rgba(255,255,255,0.1);">
+                    <div style="background:#112050; padding:32px; border-radius:var(--radius-lg); max-width:640px; border:1px solid rgba(255,255,255,0.1);">
                         <div class="form-sec"><label style="color:#cbd5e1;">Business Legal Name</label><input type="text" id="set_name"></div>
                         <div class="form-sec"><label style="color:#cbd5e1;">Primary Email</label><input type="email" id="set_email"></div>
                         <div class="form-sec"><label style="color:#cbd5e1;">Phone Number</label><input type="text" id="set_phone"></div>
@@ -1302,7 +1304,7 @@
      ========================================== -->
 <!-- Package Modal -->
 <div id="pkgFormModal" style="display:none; position:fixed; inset:0; background:rgba(5,8,20,0.75); z-index:99999; padding:20px; overflow-y:auto; backdrop-filter:blur(8px);">
-    <div style="background:#0f1838; color:#fff; max-width:700px; margin:30px auto; padding:36px; border-radius:var(--radius-xl); border:1px solid var(--border-gold); position:relative; box-shadow:var(--shadow-xl);">
+    <div style="background:#112050; color:#fff; max-width:700px; margin:30px auto; padding:36px; border-radius:var(--radius-xl); border:1px solid var(--border-gold); position:relative; box-shadow:var(--shadow-xl);">
         <button onclick="document.getElementById('pkgFormModal').style.display='none'" style="position:absolute; top:20px; right:20px; background:none; border:none; font-size:24px; color:#fff; cursor:pointer;">&times;</button>
         <h3 style="margin-bottom:20px; color:var(--gold-400);" id="pkg_modal_title">Add Package</h3>
         <input type="hidden" id="m_pkg_id">
@@ -1313,7 +1315,7 @@
         </div>
         <div class="form-grid-2">
             <div class="form-sec"><label style="color:#cbd5e1;">Duration</label><input type="text" id="m_pkg_duration" placeholder="e.g. 7 Days / 6 Nights"></div>
-            <div class="form-sec"><label style="color:#cbd5e1;">Destination</label><select id="m_pkg_dest" style="background:#070b1a; color:#fff;"></select></div>
+            <div class="form-sec"><label style="color:#cbd5e1;">Destination</label><select id="m_pkg_dest" style="background:#081535; color:#fff;"></select></div>
         </div>
         <div class="form-sec"><label style="color:#cbd5e1;">Short Deck (1-2 sentences)</label><input type="text" id="m_pkg_short_desc"></div>
         <div class="form-sec"><label style="color:#cbd5e1;">Full Overview Description</label><textarea id="m_pkg_desc" rows="4"></textarea></div>
@@ -1325,14 +1327,14 @@
             <div class="form-sec"><label style="color:#cbd5e1;">Exclusions (One per line)</label><textarea id="m_pkg_exc" rows="4"></textarea></div>
         </div>
         <div class="form-sec"><label style="color:#cbd5e1;">Important Notes (One per line)</label><textarea id="m_pkg_imp" rows="3"></textarea></div>
-        <div class="form-sec"><label style="color:#cbd5e1;">Publish Status</label><select id="m_pkg_pub" style="background:#070b1a; color:#fff;"><option value="true">Live (Published)</option><option value="false">Draft (Hidden)</option></select></div>
+        <div class="form-sec"><label style="color:#cbd5e1;">Publish Status</label><select id="m_pkg_pub" style="background:#081535; color:#fff;"><option value="true">Live (Published)</option><option value="false">Draft (Hidden)</option></select></div>
         <button class="btn btn-gold" onclick="savePackage()" style="width:100%; margin-top:15px;"><i class="fas fa-save"></i> Save Package</button>
     </div>
 </div>
 
 <!-- Destination Modal -->
 <div id="destFormModal" style="display:none; position:fixed; inset:0; background:rgba(5,8,20,0.75); z-index:99999; padding:20px; overflow-y:auto; backdrop-filter:blur(8px);">
-    <div style="background:#0f1838; color:#fff; max-width:540px; margin:40px auto; padding:36px; border-radius:var(--radius-xl); border:1px solid var(--border-gold); position:relative; box-shadow:var(--shadow-xl);">
+    <div style="background:#112050; color:#fff; max-width:540px; margin:40px auto; padding:36px; border-radius:var(--radius-xl); border:1px solid var(--border-gold); position:relative; box-shadow:var(--shadow-xl);">
         <button onclick="document.getElementById('destFormModal').style.display='none'" style="position:absolute; top:20px; right:20px; background:none; border:none; font-size:24px; color:#fff; cursor:pointer;">&times;</button>
         <h3 style="margin-bottom:20px; color:var(--gold-400);">Add Destination</h3>
         <input type="hidden" id="m_dest_id">
@@ -1342,14 +1344,14 @@
         <div class="form-sec"><label style="color:#cbd5e1;">Cover Image Upload</label><input type="file" id="m_dest_img" accept="image/*"></div>
         <div class="form-sec"><label style="color:#cbd5e1;">Description</label><textarea id="m_dest_desc" rows="3"></textarea></div>
         <div class="form-sec"><label style="color:#cbd5e1;">Best Time to Visit</label><input type="text" id="m_dest_time" placeholder="e.g. Nov - Apr"></div>
-        <div class="form-sec"><label style="color:#cbd5e1;">Publish Status</label><select id="m_dest_pub" style="background:#070b1a; color:#fff;"><option value="true">Live</option><option value="false">Hidden</option></select></div>
+        <div class="form-sec"><label style="color:#cbd5e1;">Publish Status</label><select id="m_dest_pub" style="background:#081535; color:#fff;"><option value="true">Live</option><option value="false">Hidden</option></select></div>
         <button class="btn btn-gold" onclick="saveDestination()" style="width:100%; margin-top:15px;">Save Destination</button>
     </div>
 </div>
 
 <!-- Booking Modal -->
 <div id="bookFormModal" style="display:none; position:fixed; inset:0; background:rgba(5,8,20,0.75); z-index:99999; padding:20px; overflow-y:auto; backdrop-filter:blur(8px);">
-    <div style="background:#0f1838; color:#fff; max-width:540px; margin:40px auto; padding:36px; border-radius:var(--radius-xl); border:1px solid var(--border-gold); position:relative; box-shadow:var(--shadow-xl);">
+    <div style="background:#112050; color:#fff; max-width:540px; margin:40px auto; padding:36px; border-radius:var(--radius-xl); border:1px solid var(--border-gold); position:relative; box-shadow:var(--shadow-xl);">
         <button onclick="document.getElementById('bookFormModal').style.display='none'" style="position:absolute; top:20px; right:20px; background:none; border:none; font-size:24px; color:#fff; cursor:pointer;">&times;</button>
         <h3 style="margin-bottom:20px; color:var(--gold-400);">Create Booking</h3>
         <div class="form-sec"><label style="color:#cbd5e1;">Customer Name</label><input type="text" id="m_book_customer_name"></div>
@@ -1358,27 +1360,27 @@
         <div class="form-sec"><label style="color:#cbd5e1;">Travelers</label><input type="number" id="m_book_travelers" value="2" min="1"></div>
         <div class="form-sec"><label style="color:#cbd5e1;">Total Amount (INR ₹)</label><input type="number" id="m_book_total"></div>
         <div class="form-sec"><label style="color:#cbd5e1;">Amount Paid (INR ₹)</label><input type="number" id="m_book_paid"></div>
-        <div class="form-sec"><label style="color:#cbd5e1;">Booking Status</label><select id="m_book_status" style="background:#070b1a; color:#fff;"><option>Pending</option><option>Confirmed</option><option>Completed</option><option>Cancelled</option></select></div>
+        <div class="form-sec"><label style="color:#cbd5e1;">Booking Status</label><select id="m_book_status" style="background:#081535; color:#fff;"><option>Pending</option><option>Confirmed</option><option>Completed</option><option>Cancelled</option></select></div>
         <button class="btn btn-gold" onclick="saveBooking()" style="width:100%; margin-top:15px;">Save Booking Record</button>
     </div>
 </div>
 
 <!-- FAQ Modal -->
 <div id="faqFormModal" style="display:none; position:fixed; inset:0; background:rgba(5,8,20,0.75); z-index:99999; padding:20px; overflow-y:auto; backdrop-filter:blur(8px);">
-    <div style="background:#0f1838; color:#fff; max-width:540px; margin:40px auto; padding:36px; border-radius:var(--radius-xl); border:1px solid var(--border-gold); position:relative; box-shadow:var(--shadow-xl);">
+    <div style="background:#112050; color:#fff; max-width:540px; margin:40px auto; padding:36px; border-radius:var(--radius-xl); border:1px solid var(--border-gold); position:relative; box-shadow:var(--shadow-xl);">
         <button onclick="document.getElementById('faqFormModal').style.display='none'" style="position:absolute; top:20px; right:20px; background:none; border:none; font-size:24px; color:#fff; cursor:pointer;">&times;</button>
         <h3 style="margin-bottom:20px; color:var(--gold-400);" id="faq_modal_title">Add FAQ</h3>
         <input type="hidden" id="m_faq_id">
         <div class="form-sec"><label style="color:#cbd5e1;">Question</label><input type="text" id="m_faq_question"></div>
         <div class="form-sec"><label style="color:#cbd5e1;">Answer</label><textarea id="m_faq_answer" rows="4"></textarea></div>
-        <div class="form-sec"><label style="color:#cbd5e1;">Publish Status</label><select id="m_faq_pub" style="background:#070b1a; color:#fff;"><option value="true">Live</option><option value="false">Hidden</option></select></div>
+        <div class="form-sec"><label style="color:#cbd5e1;">Publish Status</label><select id="m_faq_pub" style="background:#081535; color:#fff;"><option value="true">Live</option><option value="false">Hidden</option></select></div>
         <button class="btn btn-gold" onclick="saveFaq()" style="width:100%; margin-top:15px;">Save FAQ</button>
     </div>
 </div>
 
 <!-- Testimonial Modal -->
 <div id="testFormModal" style="display:none; position:fixed; inset:0; background:rgba(5,8,20,0.75); z-index:99999; padding:20px; overflow-y:auto; backdrop-filter:blur(8px);">
-    <div style="background:#0f1838; color:#fff; max-width:540px; margin:40px auto; padding:36px; border-radius:var(--radius-xl); border:1px solid var(--border-gold); position:relative; box-shadow:var(--shadow-xl);">
+    <div style="background:#112050; color:#fff; max-width:540px; margin:40px auto; padding:36px; border-radius:var(--radius-xl); border:1px solid var(--border-gold); position:relative; box-shadow:var(--shadow-xl);">
         <button onclick="document.getElementById('testFormModal').style.display='none'" style="position:absolute; top:20px; right:20px; background:none; border:none; font-size:24px; color:#fff; cursor:pointer;">&times;</button>
         <h3 style="margin-bottom:20px; color:var(--gold-400);">Add Testimonial</h3>
         <div class="form-sec"><label style="color:#cbd5e1;">Guest Name</label><input type="text" id="m_test_name"></div>
@@ -1392,7 +1394,7 @@
 
 <!-- Blog Post Modal -->
 <div id="blogFormModal" style="display:none; position:fixed; inset:0; background:rgba(5,8,20,0.75); z-index:99999; padding:20px; overflow-y:auto; backdrop-filter:blur(8px);">
-    <div style="background:#0f1838; color:#fff; max-width:720px; margin:40px auto; padding:36px; border-radius:var(--radius-xl); border:1px solid var(--border-gold); position:relative; box-shadow:var(--shadow-xl);">
+    <div style="background:#112050; color:#fff; max-width:720px; margin:40px auto; padding:36px; border-radius:var(--radius-xl); border:1px solid var(--border-gold); position:relative; box-shadow:var(--shadow-xl);">
         <button onclick="document.getElementById('blogFormModal').style.display='none'" style="position:absolute; top:20px; right:20px; background:none; border:none; font-size:24px; color:#fff; cursor:pointer;">&times;</button>
         <h3 style="margin-bottom:20px; color:var(--gold-400);" id="blog_modal_title">Add Journal Post</h3>
         <input type="hidden" id="m_blog_id">
@@ -1401,7 +1403,7 @@
         <div class="form-sec"><label style="color:#cbd5e1;">Cover Image URL</label><input type="text" id="m_blog_img"></div>
         <div class="form-sec"><label style="color:#cbd5e1;">Short Excerpt</label><textarea id="m_blog_excerpt" rows="2"></textarea></div>
         <div class="form-sec"><label style="color:#cbd5e1;">Full Article Content (HTML allowed)</label><textarea id="m_blog_content" rows="8"></textarea></div>
-        <div class="form-sec"><label style="color:#cbd5e1;">Publish Status</label><select id="m_blog_pub" style="background:#070b1a; color:#fff;"><option value="true">Live</option><option value="false">Hidden</option></select></div>
+        <div class="form-sec"><label style="color:#cbd5e1;">Publish Status</label><select id="m_blog_pub" style="background:#081535; color:#fff;"><option value="true">Live</option><option value="false">Hidden</option></select></div>
         <button class="btn btn-gold" onclick="saveBlogPost()" style="width:100%; margin-top:15px;">Save Journal Post</button>
     </div>
 </div>
