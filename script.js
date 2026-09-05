@@ -579,8 +579,7 @@ function updateSEO(title, desc) {
 // --- ROUTER (WITH CRITICAL BUG FIXES & FALLBACK) ---
 function navTo(page, id = null) {
     // Close mobile menu if open
-    const menu = document.getElementById('navMenu');
-    if (menu) menu.classList.remove('active');
+    toggleMenu(false);
 
     // Build standard hash route
     if (page === 'blog-post' && id) {
@@ -603,10 +602,21 @@ async function router() {
     const siteWrapper = document.getElementById('site-wrapper');
     const adminWrapper = document.getElementById('admin-wrapper');
 
-    // Update active nav styling
-    document.querySelectorAll('.nav-menu a').forEach(a => a.classList.remove('active'));
+    // Update active nav styling (Desktop menu)
+    document.querySelectorAll('.nav-menu a, .nav-links-wrap a').forEach(a => a.classList.remove('active'));
     const activeNav = document.getElementById('nav-' + (page === 'blog-post' ? 'blog' : page));
     if (activeNav) activeNav.classList.add('active');
+
+    // Update active mobile bottom bar styling
+    document.querySelectorAll('.mob-nav-item').forEach(m => m.classList.remove('active'));
+    const mobActiveNav = document.getElementById('mob-nav-' + (page === 'blog-post' ? 'packages' : (page === 'package' ? 'packages' : page)));
+    if (mobActiveNav) mobActiveNav.classList.add('active');
+
+    // Hide sticky booking bar if leaving package details
+    const mobStickyBooking = document.getElementById('mobileStickyBooking');
+    if (mobStickyBooking && page !== 'package') {
+        mobStickyBooking.style.display = 'none';
+    }
 
     // Admin view separation
     if (page === 'admin') {
@@ -700,9 +710,22 @@ window.addEventListener('load', () => {
 });
 
 // --- MOBILE MENU TOGGLE ---
-function toggleMenu() {
+function toggleMenu(forceState) {
     const menu = document.getElementById('navMenu');
-    if (menu) menu.classList.toggle('active');
+    const overlay = document.getElementById('navOverlay');
+    const toggleBtn = document.getElementById('mobileMenuToggle');
+    const icon = document.getElementById('menuToggleIcon');
+    if (!menu) return;
+
+    const willBeActive = typeof forceState === 'boolean' ? forceState : !menu.classList.contains('active');
+    
+    menu.classList.toggle('active', willBeActive);
+    if (overlay) overlay.classList.toggle('active', willBeActive);
+    if (toggleBtn) toggleBtn.setAttribute('aria-expanded', willBeActive ? 'true' : 'false');
+    if (icon) icon.className = willBeActive ? 'fas fa-times' : 'fas fa-bars';
+    
+    // Lock/unlock body scroll when mobile menu is open
+    document.body.style.overflow = willBeActive ? 'hidden' : '';
 }
 
 // --- POPUP TRIP MODAL ---
@@ -739,10 +762,14 @@ if (tripModalBackdrop) {
 
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
+        const menu = document.getElementById('navMenu');
+        if (menu && menu.classList.contains('active')) toggleMenu(false);
         const tripModal = document.getElementById('tripModal');
         if (tripModal && tripModal.classList.contains('active')) hideTripModal();
         const confirmModal = document.getElementById('confirmModal');
         if (confirmModal && confirmModal.style.display === 'flex') confirmModal.style.display = 'none';
+        const chatWin = document.getElementById('chatWindow');
+        if (chatWin && chatWin.classList.contains('active')) toggleChat();
     }
 });
 
@@ -1293,8 +1320,28 @@ async function loadPackageDetails(id) {
         </div>
     `;
 
+    // Initialize Mobile Sticky Booking Bar
+    const mobSticky = document.getElementById('mobileStickyBooking');
+    const mobPrice = document.getElementById('mobStickyPrice');
+    const mobWa = document.getElementById('mobStickyWaBtn');
+    if (mobSticky && mobPrice) {
+        mobSticky.style.display = 'flex';
+        mobPrice.textContent = baseFormattedPrice;
+        if (mobWa) {
+            mobWa.href = `https://wa.me/${escapeHTML(appSettings.whatsapp)}?text=${encodeURIComponent('Hello Via Tours! I would like to customize or book the ' + pkg.title + ' tour.')}`;
+        }
+    }
+
     renderDetailTabContent('itinerary');
     calculateSidebarPrice();
+}
+
+function openCustomTripFromCurrentPkg() {
+    if (currentPackage && currentPackage.id) {
+        openCustomTripFromPkg(currentPackage.id);
+    } else {
+        navTo('plan-trip');
+    }
 }
 
 function switchDetailTab(ev, tab) {
@@ -1372,6 +1419,9 @@ function calculateSidebarPrice() {
     if (paxEl) paxEl.textContent = travelers;
     if (totalEl) totalEl.textContent = formatPrice(totalEstimate);
     if (sidebarDisplay) sidebarDisplay.textContent = formatPrice(totalEstimate);
+
+    const mobPrice = document.getElementById('mobStickyPrice');
+    if (mobPrice) mobPrice.textContent = formatPrice(pricePerPerson);
 }
 
 function openCustomTripFromPkg(pkgId) {

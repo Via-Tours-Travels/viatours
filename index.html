@@ -40,8 +40,8 @@
             <span class="vip-pill"><i class="fas fa-clock"></i> 24/7 VIP Concierge Support</span>
         </div>
         <div class="vip-right">
-            <a href="tel:+919876543210" class="vip-link" id="vip_phone"><i class="fas fa-phone-alt"></i> +91 98765 43210</a>
-            <a href="https://wa.me/919876543210" target="_blank" class="vip-link" id="vip_whatsapp"><i class="fab fa-whatsapp" style="color:#25d366;"></i> WhatsApp Direct</a>
+            <a href="tel:+919876543210" class="vip-link vip-link-phone" id="vip_phone" title="Call Concierge"><i class="fas fa-phone-alt"></i> <span>+91 98765 43210</span></a>
+            <a href="https://wa.me/919876543210" target="_blank" class="vip-link vip-link-wa" id="vip_whatsapp" title="WhatsApp Concierge"><i class="fab fa-whatsapp" style="color:#25d366;"></i> <span>WhatsApp Direct</span></a>
             
             <!-- Currency Switcher -->
             <div class="currency-select-wrap">
@@ -61,6 +61,9 @@
     </div>
 </div>
 
+<!-- Mobile Navigation Backdrop Overlay -->
+<div class="nav-overlay" id="navOverlay" onclick="toggleMenu(false)" aria-hidden="true"></div>
+
 <div id="site-wrapper">
     <!-- STICKY LUXURY HEADER -->
     <header class="header" id="mainHeader">
@@ -73,18 +76,37 @@
                 </div>
             </div>
             
-            <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Toggle navigation menu">
-                <i class="fas fa-bars"></i>
+            <button class="mobile-toggle" id="mobileMenuToggle" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
+                <i class="fas fa-bars" id="menuToggleIcon"></i>
             </button>
             
-            <nav class="nav-menu" id="navMenu">
-                <a onclick="navTo('home')" id="nav-home" class="active">Home</a>
-                <a onclick="navTo('destinations')" id="nav-destinations">Destinations</a>
-                <a onclick="navTo('packages')" id="nav-packages">Packages</a>
-                <a onclick="navTo('blog')" id="nav-blog">Travel Journal</a>
-                <a onclick="navTo('about')" id="nav-about">About Us</a>
-                <a onclick="navTo('contact')" id="nav-contact">Contact</a>
-                <a onclick="navTo('plan-trip')" class="btn btn-gold nav-cta"><i class="fas fa-compass"></i> Plan Bespoke Trip</a>
+            <nav class="nav-menu" id="navMenu" aria-label="Primary navigation">
+                <div class="nav-drawer-header">
+                    <div class="logo-txt">
+                        <strong>Via</strong>
+                        <span>Tours & Travels</span>
+                    </div>
+                    <button class="nav-drawer-close" onclick="toggleMenu(false)" aria-label="Close navigation menu">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="nav-links-wrap">
+                    <a onclick="navTo('home')" id="nav-home" class="active"><i class="fas fa-home"></i> <span>Home</span></a>
+                    <a onclick="navTo('destinations')" id="nav-destinations"><i class="fas fa-map-marked-alt"></i> <span>Destinations</span></a>
+                    <a onclick="navTo('packages')" id="nav-packages"><i class="fas fa-suitcase-rolling"></i> <span>Packages</span></a>
+                    <a onclick="navTo('blog')" id="nav-blog"><i class="fas fa-feather-alt"></i> <span>Travel Journal</span></a>
+                    <a onclick="navTo('about')" id="nav-about"><i class="fas fa-award"></i> <span>About Us</span></a>
+                    <a onclick="navTo('contact')" id="nav-contact"><i class="fas fa-paper-plane"></i> <span>Contact</span></a>
+                </div>
+
+                <div class="nav-drawer-cta">
+                    <a onclick="navTo('plan-trip')" class="btn btn-gold nav-cta"><i class="fas fa-compass"></i> Plan Bespoke Trip</a>
+                    <div class="nav-drawer-contact">
+                        <a href="tel:+919876543210" class="drawer-contact-pill"><i class="fas fa-phone-alt"></i> Call Us</a>
+                        <a href="https://wa.me/919876543210" target="_blank" class="drawer-contact-pill wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                    </div>
+                </div>
             </nav>
         </div>
     </header>
@@ -451,16 +473,16 @@
             </div>
             
             <div class="filter-bar">
-                <input type="text" id="dest-search" placeholder="Search destination, country or region..." oninput="debounceDestSearch()" style="flex:1.5; min-width:240px;">
-                <select id="dest-country-filter" onchange="loadDestinations()" style="flex:1; min-width:180px;">
+                <input type="text" id="dest-search" placeholder="Search destination, country or region..." oninput="debounceDestSearch()" class="filter-input-main">
+                <select id="dest-country-filter" onchange="loadDestinations()" class="filter-select">
                     <option value="">All Countries & Regions</option>
                 </select>
-                <select id="dest-sort" onchange="loadDestinations()" style="flex:1; min-width:160px;">
+                <select id="dest-sort" onchange="loadDestinations()" class="filter-select">
                     <option value="name_asc">Name: A to Z</option>
                     <option value="name_desc">Name: Z to A</option>
                     <option value="country_asc">Country: A to Z</option>
                 </select>
-                <button class="btn btn-outline" onclick="resetDestFilters()"><i class="fas fa-undo"></i> Reset</button>
+                <button class="btn btn-outline filter-btn" onclick="resetDestFilters()"><i class="fas fa-undo"></i> Reset</button>
             </div>
             
             <div id="list_destinations">
@@ -472,22 +494,22 @@
              PACKAGES CATALOG PAGE VIEW
              ========================================== -->
         <div id="page-packages" class="page-view container" style="display:none; padding:50px 24px;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:30px; flex-wrap:wrap; gap:20px;">
+            <div class="packages-header-wrap">
                 <div>
                     <span class="eyebrow"><i class="fas fa-suitcase"></i> Curated Itineraries</span>
                     <h1>Luxury Travel Packages</h1>
                     <p style="color:var(--text-muted);">Explore hand-crafted holiday packages with guaranteed 5-star comfort and transparent pricing.</p>
                 </div>
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <input type="text" id="pkg_search" placeholder="Search by title or duration..." oninput="debounceSearch()" style="padding:10px 16px; border:1px solid var(--border-light); border-radius:var(--radius-sm); width:280px; max-width:100%; background:var(--surface-card); color:var(--text-primary);">
+                <div class="packages-search-box">
+                    <input type="text" id="pkg_search" placeholder="Search by title or duration..." oninput="debounceSearch()">
                 </div>
             </div>
             
             <div class="filter-bar">
-                <select id="filter-destination" onchange="loadPackages()" style="flex:1; min-width:180px;">
+                <select id="filter-destination" onchange="loadPackages()" class="filter-select">
                     <option value="">All Destinations</option>
                 </select>
-                <select id="filter-category" onchange="loadPackages()" style="flex:1; min-width:160px;">
+                <select id="filter-category" onchange="loadPackages()" class="filter-select">
                     <option value="">All Categories</option>
                     <option value="Luxury">Luxury Escapes</option>
                     <option value="Honeymoon">Honeymoon & Romantic</option>
@@ -495,14 +517,14 @@
                     <option value="Adventure">Adventure & Trekking</option>
                     <option value="Heritage">Heritage & Culture</option>
                 </select>
-                <input type="number" id="filter-min-price" placeholder="Min Price" oninput="debounceSearch()" style="width:130px;">
-                <input type="number" id="filter-max-price" placeholder="Max Price" oninput="debounceSearch()" style="width:130px;">
-                <select id="pkg_sort" onchange="loadPackages()" style="flex:1; min-width:160px;">
+                <input type="number" id="filter-min-price" placeholder="Min Price" oninput="debounceSearch()" class="filter-input-num">
+                <input type="number" id="filter-max-price" placeholder="Max Price" oninput="debounceSearch()" class="filter-input-num">
+                <select id="pkg_sort" onchange="loadPackages()" class="filter-select">
                     <option value="new">Featured & Newest</option>
                     <option value="price_asc">Price: Low to High</option>
                     <option value="price_desc">Price: High to Low</option>
                 </select>
-                <button class="btn btn-outline" onclick="clearFilter()"><i class="fas fa-times"></i> Clear Filters</button>
+                <button class="btn btn-outline filter-btn" onclick="clearFilter()"><i class="fas fa-times"></i> Clear Filters</button>
             </div>
             
             <div class="grid-3" id="list_packages">
@@ -1006,6 +1028,52 @@
             <button class="btn btn-danger" id="confirmYes">Confirm</button>
             <button class="btn btn-outline" id="confirmNo">Cancel</button>
         </div>
+    </div>
+</div>
+
+<!-- ==========================================
+     MOBILE BOTTOM NAVIGATION BAR (Luxury App Experience)
+     ========================================== -->
+<nav class="mobile-bottom-nav" id="mobileBottomNav" aria-label="Mobile navigation bar">
+    <a onclick="navTo('home')" id="mob-nav-home" class="mob-nav-item active">
+        <i class="fas fa-compass"></i>
+        <span>Explore</span>
+    </a>
+    <a onclick="navTo('destinations')" id="mob-nav-destinations" class="mob-nav-item">
+        <i class="fas fa-map-marked-alt"></i>
+        <span>Places</span>
+    </a>
+    <a onclick="navTo('plan-trip')" id="mob-nav-plan-trip" class="mob-nav-item mob-nav-highlight">
+        <div class="mob-nav-fab">
+            <i class="fas fa-plus"></i>
+        </div>
+        <span>Bespoke</span>
+    </a>
+    <a onclick="navTo('packages')" id="mob-nav-packages" class="mob-nav-item">
+        <i class="fas fa-suitcase-rolling"></i>
+        <span>Tours</span>
+    </a>
+    <a href="https://wa.me/919876543210" target="_blank" class="mob-nav-item mob-nav-wa" title="WhatsApp Concierge">
+        <i class="fab fa-whatsapp"></i>
+        <span>VIP Chat</span>
+    </a>
+</nav>
+
+<!-- ==========================================
+     MOBILE STICKY BOOKING BAR (For Package Detail View)
+     ========================================== -->
+<div class="mobile-sticky-booking" id="mobileStickyBooking" style="display:none;">
+    <div class="mob-booking-info">
+        <span class="mob-booking-label">From / Person</span>
+        <strong class="mob-booking-price" id="mobStickyPrice">₹0</strong>
+    </div>
+    <div class="mob-booking-actions">
+        <a href="https://wa.me/919876543210" target="_blank" class="btn btn-whatsapp btn-sm" id="mobStickyWaBtn" title="WhatsApp Concierge">
+            <i class="fab fa-whatsapp"></i> Chat
+        </a>
+        <button class="btn btn-gold btn-sm" id="mobStickyBookBtn" onclick="openCustomTripFromCurrentPkg()">
+            <i class="fas fa-file-invoice"></i> Quote
+        </button>
     </div>
 </div>
 
