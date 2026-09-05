@@ -113,6 +113,9 @@ html {
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
 }
 
 body {
@@ -121,7 +124,17 @@ body {
     color: var(--text-secondary);
     line-height: 1.7;
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
     transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+#site-wrapper {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -195,53 +208,119 @@ ul {
 }
 
 /* ==========================================================================
-   PRELOADER
+   PRELOADER (LUXURY BRAND EXPERIENCE)
    ========================================================================== */
 #preloader {
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle at center, #112050 0%, #061029 100%);
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #0c1a3d 0%, #061029 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 999999;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 #preloader.hidden {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 }
-.loader-plane {
-    font-size: 3.5rem;
-    animation: flightBob 2s infinite ease-in-out;
-    filter: drop-shadow(0 0 18px rgba(232, 119, 34, 0.6));
+.preloader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    max-width: 380px;
+    width: 90%;
 }
-.loader-text {
+.preloader-logo-wrap {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+}
+.preloader-ring {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: var(--gold-400);
+    border-right-color: var(--gold-500);
+    animation: preloaderSpin 1.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+    filter: drop-shadow(0 0 10px rgba(232, 119, 34, 0.6));
+}
+.preloader-logo {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    border-radius: 50%;
+    background: #061029;
+    padding: 8px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(232, 119, 34, 0.25);
+    animation: preloaderPulse 2s ease-in-out infinite alternate;
+}
+.preloader-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+.preloader-title {
     font-family: var(--font-heading);
-    font-size: 1.4rem;
+    font-size: 1.35rem;
     font-weight: 800;
-    letter-spacing: 6px;
+    letter-spacing: 4px;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+.preloader-sub {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2px;
     color: var(--gold-400);
-    margin-top: 18px;
     text-transform: uppercase;
 }
-.loader-spinner {
-    width: 48px;
-    height: 48px;
-    border: 3px solid rgba(232, 119, 34, 0.2);
-    border-top-color: var(--gold-400);
-    border-radius: 50%;
-    margin: 15px auto 0;
-    animation: spin 0.8s linear infinite;
+.preloader-bar-wrap {
+    width: 180px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 99px;
+    margin-top: 24px;
+    overflow: hidden;
+    position: relative;
+}
+.preloader-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: var(--gold-gradient);
+    border-radius: 99px;
+    box-shadow: 0 0 10px var(--gold-400);
+    animation: preloaderFill 1.1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-@keyframes flightBob {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-15px) rotate(8deg) scale(1.05); }
+@keyframes preloaderSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
-@keyframes spin {
-    to { transform: rotate(360deg); }
+@keyframes preloaderPulse {
+    0% { transform: scale(0.96); }
+    100% { transform: scale(1.03); }
+}
+@keyframes preloaderFill {
+    0% { width: 0%; }
+    40% { width: 65%; }
+    100% { width: 100%; }
 }
 
 /* ==========================================================================
@@ -2986,6 +3065,11 @@ body.dark-mode .mobile-sticky-booking {
     }
 
     /* Header & Mobile Toggle */
+    .header {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: var(--surface-card) !important;
+    }
     .header-in {
         height: 70px;
     }
@@ -3012,19 +3096,28 @@ body.dark-mode .mobile-sticky-booking {
         right: 0;
         bottom: 0;
         width: min(85vw, 340px);
+        height: 100%;
+        height: 100dvh;
         background: var(--surface-card);
         flex-direction: column;
         padding: 24px 20px;
         gap: 0;
         align-items: stretch;
-        transform: translateX(100%);
-        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        transform: translateX(105%);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, visibility 0.25s ease;
         box-shadow: -10px 0 40px rgba(0, 0, 0, 0.35);
-        z-index: 1010;
+        z-index: 100010;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     .nav-menu.active {
         transform: translateX(0);
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
     }
     .nav-drawer-header {
         display: flex;

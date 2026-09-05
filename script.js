@@ -4,12 +4,17 @@
    Interactive Trip Wizard, Smart AI Concierge, Admin Management Portal
    ========================================================================== */
 
-// --- INITIAL PRELOADER ---
+// --- INITIAL PRELOADER (LUXURY BRAND EXPERIENCE) ---
 function hidePreloader() {
     const preloader = document.getElementById('preloader');
-    if (preloader) preloader.classList.add('hidden');
+    if (preloader && !preloader.classList.contains('hidden')) {
+        preloader.classList.add('hidden');
+    }
 }
-setTimeout(hidePreloader, 900);
+window.addEventListener('load', () => {
+    setTimeout(hidePreloader, 650);
+});
+setTimeout(hidePreloader, 1300);
 
 // --- SUPABASE CLIENT SETUP ---
 const SUPABASE_URL = 'https://goqwtovltftehautxekh.supabase.co';
