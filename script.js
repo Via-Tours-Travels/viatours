@@ -16,6 +16,45 @@ window.addEventListener('load', () => {
 });
 setTimeout(hidePreloader, 1300);
 
+// --- LUXURY BRAND EMBLEM FALLBACK (When Remote Logo Fails to Load) ---
+function handleLogoError(img) {
+    if (!img || img.dataset.hasFailed) return;
+    img.dataset.hasFailed = 'true';
+    img.onerror = null;
+
+    const fallback = document.createElement('div');
+    fallback.className = 'brand-emblem-fallback';
+    fallback.setAttribute('role', 'img');
+    fallback.setAttribute('aria-label', 'Via Tours & Travels Emblem');
+    fallback.innerHTML = `
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+                <linearGradient id="viaBrandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fef08a"/>
+                    <stop offset="50%" stop-color="#d97706"/>
+                    <stop offset="100%" stop-color="#92400e"/>
+                </linearGradient>
+                <radialGradient id="viaBgGrad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="rgba(217,119,6,0.2)"/>
+                    <stop offset="100%" stop-color="rgba(217,119,6,0.05)"/>
+                </radialGradient>
+            </defs>
+            <circle cx="32" cy="32" r="30" stroke="url(#viaBrandGrad)" stroke-width="2.5" fill="url(#viaBgGrad)"/>
+            <polygon points="32,7 34,13 32,11 30,13" fill="url(#viaBrandGrad)"/>
+            <polygon points="32,57 34,51 32,53 30,51" fill="url(#viaBrandGrad)"/>
+            <polygon points="7,32 13,34 11,32 13,30" fill="url(#viaBrandGrad)"/>
+            <polygon points="57,32 51,34 53,32 51,30" fill="url(#viaBrandGrad)"/>
+            <path d="M20 21 L32 45 L44 21" stroke="url(#viaBrandGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M26 29 L38 29" stroke="url(#viaBrandGrad)" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+        </svg>
+    `;
+
+    if (img.parentNode) {
+        img.parentNode.replaceChild(fallback, img);
+    }
+}
+window.handleLogoError = handleLogoError;
+
 // --- SUPABASE CLIENT SETUP ---
 const SUPABASE_URL = 'https://goqwtovltftehautxekh.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_bQXp8x_2x4ymx4_oxcOFUA_UTGsqF-5';
@@ -640,6 +679,17 @@ function navTo(page, id = null) {
 
 async function router() {
     const hash = window.location.hash || '#/home';
+
+    // Guard against in-page anchor jumps (e.g. #section-main, #section-tips)
+    if (hash && !hash.startsWith('#/')) {
+        const anchorId = hash.replace(/^#/, '');
+        const anchorEl = document.getElementById(anchorId);
+        if (anchorEl) {
+            anchorEl.scrollIntoView({ behavior: 'smooth' });
+            return;
+        }
+    }
+
     const parts = hash.replace(/^#\/?/, '').split('/');
     const page = parts[0] || 'home';
     const id = parts[1] ? decodeURIComponent(parts[1]) : null;
@@ -669,7 +719,14 @@ async function router() {
         if (adminWrapper) adminWrapper.style.display = 'block';
         if (sb) {
             const { data: { session } } = await sb.auth.getSession();
-            if (session) initAdminDashboard();
+            if (session) {
+                initAdminDashboard();
+            } else {
+                const loginBox = document.getElementById('admin-login');
+                const dashBox = document.getElementById('admin-dashboard');
+                if (loginBox) loginBox.style.display = 'block';
+                if (dashBox) dashBox.style.display = 'none';
+            }
         }
         return;
     }
@@ -745,11 +802,24 @@ async function router() {
     }
 }
 
+// --- DATE PICKER CONSTRAINTS (PREVENT PAST BOOKINGS) ---
+function initDatePickers() {
+    const today = new Date().toISOString().split('T')[0];
+    const dateInputIds = ['hero_date', 'pt_dates', 'modal_pt_dates', 'm_book_date'];
+    dateInputIds.forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            input.min = today;
+        }
+    });
+}
+
 window.addEventListener('hashchange', router);
 window.addEventListener('load', () => {
     // Sync currency selector
     const currSelect = document.getElementById('currencySelector');
     if (currSelect) currSelect.value = currentCurrency;
+    initDatePickers();
     router();
     maybeShowTripModal();
 });
@@ -762,19 +832,17 @@ function toggleMenu(forceState) {
     const icon = document.getElementById('menuToggleIcon');
     if (!menu) return;
 
-    const willBeActive = typeof forceState === 'boolean' ? forceState : !menu.classList.contains('active');
-    
-    menu.classList.toggle('active', willBeActive);
-    if (overlay) overlay.classList.toggle('active', willBeActive);
-    if (toggleBtn) toggleBtn.setAttribute('aria-expanded', willBeActive ? 'true' : 'false');
-    if (icon) icon.className = willBeActive ? 'fas fa-times' : 'fas fa-bars';
-    
-    // Lock/unlock body scroll when mobile menu is open
-    document.body.style.overflow = willBeActive ? 'hidden' : '';
+    const isOpen = forceState !== undefined ? forceState : !menu.classList.contains('active');
+    menu.classList.toggle('active', isOpen);
+    if (overlay) overlay.classList.toggle('active', isOpen);
+    if (toggleBtn) toggleBtn.setAttribute('aria-expanded', isOpen);
+    if (icon) icon.className = isOpen ? 'fas fa-times' : 'fas fa-bars';
+    document.body.style.overflow = isOpen ? 'hidden' : '';
 }
 
 // --- POPUP TRIP MODAL ---
 function showTripModal() {
+    initDatePickers();
     const modal = document.getElementById('tripModal');
     if (!modal) return;
     modal.classList.add('active');
@@ -835,45 +903,227 @@ async function handleSampleItineraryDownload(e) {
         // Save lead to Supabase if connected
         if (sb) {
             try {
-                await sb.from('enquiries').insert({
-                    customer_name: name,
+                await sb.from('enquiries').insert([{
+                    name: name,
                     email: email,
-                    phone: 'Sample Itinerary Download',
+                    phone: 'Lead Capture (PDF Download)',
                     destination: dest,
-                    notes: 'Downloaded Sample Itinerary PDF Guide for ' + dest
-                });
+                    requirements: 'Downloaded Sample Itinerary PDF Guide for ' + dest,
+                    status: 'New'
+                }]);
             } catch(err) {
                 console.warn('Enquiry capture info:', err);
             }
         }
 
         // Generate and trigger download of luxury itinerary PDF summary document
-        const content = `=================================================================\nVIA TOURS & TRAVELS — CURATED SAMPLE ITINERARY GUIDE\n=================================================================\n\nPrepared Exclusively For: ${name}\nEmail: ${email}\nSelected Itinerary: ${dest}\nDate of Issue: ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}\nAccreditation: IATA #08392110 | ASTA Verified Luxury Tour Operator\n\n-----------------------------------------------------------------\nSIGNATURE ITINERARY HIGHLIGHTS & INCLUSIONS\n-----------------------------------------------------------------\n✓ Handpicked 5-Star Accommodations & Private Overwater/Pool Villas\n✓ Private Mercedes Chauffeur Transfers & Speedboat/Seaplane Connections\n✓ Gourmet Breakfasts, Multi-Course Fine Dining & Curated Excursions\n✓ 24/7 Dedicated Senior Concierge Specialist on WhatsApp\n✓ 100% Free Date Changes up to 21 Days Prior to Departure\n\n-----------------------------------------------------------------\nHOW TO PERSONALIZE YOUR DATES & EXPERIENCE\n-----------------------------------------------------------------\nTo adjust resort choices, add helicopter excursions, or receive formal flight quotations:\n\nWhatsApp Concierge: +91 98765 43210\nDirect Email: hello@viatours.com\nWebsite: https://www.viatours.com\n\nThank you for choosing Via Tours & Travels — Crafting Extraordinary Journeys.`;
+        const cleanDest = dest.replace(/[^a-zA-Z0-9]/g, '_');
+        const issueDate = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
-        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `Via_Tours_Sample_Itinerary_${dest.replace(/[^a-zA-Z0-9]/g, '_')}.txt`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
+        const fallbackTextDownload = () => {
+            const content = `=================================================================\nVIA TOURS & TRAVELS — CURATED SAMPLE ITINERARY GUIDE\n=================================================================\n\nPrepared Exclusively For: ${name}\nEmail: ${email}\nSelected Itinerary: ${dest}\nDate of Issue: ${issueDate}\nAccreditation: IATA #08392110 | ASTA Verified Luxury Tour Operator\n\n-----------------------------------------------------------------\nSIGNATURE ITINERARY HIGHLIGHTS & INCLUSIONS\n-----------------------------------------------------------------\n✓ Handpicked 5-Star Accommodations & Private Overwater/Pool Villas\n✓ Private Mercedes Chauffeur Transfers & Speedboat/Seaplane Connections\n✓ Gourmet Breakfasts, Multi-Course Fine Dining & Curated Excursions\n✓ 24/7 Dedicated Senior Concierge Specialist on WhatsApp\n✓ 100% Free Date Changes up to 21 Days Prior to Departure\n\n-----------------------------------------------------------------\nHOW TO PERSONALIZE YOUR DATES & EXPERIENCE\n-----------------------------------------------------------------\nTo adjust resort choices, add helicopter excursions, or receive formal flight quotations:\n\nWhatsApp Concierge: +91 98765 43210\nDirect Email: hello@viatours.com\nWebsite: https://www.viatours.com\n\nThank you for choosing Via Tours & Travels — Crafting Extraordinary Journeys.`;
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `Via_Tours_Sample_Itinerary_${cleanDest}.txt`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        };
+
+        if (window.jspdf && window.jspdf.jsPDF) {
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+                // Header Banner (Royal Navy #061029)
+                doc.setFillColor(6, 16, 41);
+                doc.rect(0, 0, 210, 38, 'F');
+
+                // Gold Accent Line
+                doc.setFillColor(232, 119, 34);
+                doc.rect(0, 38, 210, 2, 'F');
+
+                // Brand Title & Tagline
+                doc.setTextColor(255, 255, 255);
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(20);
+                doc.text('VIA TOURS & TRAVELS', 14, 16);
+
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(9);
+                doc.setTextColor(232, 119, 34);
+                doc.text('CURATED LUXURY & BESPOKE BESPOKE JOURNEYS', 14, 23);
+
+                doc.setTextColor(148, 163, 184);
+                doc.setFontSize(7.5);
+                doc.text('IATA Accredited Tour Operator  |  ASTA Verified Luxury Partner', 14, 30);
+
+                // Prepared For Info Card
+                doc.setFillColor(245, 247, 251);
+                doc.roundedRect(14, 46, 182, 32, 2, 2, 'F');
+                doc.setDrawColor(223, 229, 239);
+                doc.roundedRect(14, 46, 182, 32, 2, 2, 'S');
+
+                doc.setTextColor(15, 23, 42);
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(10.5);
+                doc.text('COMPLIMENTARY CURATED SAMPLE ITINERARY', 20, 54);
+
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(8.5);
+                doc.setTextColor(51, 65, 85);
+                doc.text(`Guest Name: ${name}`, 20, 61);
+                doc.text(`Email Address: ${email}`, 20, 66);
+                doc.text(`Selected Itinerary: ${dest}`, 20, 71);
+                doc.text(`Date of Issue: ${issueDate}`, 120, 61);
+                doc.text('Status: VIP Requested Preview', 120, 66);
+
+                // Section 1: Signature Inclusions
+                doc.setTextColor(6, 16, 41);
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(12);
+                doc.text('Signature Highlights & Inclusions', 14, 88);
+
+                doc.setDrawColor(232, 119, 34);
+                doc.setLineWidth(0.5);
+                doc.line(14, 91, 196, 91);
+
+                const inclusions = [
+                    'Handpicked 5-Star Accommodations & Private Overwater / Pool Villa Stays',
+                    'Private Mercedes Chauffeur Transfers & Speedboat / Seaplane VIP Connections',
+                    'Daily Gourmet Breakfasts, Multi-Course Fine Dining & Chef-Curated Experiences',
+                    '24/7 Dedicated Senior Concierge Specialist on WhatsApp & Direct Priority Call',
+                    '100% Free Date Changes up to 21 Days Prior to Departure & Full Visa Assistance'
+                ];
+
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(9);
+                let yPos = 99;
+                inclusions.forEach(item => {
+                    doc.setTextColor(232, 119, 34);
+                    doc.text('✓', 16, yPos);
+                    doc.setTextColor(51, 65, 85);
+                    const splitText = doc.splitTextToSize(item, 170);
+                    doc.text(splitText, 22, yPos);
+                    yPos += splitText.length * 5.5 + 2;
+                });
+
+                // Section 2: Sample Day-by-Day Flow
+                yPos += 4;
+                doc.setTextColor(6, 16, 41);
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(12);
+                doc.text('Curated Day-by-Day Journey Framework', 14, yPos);
+                doc.setDrawColor(232, 119, 34);
+                doc.line(14, yPos + 3, 196, yPos + 3);
+                yPos += 10;
+
+                const days = [
+                    { day: 'Day 1: VIP Arrival & Private Chauffeur Welcome', desc: 'VIP meet & assist upon landing. Private luxury transfer to your 5-star suite with sunset champagne reception.' },
+                    { day: 'Day 2: Immersive Private Cultural & Scenic Excursion', desc: 'Guided cultural exploration with private local specialist. Gourmet dining at signature partner restaurant.' },
+                    { day: 'Day 3: Signature Leisure, Wellness & Scenic Views', desc: 'Dedicated spa wellness treatments, private yacht charter or scenic mountain pass, and personal leisure.' },
+                    { day: 'Day 4: Bespoke Adventure & Celebration Dinner', desc: 'Curated excursion tailored to your party, followed by a romantic or family candlelit celebration under the stars.' },
+                    { day: 'Day 5+: Farewell & Departure Transfer', desc: 'Gourmet breakfast overlooking vistas, private chauffeur connection to airport with VIP lounge access.' }
+                ];
+
+                days.forEach(d => {
+                    doc.setFont('helvetica', 'bold');
+                    doc.setFontSize(8.5);
+                    doc.setTextColor(232, 119, 34);
+                    doc.text(d.day, 16, yPos);
+                    yPos += 4.5;
+                    doc.setFont('helvetica', 'normal');
+                    doc.setFontSize(8);
+                    doc.setTextColor(71, 85, 105);
+                    const descLines = doc.splitTextToSize(d.desc, 175);
+                    doc.text(descLines, 16, yPos);
+                    yPos += descLines.length * 4.2 + 2.5;
+                });
+
+                // Section 3: Concierge Contact Box
+                doc.setFillColor(6, 16, 41);
+                doc.roundedRect(14, 238, 182, 34, 2, 2, 'F');
+                doc.setTextColor(255, 255, 255);
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(10);
+                doc.text('Personalize Your Bespoke Quotation', 20, 246);
+
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(8.5);
+                doc.setTextColor(226, 232, 240);
+                doc.text('WhatsApp Concierge: +91 98765 43210  |  Email: hello@viatours.com', 20, 253);
+                doc.text('Official Website: https://www.viatours.com', 20, 258);
+
+                doc.setTextColor(232, 119, 34);
+                doc.setFontSize(8);
+                doc.text('Connect directly with our senior destination architects to lock in VIP perks and room upgrades.', 20, 265);
+
+                // Footer Bar
+                doc.setFillColor(232, 119, 34);
+                doc.rect(0, 286, 210, 1.2, 'F');
+                doc.setTextColor(148, 163, 184);
+                doc.setFontSize(7.5);
+                doc.text('© 2026 Via Tours & Travels. All Rights Reserved. Confidential & Prepared Exclusively for Client.', 14, 292);
+
+                doc.save(`Via_Tours_Sample_Itinerary_${cleanDest}.pdf`);
+            } catch (err) {
+                console.warn('jsPDF generation error, falling back to text:', err);
+                fallbackTextDownload();
+            }
+        } else {
+            fallbackTextDownload();
+        }
 
         if (window.confetti) {
             window.confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
         }
 
         closeSampleItineraryModal();
-        showToast(`Sample itinerary for ${dest} downloaded and sent to ${email}!`, 'success');
+        showToast(`Sample itinerary for ${dest} (PDF) downloaded successfully!`, 'success');
     });
 }
 
 function maybeShowTripModal() {
     if (sessionStorage.getItem('viaTripModalDismissed') === 'true') return;
+
+    let hasTriggered = false;
+    const trigger = () => {
+        if (hasTriggered || sessionStorage.getItem('viaTripModalDismissed') === 'true') return;
+        hasTriggered = true;
+        showTripModal();
+    };
+
+    // 1. Desktop Exit-Intent Trigger: user moves cursor toward top of browser to leave
+    const handleExitIntent = (e) => {
+        if (e.clientY <= 12 && !hasTriggered) {
+            trigger();
+            document.removeEventListener('mouseleave', handleExitIntent);
+        }
+    };
     setTimeout(() => {
-        if (sessionStorage.getItem('viaTripModalDismissed') !== 'true') showTripModal();
-    }, 2800);
+        document.addEventListener('mouseleave', handleExitIntent);
+    }, 8000);
+
+    // 2. Engaged Scroll-Depth Trigger: when user has scrolled > 55% after 20s
+    const handleScroll = () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (docHeight > 0 && (scrollTop / docHeight) >= 0.55) {
+            window.removeEventListener('scroll', handleScroll);
+            trigger();
+        }
+    };
+    setTimeout(() => {
+        window.addEventListener('scroll', handleScroll, { passive: true });
+    }, 20000);
+
+    // 3. Fallback gentle timer (45 seconds instead of aggressive 2.8s)
+    setTimeout(() => {
+        trigger();
+    }, 45000);
 }
 
 const tripModalBackdrop = document.getElementById('tripModal');
@@ -891,7 +1141,11 @@ if (sampleModalBackdrop) {
 }
 
 document.addEventListener('keydown', (e) => {
+    const lightbox = document.getElementById('imageLightboxModal');
+    const isLightboxActive = lightbox && lightbox.classList.contains('active');
+
     if (e.key === 'Escape') {
+        if (isLightboxActive) { closeLightbox(); return; }
         const menu = document.getElementById('navMenu');
         if (menu && menu.classList.contains('active')) toggleMenu(false);
         const tripModal = document.getElementById('tripModal');
@@ -902,6 +1156,9 @@ document.addEventListener('keydown', (e) => {
         if (confirmModal && confirmModal.style.display === 'flex') confirmModal.style.display = 'none';
         const chatWin = document.getElementById('chatWindow');
         if (chatWin && chatWin.classList.contains('active')) toggleChat();
+    } else if (isLightboxActive) {
+        if (e.key === 'ArrowLeft') navigateLightbox(-1);
+        else if (e.key === 'ArrowRight') navigateLightbox(1);
     }
 });
 
@@ -1331,15 +1588,67 @@ async function loadPackageDetails(id) {
     updateSEO(`${pkg.title} | Via Tours & Travels`, pkg.short_description || pkg.description);
 
     const destName = pkg.destinations?.name || (LUXURY_FALLBACK_DATA.destinations.find(d => d.id === pkg.destination_id)?.name) || 'Global Destination';
-    const allImages = [pkg.image_url, ...(pkg.gallery_images || [])].filter(Boolean);
+    const uniqueImages = Array.from(new Set([pkg.image_url, ...(pkg.gallery_images || [])].filter(Boolean)));
+    if (uniqueImages.length === 0) {
+        uniqueImages.push('https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=1200&q=80');
+    }
     const baseFormattedPrice = formatPrice(pkg.price);
 
-    // Mosaic Gallery HTML (1 Main + up to 4 items)
-    const mainImg = allImages[0] || 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=1200&q=80';
-    const thumb1 = allImages[1] || allImages[0];
-    const thumb2 = allImages[2] || allImages[0];
-    const thumb3 = allImages[3] || allImages[0];
-    const thumb4 = allImages[4] || allImages[0];
+    // Build adaptive mosaic gallery markup without duplicate repeats
+    let galleryClass = 'mosaic-gallery';
+    let galleryHTML = '';
+    const imagesAttr = escapeHTML(JSON.stringify(uniqueImages));
+
+    if (uniqueImages.length === 1) {
+        galleryClass += ' single-img';
+        galleryHTML = `
+            <div class="mosaic-main" onclick="openLightbox('${escapeHTML(uniqueImages[0])}', ${imagesAttr}, '${escapeHTML(pkg.title)}')">
+                <img src="${escapeHTML(uniqueImages[0])}" id="detail_main_image" alt="${escapeHTML(pkg.title)}">
+                <span class="mosaic-zoom-badge"><i class="fas fa-expand"></i> View High-Res Photo</span>
+            </div>
+        `;
+    } else if (uniqueImages.length === 2) {
+        galleryClass += ' dual-img';
+        galleryHTML = `
+            <div class="mosaic-main" onclick="openLightbox('${escapeHTML(uniqueImages[0])}', ${imagesAttr}, '${escapeHTML(pkg.title)}')">
+                <img src="${escapeHTML(uniqueImages[0])}" id="detail_main_image" alt="${escapeHTML(pkg.title)}">
+                <span class="mosaic-zoom-badge"><i class="fas fa-expand"></i> Photo 1 of 2</span>
+            </div>
+            <div class="mosaic-item" onclick="openLightbox('${escapeHTML(uniqueImages[1])}', ${imagesAttr}, '${escapeHTML(pkg.title)}')">
+                <img src="${escapeHTML(uniqueImages[1])}" alt="${escapeHTML(pkg.title)} 2">
+                <span class="mosaic-zoom-badge"><i class="fas fa-expand"></i> Photo 2 of 2</span>
+            </div>
+        `;
+    } else if (uniqueImages.length === 3) {
+        galleryClass += ' triple-img';
+        galleryHTML = `
+            <div class="mosaic-main" onclick="openLightbox('${escapeHTML(uniqueImages[0])}', ${imagesAttr}, '${escapeHTML(pkg.title)}')">
+                <img src="${escapeHTML(uniqueImages[0])}" id="detail_main_image" alt="${escapeHTML(pkg.title)}">
+                <span class="mosaic-zoom-badge"><i class="fas fa-expand"></i> View Full Gallery</span>
+            </div>
+            <div class="mosaic-item" onclick="openLightbox('${escapeHTML(uniqueImages[1])}', ${imagesAttr}, '${escapeHTML(pkg.title)}')">
+                <img src="${escapeHTML(uniqueImages[1])}" alt="${escapeHTML(pkg.title)} 2">
+            </div>
+            <div class="mosaic-item" onclick="openLightbox('${escapeHTML(uniqueImages[2])}', ${imagesAttr}, '${escapeHTML(pkg.title)}')">
+                <img src="${escapeHTML(uniqueImages[2])}" alt="${escapeHTML(pkg.title)} 3">
+            </div>
+        `;
+    } else {
+        const mainImg = uniqueImages[0];
+        const extraItems = uniqueImages.slice(1, 5).map((imgUrl, i) => `
+            <div class="mosaic-item" onclick="openLightbox('${escapeHTML(imgUrl)}', ${imagesAttr}, '${escapeHTML(pkg.title)}')">
+                <img src="${escapeHTML(imgUrl)}" alt="${escapeHTML(pkg.title)} ${i + 2}">
+            </div>
+        `).join('');
+
+        galleryHTML = `
+            <div class="mosaic-main" onclick="openLightbox('${escapeHTML(mainImg)}', ${imagesAttr}, '${escapeHTML(pkg.title)}')">
+                <img src="${escapeHTML(mainImg)}" id="detail_main_image" alt="${escapeHTML(pkg.title)}">
+                <span class="mosaic-zoom-badge"><i class="fas fa-expand"></i> ${uniqueImages.length} Photos</span>
+            </div>
+            ${extraItems}
+        `;
+    }
 
     container.innerHTML = `
         <div class="pkg-detail-header">
@@ -1360,23 +1669,9 @@ async function loadPackageDetails(id) {
             </div>
         </div>
 
-        <!-- Mosaic Gallery -->
-        <div class="mosaic-gallery">
-            <div class="mosaic-main" onclick="openLightbox('${escapeHTML(mainImg)}')">
-                <img src="${escapeHTML(mainImg)}" id="detail_main_image" alt="${escapeHTML(pkg.title)}">
-            </div>
-            <div class="mosaic-item" onclick="openLightbox('${escapeHTML(thumb1)}')">
-                <img src="${escapeHTML(thumb1)}" alt="${escapeHTML(pkg.title)} 1">
-            </div>
-            <div class="mosaic-item" onclick="openLightbox('${escapeHTML(thumb2)}')">
-                <img src="${escapeHTML(thumb2)}" alt="${escapeHTML(pkg.title)} 2">
-            </div>
-            <div class="mosaic-item" onclick="openLightbox('${escapeHTML(thumb3)}')">
-                <img src="${escapeHTML(thumb3)}" alt="${escapeHTML(pkg.title)} 3">
-            </div>
-            <div class="mosaic-item" onclick="openLightbox('${escapeHTML(thumb4)}')">
-                <img src="${escapeHTML(thumb4)}" alt="${escapeHTML(pkg.title)} 4">
-            </div>
+        <!-- Adaptive Mosaic Gallery -->
+        <div class="${galleryClass}">
+            ${galleryHTML}
         </div>
 
         <!-- Detail Main Layout -->
@@ -1560,9 +1855,56 @@ function openCustomTripFromPkg(pkgId) {
     navTo('plan-trip', pkgId);
 }
 
-function openLightbox(url) {
-    const main = document.getElementById('detail_main_image');
-    if (main) main.src = url;
+// --- HIGH-END LUXURY LIGHTBOX MODAL ---
+let lightboxImages = [];
+let currentLightboxIndex = 0;
+
+function openLightbox(url, imagesList = [], caption = '') {
+    const modal = document.getElementById('imageLightboxModal');
+    const img = document.getElementById('lightboxActiveImage');
+    const cap = document.getElementById('lightboxCaption');
+    if (!modal || !img) return;
+
+    if (imagesList && imagesList.length > 0) {
+        lightboxImages = imagesList;
+        currentLightboxIndex = imagesList.indexOf(url) >= 0 ? imagesList.indexOf(url) : 0;
+    } else {
+        lightboxImages = [url];
+        currentLightboxIndex = 0;
+    }
+
+    img.src = lightboxImages[currentLightboxIndex] || url;
+    if (cap) cap.textContent = caption || (currentPackage ? currentPackage.title : 'Via Tours & Travels');
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    updateLightboxNav();
+}
+
+function closeLightbox(e) {
+    if (e && e.target && !e.target.classList.contains('lightbox-backdrop') && !e.target.classList.contains('lightbox-close')) return;
+    const modal = document.getElementById('imageLightboxModal');
+    if (!modal) return;
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+}
+
+function navigateLightbox(dir) {
+    if (lightboxImages.length <= 1) return;
+    currentLightboxIndex = (currentLightboxIndex + dir + lightboxImages.length) % lightboxImages.length;
+    const img = document.getElementById('lightboxActiveImage');
+    if (img) img.src = lightboxImages[currentLightboxIndex];
+    updateLightboxNav();
+}
+
+function updateLightboxNav() {
+    const prevBtn = document.getElementById('lightboxPrevBtn');
+    const nextBtn = document.getElementById('lightboxNextBtn');
+    const show = lightboxImages.length > 1;
+    if (prevBtn) prevBtn.style.display = show ? 'flex' : 'none';
+    if (nextBtn) nextBtn.style.display = show ? 'flex' : 'none';
 }
 
 // --- INTERACTIVE MULTI-STEP TRIP BUILDER ---
@@ -1612,6 +1954,7 @@ function nextTripStep(stepNum) {
 }
 
 async function setupPlanForm(pkgId) {
+    initDatePickers();
     currentTripStep = 1;
     nextTripStep(1);
 
@@ -1634,7 +1977,13 @@ const planTripForm = document.getElementById('planTripForm');
 if (planTripForm) {
     planTripForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
+        // If user pressed Enter in steps 1-3, advance wizard smoothly instead of submitting
+        if (currentTripStep < 4) {
+            nextTripStep(currentTripStep + 1);
+            return;
+        }
+
         // Spam check
         if (document.getElementById('honeypot')?.value) {
             showToast('Spam detected.', 'error');
@@ -1746,31 +2095,52 @@ if (tripModalForm) {
 }
 
 // Quick Contact Form
-function handleQuickContact(e) {
+async function handleQuickContact(e) {
     e.preventDefault();
-    const name = document.getElementById('c_name').value.trim();
-    const email = document.getElementById('c_email').value.trim();
-    const phone = document.getElementById('c_phone').value.trim();
-    const msg = document.getElementById('c_msg').value.trim();
+    const name = document.getElementById('c_name')?.value.trim() || '';
+    const email = document.getElementById('c_email')?.value.trim() || '';
+    const phone = document.getElementById('c_phone')?.value.trim() || '';
+    const msg = document.getElementById('c_msg')?.value.trim() || '';
 
     if (sb) {
-        sb.from('enquiries').insert([{
-            name, email, phone,
-            destination: 'Contact Page Inquiry',
-            requirements: msg,
-            status: 'New'
-        }]);
+        try {
+            await sb.from('enquiries').insert([{
+                name, email, phone,
+                destination: 'Contact Page Inquiry',
+                requirements: msg,
+                status: 'New'
+            }]);
+        } catch (err) {
+            console.warn('Contact inquiry save error:', err);
+        }
     }
     showToast('Your message has been sent to our concierge desk!', 'success');
     e.target.reset();
 }
 
 // Newsletter Subscription
-function handleNewsletter(e) {
+async function handleNewsletter(e) {
     e.preventDefault();
-    const email = document.getElementById('nl_email').value.trim();
+    const emailInput = document.getElementById('nl_email');
+    const email = emailInput ? emailInput.value.trim() : '';
+    if (!email) return;
+
+    if (sb) {
+        try {
+            await sb.from('enquiries').insert([{
+                name: 'Newsletter Subscriber',
+                email: email,
+                phone: 'N/A',
+                destination: 'Newsletter Subscription (The Luxury Bulletin)',
+                requirements: 'Opted in for secret villa deals, seasonal travel guides, and VIP invitations.',
+                status: 'Subscribed'
+            }]);
+        } catch (err) {
+            console.warn('Newsletter subscription save error:', err);
+        }
+    }
     showToast(`Thank you! ${email} is now subscribed to The Luxury Bulletin.`, 'success');
-    e.target.reset();
+    if (e.target && e.target.reset) e.target.reset();
 }
 
 // --- TRAVEL JOURNAL BLOG VIEW ---
@@ -1853,8 +2223,8 @@ async function loadBlogPost(slugOrId) {
                 <aside class="article-aside">
                     <div class="article-toc">
                         <p><i class="fas fa-list-ul"></i> Article Highlights</p>
-                        <a href="#section-main">Overview & Insights</a>
-                        <a href="#section-tips">Specialist Advice</a>
+                        <a href="javascript:void(0)" onclick="document.getElementById('section-main')?.scrollIntoView({ behavior: 'smooth' })">Overview & Insights</a>
+                        <a href="javascript:void(0)" onclick="document.getElementById('section-tips')?.scrollIntoView({ behavior: 'smooth' })">Specialist Advice</a>
                     </div>
 
                     <div style="background:var(--surface-card); border:1px solid var(--border-gold); border-radius:var(--radius-md); padding:24px; text-align:center; box-shadow:var(--shadow-md);">
@@ -1867,6 +2237,12 @@ async function loadBlogPost(slugOrId) {
 
                 <div class="article-body" id="section-main">
                     ${sanitizedContent}
+                    
+                    <div id="section-tips" class="article-specialist-tips" style="margin-top:36px; padding:24px; background:var(--surface-soft); border-left:4px solid var(--gold-500); border-radius:var(--radius-md);">
+                        <h4 style="margin-bottom:8px; color:var(--gold-500); font-family:var(--font-heading);"><i class="fas fa-lightbulb"></i> Via Travel Specialist Advice</h4>
+                        <p style="font-size:0.95rem; line-height:1.7; color:var(--text-secondary); margin-bottom:12px;">Every journey we curate is fully customized to your travel rhythm, accommodation style, and pace. For bespoke arrangements, room upgrade preferences, or private chauffeured transfers, connect directly with our senior travel concierge.</p>
+                        <button class="btn btn-gold btn-sm" onclick="navTo('plan-trip')"><i class="fas fa-magic"></i> Custom Quote for This Trip</button>
+                    </div>
                 </div>
             </div>
         </article>
@@ -1935,6 +2311,29 @@ function processAiMessage(msg) {
     }, 550);
 }
 
+// --- SUPABASE STORAGE FILE UPLOAD HELPER ---
+async function uploadFileToSupabase(file, folder = 'package-images') {
+    if (!sb || !file) return null;
+    try {
+        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+        const fileName = `${Date.now()}_${Math.floor(Math.random() * 1000)}_${safeName}`;
+        const { data, error } = await sb.storage.from(folder).upload(fileName, file, {
+            cacheControl: '3600',
+            upsert: true
+        });
+        if (error) {
+            console.warn('Storage upload error:', error);
+            showToast('Storage upload notice: ' + error.message, 'error');
+            return null;
+        }
+        const { data: { publicUrl } } = sb.storage.from(folder).getPublicUrl(fileName);
+        return publicUrl;
+    } catch (err) {
+        console.warn('Storage upload exception:', err);
+        return null;
+    }
+}
+
 // --- ADMIN MANAGEMENT PORTAL ---
 let loginAttempts = 0;
 let lockoutUntil = 0;
@@ -1995,7 +2394,12 @@ async function forgotPassword() {
 
 async function logout() {
     if (sb) await sb.auth.signOut();
+    const loginBox = document.getElementById('admin-login');
+    const dashBox = document.getElementById('admin-dashboard');
+    if (loginBox) loginBox.style.display = 'block';
+    if (dashBox) dashBox.style.display = 'none';
     navTo('home');
+    showToast('Signed out of staff portal successfully.');
 }
 
 function toggleSidebar() {
@@ -2008,6 +2412,17 @@ function toggleSidebar() {
 }
 
 async function initAdminDashboard() {
+    if (sb) {
+        const { data: { session } } = await sb.auth.getSession();
+        if (!session) {
+            const loginBox = document.getElementById('admin-login');
+            const dashBox = document.getElementById('admin-dashboard');
+            if (loginBox) loginBox.style.display = 'block';
+            if (dashBox) dashBox.style.display = 'none';
+            return;
+        }
+    }
+
     const loginBox = document.getElementById('admin-login');
     const dashBox = document.getElementById('admin-dashboard');
     if (loginBox) loginBox.style.display = 'none';
@@ -2061,7 +2476,7 @@ async function loadAdminStats() {
         const { data: recentEnq } = await sb.from('enquiries').select('*').order('created_at', { ascending: false }).limit(5);
         document.getElementById('table_recent_enq').innerHTML = (recentEnq || []).map(e => `
             <tr>
-                <td><strong>${escapeHTML(e.name)}</strong><br><small style="color:#94a3b8;">${escapeHTML(e.email)}</small></td>
+                <td><strong>${escapeHTML(e.name || e.customer_name || 'Guest')}</strong><br><small style="color:#94a3b8;">${escapeHTML(e.email)}</small></td>
                 <td>${escapeHTML(e.destination || 'Custom')}</td>
                 <td><span class="luxury-badge" style="font-size:0.75rem;">${escapeHTML(e.status || 'New')}</span></td>
             </tr>
@@ -2075,14 +2490,24 @@ async function loadAdminStats() {
 async function loadAdminPackages() {
     const table = document.getElementById('table_packages');
     if (!table) return;
-    const packages = await fetchPackages();
+
+    let packages = [];
+    if (sb) {
+        const { data, error } = await sb.from('packages').select('*').order('created_at', { ascending: false });
+        if (!error && data) packages = data;
+    }
+
+    if (packages.length === 0) {
+        table.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:32px; color:#94a3b8;"><i class="fas fa-box-open" style="font-size:1.8rem; margin-bottom:8px; display:block; color:var(--gold-400);"></i>No packages in database yet.<br><small>Click <strong>"+ Add Luxury Package"</strong> to create your first package.</small></td></tr>`;
+        return;
+    }
 
     table.innerHTML = packages.map(p => `
         <tr>
             <td><input type="checkbox" class="package-checkbox" value="${escapeHTML(p.id)}"></td>
-            <td><img src="${escapeHTML(p.image_url || '')}" style="width:48px; height:48px; border-radius:6px; object-fit:cover;"></td>
+            <td><img src="${escapeHTML(p.image_url || 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=100&q=80')}" style="width:48px; height:48px; border-radius:6px; object-fit:cover;"></td>
             <td><strong>${escapeHTML(p.title)}</strong><br><small style="color:#94a3b8;">${escapeHTML(p.duration || '')}</small></td>
-            <td>₹${Number(p.price).toLocaleString('en-IN')}</td>
+            <td>₹${Number(p.price || 0).toLocaleString('en-IN')}</td>
             <td><span class="luxury-badge" style="font-size:0.75rem;">${p.is_published ? 'Live' : 'Draft'}</span></td>
             <td>
                 <button class="btn btn-gold btn-sm" onclick="editPackage('${escapeHTML(p.id)}')"><i class="fas fa-edit"></i></button>
@@ -2096,7 +2521,13 @@ function openPkgModal() {
     document.getElementById('pkgFormModal').style.display = 'block';
     document.getElementById('m_pkg_id').value = '';
     document.getElementById('pkg_modal_title').textContent = 'Add Luxury Package';
-    document.querySelectorAll('#pkgFormModal input, #pkgFormModal textarea').forEach(i => { if (i.type !== 'hidden') i.value = ''; });
+    document.querySelectorAll('#pkgFormModal input, #pkgFormModal textarea').forEach(i => {
+        if (i.type !== 'hidden' && i.type !== 'file') i.value = '';
+    });
+    const fileImg = document.getElementById('m_pkg_img');
+    if (fileImg) fileImg.value = '';
+    const fileGal = document.getElementById('m_pkg_gallery');
+    if (fileGal) fileGal.value = '';
     currentItinerary = [];
     currentGallery = [];
     renderItinEditor();
@@ -2161,10 +2592,27 @@ async function savePackage() {
         is_published: document.getElementById('m_pkg_pub').value === 'true'
     };
 
+    // Upload featured image if selected
+    const featuredFile = document.getElementById('m_pkg_img')?.files?.[0];
+    if (featuredFile) {
+        const uploadedUrl = await uploadFileToSupabase(featuredFile, 'package-images');
+        if (uploadedUrl) payload.image_url = uploadedUrl;
+    }
+
+    // Upload gallery images if selected
+    const galleryFiles = document.getElementById('m_pkg_gallery')?.files;
+    if (galleryFiles && galleryFiles.length > 0) {
+        for (let i = 0; i < galleryFiles.length; i++) {
+            const gUrl = await uploadFileToSupabase(galleryFiles[i], 'package-images');
+            if (gUrl) currentGallery.push(gUrl);
+        }
+    }
+    payload.gallery_images = currentGallery;
+
     if (sb) {
         const { error } = id ? await sb.from('packages').update(payload).eq('id', id) : await sb.from('packages').insert([payload]);
         if (error) {
-            showToast('Error saving: ' + error.message, 'error');
+            showToast('Error saving package: ' + error.message, 'error');
             return;
         }
     }
@@ -2174,8 +2622,15 @@ async function savePackage() {
 }
 
 async function editPackage(id) {
-    const packages = await fetchPackages();
-    const p = packages.find(x => x.id === id);
+    let p = null;
+    if (sb) {
+        const { data } = await sb.from('packages').select('*').eq('id', id).single();
+        p = data;
+    }
+    if (!p) {
+        const packages = await fetchPackages();
+        p = packages.find(x => x.id === id);
+    }
     if (!p) return;
     await loadDestDropdown();
     document.getElementById('pkgFormModal').style.display = 'block';
@@ -2194,13 +2649,26 @@ async function editPackage(id) {
     document.getElementById('m_pkg_pub').value = p.is_published ? 'true' : 'false';
     currentItinerary = p.itinerary || [];
     renderItinEditor();
+    currentGallery = p.gallery_images || [];
+    renderGalleryPreview();
 }
 
 // Destination Admin CRUD
 async function loadAdminDestinations() {
     const table = document.getElementById('table_destinations');
     if (!table) return;
-    const dests = await fetchDestinations();
+
+    let dests = [];
+    if (sb) {
+        const { data, error } = await sb.from('destinations').select('*').order('name');
+        if (!error && data) dests = data;
+    }
+
+    if (dests.length === 0) {
+        table.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:32px; color:#94a3b8;"><i class="fas fa-map-marked-alt" style="font-size:1.8rem; margin-bottom:8px; display:block; color:var(--gold-400);"></i>No destinations in database yet.<br><small>Click <strong>"+ Add Destination"</strong> to create one.</small></td></tr>`;
+        return;
+    }
+
     table.innerHTML = dests.map(d => `
         <tr>
             <td><input type="checkbox" class="dest-checkbox" value="${escapeHTML(d.id)}"></td>
@@ -2208,6 +2676,7 @@ async function loadAdminDestinations() {
             <td>${escapeHTML(d.country || '')}</td>
             <td><span class="luxury-badge" style="font-size:0.75rem;">${d.is_published ? 'Live' : 'Hidden'}</span></td>
             <td>
+                <button class="btn btn-gold btn-sm" onclick="editDestination('${escapeHTML(d.id)}')"><i class="fas fa-edit"></i></button>
                 <button class="btn btn-danger btn-sm" onclick="delItem('destinations', '${escapeHTML(d.id)}')"><i class="fas fa-trash"></i></button>
             </td>
         </tr>
@@ -2217,12 +2686,36 @@ async function loadAdminDestinations() {
 function openDestModal() {
     document.getElementById('destFormModal').style.display = 'block';
     document.getElementById('m_dest_id').value = '';
-    document.querySelectorAll('#destFormModal input, #destFormModal textarea').forEach(i => i.value = '');
+    document.querySelectorAll('#destFormModal input, #destFormModal textarea').forEach(i => {
+        if (i.type !== 'hidden' && i.type !== 'file') i.value = '';
+    });
+}
+
+async function editDestination(id) {
+    let d = null;
+    if (sb) {
+        const { data } = await sb.from('destinations').select('*').eq('id', id).single();
+        d = data;
+    }
+    if (!d) {
+        const dests = await fetchDestinations();
+        d = dests.find(x => x.id === id);
+    }
+    if (!d) return;
+    document.getElementById('destFormModal').style.display = 'block';
+    document.getElementById('m_dest_id').value = d.id;
+    document.getElementById('m_dest_name').value = d.name || '';
+    document.getElementById('m_dest_country').value = d.country || '';
+    document.getElementById('m_dest_region').value = d.region || '';
+    document.getElementById('m_dest_desc').value = d.description || '';
+    document.getElementById('m_dest_time').value = d.best_time || '';
+    document.getElementById('m_dest_pub').value = d.is_published ? 'true' : 'false';
 }
 
 async function saveDestination() {
     const name = document.getElementById('m_dest_name').value.trim();
     if (!name) { showToast('Please enter destination name.', 'error'); return; }
+    const id = document.getElementById('m_dest_id')?.value;
     const payload = {
         name,
         country: document.getElementById('m_dest_country').value.trim(),
@@ -2231,8 +2724,17 @@ async function saveDestination() {
         best_time: document.getElementById('m_dest_time').value.trim(),
         is_published: document.getElementById('m_dest_pub').value === 'true'
     };
+    const destFile = document.getElementById('m_dest_img')?.files?.[0];
+    if (destFile) {
+        const destImgUrl = await uploadFileToSupabase(destFile, 'package-images');
+        if (destImgUrl) payload.image_url = destImgUrl;
+    }
     if (sb) {
-        await sb.from('destinations').insert([payload]);
+        const { error } = id ? await sb.from('destinations').update(payload).eq('id', id) : await sb.from('destinations').insert([payload]);
+        if (error) {
+            showToast('Error saving destination: ' + error.message, 'error');
+            return;
+        }
     }
     document.getElementById('destFormModal').style.display = 'none';
     showToast('Destination saved successfully!');
@@ -2246,7 +2748,7 @@ async function loadAdminEnquiries() {
     const { data } = await sb.from('enquiries').select('*').order('created_at', { ascending: false });
     table.innerHTML = (data || []).map(e => `
         <tr>
-            <td><strong>${escapeHTML(e.name)}</strong><br>${escapeHTML(e.email)}<br>${escapeHTML(e.phone)}</td>
+            <td><strong>${escapeHTML(e.name || e.customer_name || 'Guest')}</strong><br>${escapeHTML(e.email || '')}<br>${escapeHTML(e.phone || '')}</td>
             <td>Dest: ${escapeHTML(e.destination || 'N/A')}<br>Dates: ${escapeHTML(e.travel_dates || 'N/A')}<br>Budget: ${escapeHTML(e.budget || 'N/A')}</td>
             <td>
                 <select class="status-dropdown" onchange="changeStatus('enquiries', '${escapeHTML(e.id)}', this.value)" style="background:#081535; color:#fff; padding:4px 8px; border-radius:4px;">
@@ -2341,6 +2843,7 @@ async function loadAdminBookings() {
 }
 
 function openBookModal() {
+    initDatePickers();
     document.getElementById('bookFormModal').style.display = 'block';
 }
 
@@ -2367,12 +2870,26 @@ async function saveBooking() {
 async function loadAdminBlog() {
     const table = document.getElementById('table_blog');
     if (!table) return;
-    const blogs = await fetchBlogs();
+
+    let blogs = [];
+    if (sb) {
+        const { data, error } = await sb.from('blog_posts').select('*').order('created_at', { ascending: false });
+        if (!error && data) blogs = data;
+    }
+
+    if (blogs.length === 0) {
+        table.innerHTML = `<tr><td colspan="3" style="text-align:center; padding:32px; color:#94a3b8;"><i class="fas fa-feather-alt" style="font-size:1.8rem; margin-bottom:8px; display:block; color:var(--gold-400);"></i>No stories in database yet.<br><small>Click <strong>"+ Add Story"</strong> to publish one.</small></td></tr>`;
+        return;
+    }
+
     table.innerHTML = blogs.map(b => `
         <tr>
             <td><strong>${escapeHTML(b.title)}</strong></td>
             <td><span class="luxury-badge">${b.is_published ? 'Live' : 'Hidden'}</span></td>
-            <td><button class="btn btn-danger btn-sm" onclick="delItem('blog_posts', '${escapeHTML(b.id)}')"><i class="fas fa-trash"></i></button></td>
+            <td>
+                <button class="btn btn-gold btn-sm" onclick="editBlog('${escapeHTML(b.id)}')"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-danger btn-sm" onclick="delItem('blog_posts', '${escapeHTML(b.id)}')"><i class="fas fa-trash"></i></button>
+            </td>
         </tr>
     `).join('');
 }
@@ -2380,12 +2897,36 @@ async function loadAdminBlog() {
 function openBlogModal() {
     document.getElementById('blogFormModal').style.display = 'block';
     document.getElementById('m_blog_id').value = '';
-    document.querySelectorAll('#blogFormModal input, #blogFormModal textarea').forEach(i => i.value = '');
+    document.querySelectorAll('#blogFormModal input, #blogFormModal textarea').forEach(i => {
+        if (i.type !== 'hidden') i.value = '';
+    });
+}
+
+async function editBlog(id) {
+    let b = null;
+    if (sb) {
+        const { data } = await sb.from('blog_posts').select('*').eq('id', id).single();
+        b = data;
+    }
+    if (!b) {
+        const blogs = await fetchBlogs();
+        b = blogs.find(x => x.id === id);
+    }
+    if (!b) return;
+    document.getElementById('blogFormModal').style.display = 'block';
+    document.getElementById('m_blog_id').value = b.id;
+    document.getElementById('m_blog_title').value = b.title || '';
+    document.getElementById('m_blog_slug').value = b.slug || '';
+    document.getElementById('m_blog_img').value = b.image_url || '';
+    document.getElementById('m_blog_excerpt').value = b.excerpt || '';
+    document.getElementById('m_blog_content').value = b.content || '';
+    document.getElementById('m_blog_pub').value = b.is_published ? 'true' : 'false';
 }
 
 async function saveBlogPost() {
     const title = document.getElementById('m_blog_title').value.trim();
     if (!title) { showToast('Please enter title.', 'error'); return; }
+    const id = document.getElementById('m_blog_id')?.value;
     const payload = {
         title,
         slug: document.getElementById('m_blog_slug').value.trim() || title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
@@ -2394,7 +2935,13 @@ async function saveBlogPost() {
         content: document.getElementById('m_blog_content').value.trim(),
         is_published: document.getElementById('m_blog_pub').value === 'true'
     };
-    if (sb) await sb.from('blog_posts').insert([payload]);
+    if (sb) {
+        const { error } = id ? await sb.from('blog_posts').update(payload).eq('id', id) : await sb.from('blog_posts').insert([payload]);
+        if (error) {
+            showToast('Error saving story: ' + error.message, 'error');
+            return;
+        }
+    }
     document.getElementById('blogFormModal').style.display = 'none';
     showToast('Blog post saved.');
     loadAdminBlog();
@@ -2404,12 +2951,23 @@ async function saveBlogPost() {
 async function loadAdminTestimonials() {
     const table = document.getElementById('table_testimonials');
     if (!table) return;
-    const tests = await fetchTestimonials();
-    table.innerHTML = tests.map((t, idx) => `
+
+    let tests = [];
+    if (sb) {
+        const { data, error } = await sb.from('testimonials').select('*');
+        if (!error && data) tests = data;
+    }
+
+    if (tests.length === 0) {
+        table.innerHTML = `<tr><td colspan="3" style="text-align:center; padding:32px; color:#94a3b8;">No client testimonials in database yet.<br><small>Click <strong>"+ Add Testimonial"</strong> to create one.</small></td></tr>`;
+        return;
+    }
+
+    table.innerHTML = tests.map(t => `
         <tr>
             <td><strong>${escapeHTML(t.name)}</strong></td>
             <td>${escapeHTML((t.message || '').substring(0, 70))}...</td>
-            <td><button class="btn btn-danger btn-sm" onclick="delItem('testimonials', '${escapeHTML(t.id || idx)}')"><i class="fas fa-trash"></i></button></td>
+            <td><button class="btn btn-danger btn-sm" onclick="delItem('testimonials', '${escapeHTML(t.id)}')"><i class="fas fa-trash"></i></button></td>
         </tr>
     `).join('');
 }
@@ -2427,7 +2985,13 @@ async function saveTestimonial() {
         image_url: document.getElementById('m_test_img').value.trim(),
         message: document.getElementById('m_test_msg').value.trim()
     };
-    if (sb) await sb.from('testimonials').insert([payload]);
+    if (sb) {
+        const { error } = await sb.from('testimonials').insert([payload]);
+        if (error) {
+            showToast('Error saving testimonial: ' + error.message, 'error');
+            return;
+        }
+    }
     document.getElementById('testFormModal').style.display = 'none';
     showToast('Testimonial saved.');
     loadAdminTestimonials();
@@ -2436,11 +3000,22 @@ async function saveTestimonial() {
 async function loadAdminFaqs() {
     const table = document.getElementById('table_faqs');
     if (!table) return;
-    const faqs = await fetchFaqs();
+
+    let faqs = [];
+    if (sb) {
+        const { data, error } = await sb.from('faqs').select('*');
+        if (!error && data) faqs = data;
+    }
+
+    if (faqs.length === 0) {
+        table.innerHTML = `<tr><td colspan="3" style="text-align:center; padding:32px; color:#94a3b8;">No custom FAQs in database yet.<br><small>Default luxury FAQs are active on the site.</small></td></tr>`;
+        return;
+    }
+
     table.innerHTML = faqs.map(f => `
         <tr>
             <td><strong>${escapeHTML(f.question)}</strong></td>
-            <td><span class="luxury-badge">Live</span></td>
+            <td><span class="luxury-badge">${f.is_published ? 'Live' : 'Hidden'}</span></td>
             <td><button class="btn btn-danger btn-sm" onclick="delItem('faqs', '${escapeHTML(f.id)}')"><i class="fas fa-trash"></i></button></td>
         </tr>
     `).join('');
@@ -2457,7 +3032,13 @@ async function saveFaq() {
         answer: document.getElementById('m_faq_answer').value.trim(),
         is_published: document.getElementById('m_faq_pub').value === 'true'
     };
-    if (sb) await sb.from('faqs').insert([payload]);
+    if (sb) {
+        const { error } = await sb.from('faqs').insert([payload]);
+        if (error) {
+            showToast('Error saving FAQ: ' + error.message, 'error');
+            return;
+        }
+    }
     document.getElementById('faqFormModal').style.display = 'none';
     showToast('FAQ saved.');
     loadAdminFaqs();
@@ -2492,9 +3073,19 @@ async function saveSettings() {
 }
 
 async function delItem(table, id) {
-    showConfirm('Are you sure you want to delete this record?', async () => {
-        if (sb) await sb.from(table).delete().eq('id', id);
-        showToast('Record deleted.');
+    if (!id) {
+        showToast('Cannot delete record: Missing valid ID.', 'error');
+        return;
+    }
+    showConfirm('Are you sure you want to permanently delete this record?', async () => {
+        if (sb) {
+            const { error } = await sb.from(table).delete().eq('id', id);
+            if (error) {
+                showToast('Failed to delete: ' + error.message, 'error');
+                return;
+            }
+        }
+        showToast('Record deleted successfully.');
         if (table === 'packages') loadAdminPackages();
         else if (table === 'destinations') loadAdminDestinations();
         else if (table === 'enquiries') loadAdminEnquiries();

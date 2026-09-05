@@ -27,7 +27,7 @@
     <div class="preloader-content">
         <div class="preloader-logo-wrap">
             <div class="preloader-ring"></div>
-            <img src="https://goqwtovltftehautxekh.supabase.co/storage/v1/object/public/package-images/Via%20tours%20&%20travels.png" alt="Via Tours & Travels Logo" class="preloader-logo">
+            <img src="https://goqwtovltftehautxekh.supabase.co/storage/v1/object/public/package-images/Via%20tours%20&%20travels.png" alt="Via Tours & Travels Logo" class="preloader-logo" onerror="handleLogoError(this)">
         </div>
         <div class="preloader-brand">
             <span class="preloader-title">VIA TOURS &amp; TRAVELS</span>
@@ -76,13 +76,13 @@
     <!-- STICKY LUXURY HEADER -->
     <header class="header" id="mainHeader">
         <div class="container header-in">
-            <div class="logo-wrap" onclick="navTo('home')">
-                <img src="https://goqwtovltftehautxekh.supabase.co/storage/v1/object/public/package-images/Via%20tours%20&%20travels.png" alt="Via Tours & Travels Logo" onerror="this.style.display='none'">
+            <a href="#/home" class="logo-wrap" onclick="navTo('home'); return false;" aria-label="Via Tours & Travels Home">
+                <img src="https://goqwtovltftehautxekh.supabase.co/storage/v1/object/public/package-images/Via%20tours%20&%20travels.png" alt="Via Tours & Travels Logo" onerror="handleLogoError(this)">
                 <div class="logo-txt">
                     <strong>Via</strong>
                     <span>Tours & Travels</span>
                 </div>
-            </div>
+            </a>
             
             <button class="mobile-toggle" id="mobileMenuToggle" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
                 <i class="fas fa-bars" id="menuToggleIcon"></i>
@@ -100,16 +100,16 @@
                 </div>
 
                 <div class="nav-links-wrap">
-                    <a onclick="navTo('home')" id="nav-home" class="active"><i class="fas fa-home"></i> <span>Home</span></a>
-                    <a onclick="navTo('destinations')" id="nav-destinations"><i class="fas fa-map-marked-alt"></i> <span>Destinations</span></a>
-                    <a onclick="navTo('packages')" id="nav-packages"><i class="fas fa-suitcase-rolling"></i> <span>Packages</span></a>
-                    <a onclick="navTo('blog')" id="nav-blog"><i class="fas fa-feather-alt"></i> <span>Travel Journal</span></a>
-                    <a onclick="navTo('about')" id="nav-about"><i class="fas fa-award"></i> <span>About Us</span></a>
-                    <a onclick="navTo('contact')" id="nav-contact"><i class="fas fa-paper-plane"></i> <span>Contact</span></a>
+                    <a href="#/home" onclick="navTo('home'); return false;" id="nav-home" class="active"><i class="fas fa-home"></i> <span>Home</span></a>
+                    <a href="#/destinations" onclick="navTo('destinations'); return false;" id="nav-destinations"><i class="fas fa-map-marked-alt"></i> <span>Destinations</span></a>
+                    <a href="#/packages" onclick="navTo('packages'); return false;" id="nav-packages"><i class="fas fa-suitcase-rolling"></i> <span>Packages</span></a>
+                    <a href="#/blog" onclick="navTo('blog'); return false;" id="nav-blog"><i class="fas fa-feather-alt"></i> <span>Travel Journal</span></a>
+                    <a href="#/about" onclick="navTo('about'); return false;" id="nav-about"><i class="fas fa-award"></i> <span>About Us</span></a>
+                    <a href="#/contact" onclick="navTo('contact'); return false;" id="nav-contact"><i class="fas fa-paper-plane"></i> <span>Contact</span></a>
                 </div>
 
                 <div class="nav-drawer-cta">
-                    <a onclick="navTo('plan-trip')" class="btn btn-gold nav-cta"><i class="fas fa-compass"></i> Plan Bespoke Trip</a>
+                    <a href="#/plan-trip" onclick="navTo('plan-trip'); return false;" class="btn btn-gold nav-cta"><i class="fas fa-compass"></i> Plan Bespoke Trip</a>
                     <div class="nav-drawer-contact">
                         <a href="tel:+919876543210" class="drawer-contact-pill"><i class="fas fa-phone-alt"></i> Call Us</a>
                         <a href="https://wa.me/919876543210" target="_blank" class="drawer-contact-pill wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
@@ -492,7 +492,7 @@
                     </div>
 
                     <div style="text-align:center; margin-top:32px; color:var(--text-muted); font-size:0.95rem;">
-                        <p>Have a custom inquiry not listed here? <a onclick="navTo('contact')" style="color:var(--gold-500); font-weight:600; cursor:pointer;">Contact Our Concierge</a> or <a href="https://wa.me/919876543210" target="_blank" style="color:#25d366; font-weight:600;"><i class="fab fa-whatsapp"></i> WhatsApp Us Directly</a>.</p>
+                        <p>Have a custom inquiry not listed here? <a href="#/contact" onclick="navTo('contact'); return false;" style="color:var(--gold-500); font-weight:600; cursor:pointer;">Contact Our Concierge</a> or <a href="https://wa.me/919876543210" target="_blank" style="color:#25d366; font-weight:600;"><i class="fab fa-whatsapp"></i> WhatsApp Us Directly</a>.</p>
                     </div>
                 </div>
             </section>
@@ -641,7 +641,7 @@
                     <div class="wizard-step-node" id="node-4">4</div>
                 </div>
 
-                <form id="planTripForm" onsubmit="event.preventDefault(); nextTripStep(4);">
+                <form id="planTripForm">
                     <input type="hidden" id="pt_pkg_id">
                     <input type="text" id="honeypot" name="honeypot" style="display:none" tabindex="-1" autocomplete="off">
 
@@ -936,13 +936,13 @@
             <div class="footer-grid">
                 <!-- Col 1: Brand -->
                 <div class="footer-col">
-                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
-                        <img src="https://goqwtovltftehautxekh.supabase.co/storage/v1/object/public/package-images/Via%20tours%20&%20travels.png" alt="Via Tours & Travels Logo" style="height:55px; border-radius:6px;" onerror="this.src='https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=100&q=80'">
+                    <a href="#/home" onclick="navTo('home'); return false;" style="display:flex; align-items:center; gap:12px; margin-bottom:16px; text-decoration:none; color:inherit;" aria-label="Via Tours & Travels Home">
+                        <img src="https://goqwtovltftehautxekh.supabase.co/storage/v1/object/public/package-images/Via%20tours%20&%20travels.png" alt="Via Tours & Travels Logo" style="height:55px; border-radius:6px;" onerror="handleLogoError(this)">
                         <div class="logo-txt">
                             <strong style="color:#ffffff;">Via</strong>
                             <span>Tours & Travels</span>
                         </div>
-                    </div>
+                    </a>
                     <p style="font-size:0.9rem; color:#94a3b8; line-height:1.6; margin-bottom:20px;">Your trusted partner for extraordinary journeys. Creating world-class, bespoke luxury memories since 2009.</p>
                     <div style="display:flex; gap:14px; color:#cbd5e1; font-size:1.1rem;">
                         <a href="https://instagram.com" target="_blank" aria-label="Instagram" style="color:var(--gold-400);"><i class="fab fa-instagram"></i></a>
@@ -956,11 +956,11 @@
                 <div class="footer-col">
                     <h4>Quick Navigation</h4>
                     <ul>
-                        <li><a onclick="navTo('home')"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Home</a></li>
-                        <li><a onclick="navTo('packages')"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Luxury Packages</a></li>
-                        <li><a onclick="navTo('destinations')"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Destinations</a></li>
-                        <li><a onclick="navTo('blog')"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Travel Journal</a></li>
-                        <li><a onclick="navTo('plan-trip')"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Plan Bespoke Trip</a></li>
+                        <li><a href="#/home" onclick="navTo('home'); return false;"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Home</a></li>
+                        <li><a href="#/packages" onclick="navTo('packages'); return false;"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Luxury Packages</a></li>
+                        <li><a href="#/destinations" onclick="navTo('destinations'); return false;"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Destinations</a></li>
+                        <li><a href="#/blog" onclick="navTo('blog'); return false;"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Travel Journal</a></li>
+                        <li><a href="#/plan-trip" onclick="navTo('plan-trip'); return false;"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Plan Bespoke Trip</a></li>
                     </ul>
                 </div>
 
@@ -968,11 +968,11 @@
                 <div class="footer-col">
                     <h4>Featured Themes</h4>
                     <ul>
-                        <li><a onclick="filterByCollection('Luxury')"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Overwater Villas</a></li>
-                        <li><a onclick="filterByCollection('Adventure')"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Swiss Alpine Tours</a></li>
-                        <li><a onclick="filterByCollection('Honeymoon')"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Romantic Escapes</a></li>
-                        <li><a onclick="filterByCollection('Family')"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Dubai & Desert Luxury</a></li>
-                        <li><a onclick="navTo('about')"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Our 15-Year Story</a></li>
+                        <li><a href="#/packages" onclick="filterByCollection('Luxury'); return false;"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Overwater Villas</a></li>
+                        <li><a href="#/packages" onclick="filterByCollection('Adventure'); return false;"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Swiss Alpine Tours</a></li>
+                        <li><a href="#/packages" onclick="filterByCollection('Honeymoon'); return false;"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Romantic Escapes</a></li>
+                        <li><a href="#/packages" onclick="filterByCollection('Family'); return false;"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Dubai & Desert Luxury</a></li>
+                        <li><a href="#/about" onclick="navTo('about'); return false;"><i class="fas fa-chevron-right" style="font-size:0.7rem; color:var(--gold-400);"></i> Our 15-Year Story</a></li>
                     </ul>
                 </div>
 
@@ -992,15 +992,30 @@
             <div class="footer-bottom">
                 <p>&copy; 2026 Via Tours & Travels. All Rights Reserved. Crafted with pure luxury.</p>
                 <div class="footer-bottom-links">
-                    <a onclick="navTo('terms')">Terms of Service</a>
+                    <a href="#/terms" onclick="navTo('terms'); return false;">Terms of Service</a>
                     <span>•</span>
-                    <a onclick="navTo('privacy')">Privacy Policy</a>
+                    <a href="#/privacy" onclick="navTo('privacy'); return false;">Privacy Policy</a>
                     <span>•</span>
-                    <a onclick="navTo('admin')" style="color:var(--gold-400);"><i class="fas fa-lock"></i> Staff Portal</a>
+                    <a href="#/admin" onclick="navTo('admin'); return false;" style="color:var(--gold-400);"><i class="fas fa-lock"></i> Staff Portal</a>
                 </div>
             </div>
         </div>
     </footer>
+</div>
+
+<!-- ==========================================
+     LUXURY IMAGE LIGHTBOX MODAL
+     ========================================== -->
+<div id="imageLightboxModal" class="lightbox-backdrop" aria-hidden="true" onclick="closeLightbox(event)">
+    <div class="lightbox-container" role="dialog" aria-modal="true" aria-label="Image gallery viewer">
+        <button class="lightbox-close" type="button" onclick="closeLightbox()" aria-label="Close image viewer">&times;</button>
+        <button class="lightbox-nav prev" id="lightboxPrevBtn" type="button" onclick="navigateLightbox(-1)" aria-label="Previous photo"><i class="fas fa-chevron-left"></i></button>
+        <div class="lightbox-image-wrap">
+            <img id="lightboxActiveImage" src="" alt="Luxury Destination View">
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+        <button class="lightbox-nav next" id="lightboxNextBtn" type="button" onclick="navigateLightbox(1)" aria-label="Next photo"><i class="fas fa-chevron-right"></i></button>
+    </div>
 </div>
 
 <!-- ==========================================
@@ -1152,21 +1167,21 @@
      MOBILE BOTTOM NAVIGATION BAR (Luxury App Experience)
      ========================================== -->
 <nav class="mobile-bottom-nav" id="mobileBottomNav" aria-label="Mobile navigation bar">
-    <a onclick="navTo('home')" id="mob-nav-home" class="mob-nav-item active">
+    <a href="#/home" onclick="navTo('home'); return false;" id="mob-nav-home" class="mob-nav-item active">
         <i class="fas fa-compass"></i>
         <span>Explore</span>
     </a>
-    <a onclick="navTo('destinations')" id="mob-nav-destinations" class="mob-nav-item">
+    <a href="#/destinations" onclick="navTo('destinations'); return false;" id="mob-nav-destinations" class="mob-nav-item">
         <i class="fas fa-map-marked-alt"></i>
         <span>Places</span>
     </a>
-    <a onclick="navTo('plan-trip')" id="mob-nav-plan-trip" class="mob-nav-item mob-nav-highlight">
+    <a href="#/plan-trip" onclick="navTo('plan-trip'); return false;" id="mob-nav-plan-trip" class="mob-nav-item mob-nav-highlight">
         <div class="mob-nav-fab">
             <i class="fas fa-plus"></i>
         </div>
         <span>Bespoke</span>
     </a>
-    <a onclick="navTo('packages')" id="mob-nav-packages" class="mob-nav-item">
+    <a href="#/packages" onclick="navTo('packages'); return false;" id="mob-nav-packages" class="mob-nav-item">
         <i class="fas fa-suitcase-rolling"></i>
         <span>Tours</span>
     </a>
@@ -1597,6 +1612,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="script.js"></script>
 
 </body>
