@@ -372,8 +372,8 @@ const LUXURY_FALLBACK_DATA = {
                 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&q=80',
                 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=800&q=80'
             ],
-            short_description: '5-star Halong Bay boutique luxury cruise with private balcony, Hanoi French Quarter, and Hoi An ancient lantern town.',
-            description: 'A mesmerizing journey through Vietnam\'s timeless landscapes and culinary wonders. Glide through thousands of limestone karst islands on a 5-star luxury cruise, and explore lantern-lit UNESCO ancient streets.',
+            short_description: 'Value-Driven Luxury 5-star Halong Bay boutique cruise with private balcony, Hanoi French Quarter, and Hoi An ancient lantern town.',
+            description: 'A mesmerizing journey through Vietnam\'s timeless landscapes and culinary wonders. Glide through thousands of limestone karst islands on a 5-star luxury cruise, and explore lantern-lit UNESCO ancient streets with dedicated private chauffeured transfers.',
             itinerary: [
                 { title: 'Day 1: Hanoi Arrival & French Quarter Stroll', desc: 'VIP airport transfer to 5★ French colonial hotel in Hanoi. Evening guided street food walk and Water Puppet show.' },
                 { title: 'Day 2: Hanoi to Halong Bay Luxury Cruise Boarding', desc: 'Limousine transfer to Halong Bay. Board your 5-star boutique ship. Cruise through emerald waters with cave kayaking and cooking class.' },
@@ -404,7 +404,7 @@ const LUXURY_FALLBACK_DATA = {
                 <h2>2. Overwater Villas vs. Beach Villas</h2>
                 <p>While overwater villas provide direct lagoon access and uninterrupted ocean sunsets, beach villas often feature larger private gardens and immediate soft white sand access. For trips of 5 nights or longer, we frequently recommend a split-stay experience (2 nights Beach Villa + 3 nights Overwater Pool Villa) for the best of both worlds.</p>
                 <h2>3. All-Inclusive Luxury Defined</h2>
-                <p>Not all all-inclusive plans are created equal. At Via Tours, we specifically partner with 5-star resorts that offer Premium All-Inclusive dining, including multi-course à la carte meals, premium cellar wines, complimentary spa sessions, and guided marine excursions.</p>
+                <p>Not all all-inclusive plans are created equal. At Via Tours & Travels, we specifically partner with 5-star resorts that offer Premium All-Inclusive dining, including multi-course à la carte meals, premium cellar wines, complimentary spa sessions, and guided marine excursions.</p>
             `,
             created_at: '2026-02-15T10:00:00Z',
             is_published: true
@@ -438,50 +438,90 @@ const LUXURY_FALLBACK_DATA = {
             `,
             created_at: '2026-01-10T09:15:00Z',
             is_published: true
+        },
+        {
+            id: 'blog-packing-checklist',
+            slug: 'luxury-international-travel-packing-checklist',
+            title: 'Essential International Travel & Packing Checklist for Luxury Voyagers',
+            excerpt: 'From passport validity and multi-currency prep to private seaplane luggage allowances, review our essential pre-departure checklist.',
+            image_url: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=80',
+            content: `
+                <p>Preparing for a seamless luxury holiday requires thoughtful preparation. Here is our senior travel concierge-recommended pre-departure checklist to ensure effortless, stress-free journeys worldwide.</p>
+                <h2>1. Travel Documentation & Visa Clearance</h2>
+                <p>Always verify that your passport has at least 6 months validity from your scheduled date of return and at least 3 blank pages. Keep digital PDF copies of your flight tickets, luxury resort vouchers, and travel insurance accessible on your smartphone offline.</p>
+                <h2>2. Currency & Multi-Currency Cards</h2>
+                <p>While international credit cards are widely accepted at 5-star resorts, carrying a modest reserve of local currency (for gratuities, traditional bazaars, and local artisans) is recommended. Ensure international roaming and bank transaction alerts are activated before departure.</p>
+                <h2>3. Luggage & Packing Strategy</h2>
+                <p>When traveling to island destinations via seaplane (such as the Maldives), keep in mind luggage weight guidelines (typically 20kg checked + 5kg hand luggage). For European alpine expeditions, pack high-quality breathable thermal layers and UV-polarized sunglasses.</p>
+            `,
+            created_at: '2026-02-20T11:00:00Z',
+            is_published: true
         }
     ],
 
     testimonials: [
         {
             name: 'Aarav & Meera Kapoor',
-            location: 'Mumbai, India — Maldives Honeymoon',
-            message: 'Our Maldives honeymoon planned by Via Tours exceeded every expectation. The overwater pool villa was breathtaking, and our private seaplane and champagne yacht cruise went off without a hitch. Truly 5-star service!',
+            location: 'Mumbai, India — Maldives Honeymoon Overwater Villa 5★',
+            rating: 5,
+            message: 'Our Maldives honeymoon planned by Via Tours & Travels exceeded every expectation. The overwater pool villa was breathtaking, and our private seaplane and champagne yacht cruise went off without a hitch. Truly 5-star service!',
             image_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&q=80'
         },
         {
             name: 'Dr. Siddharth Sen & Family',
-            location: 'Bengaluru, India — Switzerland Alpine Tour',
-            message: 'Traveling with elderly parents and kids can be challenging, but Via Tours orchestrated every private transfer and Swiss rail ticket flawlessly. The Glacier Express was the highlight of our year!',
+            location: 'Bengaluru, India — Switzerland Glacier Express Tour 5★',
+            rating: 5,
+            message: 'Traveling with elderly parents and kids can be challenging, but Via Tours & Travels orchestrated every private transfer and Swiss rail ticket flawlessly. The Glacier Express was the highlight of our year!',
             image_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&q=80'
         },
         {
             name: 'Vikramaditya & Friends',
-            location: 'Delhi, India — Dubai Luxury & Desert Safari',
+            location: 'Delhi, India — Dubai Ultra Luxury & Desert Safari 5★',
+            rating: 5,
             message: 'From the private superyacht around Palm Jumeirah to the desert glamping villa, the VIP treatment was top tier. The 24/7 WhatsApp concierge answered all our requests in seconds.',
             image_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&q=80'
+        },
+        {
+            name: 'Priya & Arjun Mehta',
+            location: 'Ahmedabad, India — Bali Private Pool Villa Retreat 5★',
+            rating: 5,
+            message: 'The private jungle pool villa in Ubud and cliffside dinner in Uluwatu arranged by Via Tours & Travels were out of a fairy tale. Everything was curated with impeccable perfection and care.',
+            image_url: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&q=80'
         }
     ],
 
     faqs: [
         {
-            question: 'How does Via Tours customize our travel itinerary?',
-            answer: 'Every journey begins with understanding your preferences. After you submit your inquiry or speak with our travel concierge, we assign a dedicated senior destination architect who crafts a bespoke day-by-day itinerary including flights, 5-star resort options, private transfers, and handpicked local experiences. You can refine and modify the plan as many times as you like until it is perfect.'
+            question: 'How does Via Tours & Travels customize our travel itinerary?',
+            answer: 'Every journey begins with understanding your preferences. After you submit your inquiry or speak with our travel concierge, we assign a dedicated senior destination architect who crafts a bespoke day-by-day itinerary including flights, 5-star resort options, private transfers, and handpicked local experiences. You can refine and modify the plan as many times as you like until it is completely tailored to your vision.'
         },
         {
-            question: 'Do you provide Visa documentation and assistance?',
+            question: 'Do you provide Visa documentation and appointment assistance?',
             answer: 'Yes! We provide complete end-to-end visa assistance for Schengen (Europe), UK, USA, UAE, Vietnam, Singapore, Japan, and 80+ other destinations. We guide you through document preparation, cover letters, appointment bookings, and flight/hotel proof vouchers.'
         },
         {
-            question: 'What payment methods do you accept?',
-            answer: 'We accept verified bank transfers (RTGS/NEFT/IMPS), corporate payment links, and all major international credit/debit cards. All transactions are securely handled with full GST invoices and receipt acknowledgment.'
+            question: 'What is your Flexible Date Change policy?',
+            answer: 'We provide 100% Free Date Changes up to 21 days prior to your departure date across all our customized private tour packages with zero administrative penalties. If unforeseen circumstances arise, your dedicated concierge will seamlessly re-align resort reservations and flight dates.'
         },
         {
-            question: 'What happens if we need support while traveling on our tour?',
-            answer: 'You will have direct 24/7 access to your personal dedicated travel concierge via phone and WhatsApp, along with local on-ground representatives at your destination ready to assist with reservations, airport changes, or any emergency requests.'
+            question: 'What is the deposit and payment structure?',
+            answer: 'To confirm your luxury itinerary and secure resort allocations, we request an initial booking deposit (typically 25% to 30% depending on the destination and peak seasonality). The remaining balance is payable prior to voucher issuance with full GST invoices and receipt acknowledgment.'
         },
         {
-            question: 'Are flight tickets included in your packages?',
-            answer: 'Our packages are designed with flexibility. We can include international and domestic flights based on your preferred airlines, departure cities, and cabin class (Economy, Premium Economy, Business, or First Class).'
+            question: 'Can we personalize special dietary preferences (Vegetarian, Jain, Halal, Vegan)?',
+            answer: 'Absolutely. Prior to your departure, our concierge coordinates directly with executive chefs at your 5-star resorts, private cruises, and booked fine-dining restaurants to guarantee seamless vegetarian, Jain, Halal, vegan, or allergen-free meals throughout your stay.'
+        },
+        {
+            question: 'Are flight tickets and airport transfers included?',
+            answer: 'All our bespoke packages include private chauffeured airport transfers. We can also include international and domestic flights based on your preferred airlines, departure cities, and cabin class (Economy, Premium Economy, Business, or First Class).'
+        },
+        {
+            question: 'How does 24/7 dedicated concierge support work while we are traveling?',
+            answer: 'You will have direct 24/7 WhatsApp and phone access to your dedicated senior travel specialist throughout your journey, paired with local on-ground representatives ready to assist with restaurant reservations, schedule tweaks, or emergency assistance in real time.'
+        },
+        {
+            question: 'What financial security and traveler protection guarantees are in place?',
+            answer: 'Via Tours & Travels operates with full IATA & ASTA accreditation, bank-grade SSL encryption, and segregated client trust escrow accounts. All vouchers, booking reference numbers, and emergency contact directories are delivered to you well in advance of departure.'
         }
     ]
 };
@@ -746,6 +786,84 @@ function hideTripModal() {
     sessionStorage.setItem('viaTripModalDismissed', 'true');
 }
 
+// --- SAMPLE ITINERARY DOWNLOAD MODAL LOGIC ---
+function openSampleItineraryModal(pkgTitle) {
+    const modal = document.getElementById('sampleItineraryModal');
+    if (!modal) return;
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    if (pkgTitle) {
+        const select = document.getElementById('sample_dest');
+        if (select) {
+            for (let i = 0; i < select.options.length; i++) {
+                if (select.options[i].value.toLowerCase().includes(pkgTitle.toLowerCase()) || pkgTitle.toLowerCase().includes(select.options[i].value.toLowerCase())) {
+                    select.selectedIndex = i;
+                    break;
+                }
+            }
+        }
+    }
+    const firstInput = document.getElementById('sample_name');
+    if (firstInput) setTimeout(() => firstInput.focus(), 50);
+}
+
+function closeSampleItineraryModal() {
+    const modal = document.getElementById('sampleItineraryModal');
+    if (!modal) return;
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+}
+
+async function handleSampleItineraryDownload(e) {
+    e.preventDefault();
+    const btn = document.getElementById('btn_sample_download');
+    const name = document.getElementById('sample_name')?.value.trim();
+    const email = document.getElementById('sample_email')?.value.trim();
+    const dest = document.getElementById('sample_dest')?.value || 'Signature Luxury Journeys';
+
+    if (!name || !email) {
+        showToast('Please enter your full name and email address.', 'error');
+        return;
+    }
+
+    await withLoading(btn, async () => {
+        // Save lead to Supabase if connected
+        if (sb) {
+            try {
+                await sb.from('enquiries').insert({
+                    customer_name: name,
+                    email: email,
+                    phone: 'Sample Itinerary Download',
+                    destination: dest,
+                    notes: 'Downloaded Sample Itinerary PDF Guide for ' + dest
+                });
+            } catch(err) {
+                console.warn('Enquiry capture info:', err);
+            }
+        }
+
+        // Generate and trigger download of luxury itinerary PDF summary document
+        const content = `=================================================================\nVIA TOURS & TRAVELS — CURATED SAMPLE ITINERARY GUIDE\n=================================================================\n\nPrepared Exclusively For: ${name}\nEmail: ${email}\nSelected Itinerary: ${dest}\nDate of Issue: ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}\nAccreditation: IATA #08392110 | ASTA Verified Luxury Tour Operator\n\n-----------------------------------------------------------------\nSIGNATURE ITINERARY HIGHLIGHTS & INCLUSIONS\n-----------------------------------------------------------------\n✓ Handpicked 5-Star Accommodations & Private Overwater/Pool Villas\n✓ Private Mercedes Chauffeur Transfers & Speedboat/Seaplane Connections\n✓ Gourmet Breakfasts, Multi-Course Fine Dining & Curated Excursions\n✓ 24/7 Dedicated Senior Concierge Specialist on WhatsApp\n✓ 100% Free Date Changes up to 21 Days Prior to Departure\n\n-----------------------------------------------------------------\nHOW TO PERSONALIZE YOUR DATES & EXPERIENCE\n-----------------------------------------------------------------\nTo adjust resort choices, add helicopter excursions, or receive formal flight quotations:\n\nWhatsApp Concierge: +91 98765 43210\nDirect Email: hello@viatours.com\nWebsite: https://www.viatours.com\n\nThank you for choosing Via Tours & Travels — Crafting Extraordinary Journeys.`;
+
+        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `Via_Tours_Sample_Itinerary_${dest.replace(/[^a-zA-Z0-9]/g, '_')}.txt`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        if (window.confetti) {
+            window.confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
+        }
+
+        closeSampleItineraryModal();
+        showToast(`Sample itinerary for ${dest} downloaded and sent to ${email}!`, 'success');
+    });
+}
+
 function maybeShowTripModal() {
     if (sessionStorage.getItem('viaTripModalDismissed') === 'true') return;
     setTimeout(() => {
@@ -760,12 +878,21 @@ if (tripModalBackdrop) {
     });
 }
 
+const sampleModalBackdrop = document.getElementById('sampleItineraryModal');
+if (sampleModalBackdrop) {
+    sampleModalBackdrop.addEventListener('click', (e) => {
+        if (e.target === sampleModalBackdrop) closeSampleItineraryModal();
+    });
+}
+
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         const menu = document.getElementById('navMenu');
         if (menu && menu.classList.contains('active')) toggleMenu(false);
         const tripModal = document.getElementById('tripModal');
         if (tripModal && tripModal.classList.contains('active')) hideTripModal();
+        const sampleModal = document.getElementById('sampleItineraryModal');
+        if (sampleModal && sampleModal.classList.contains('active')) closeSampleItineraryModal();
         const confirmModal = document.getElementById('confirmModal');
         if (confirmModal && confirmModal.style.display === 'flex') confirmModal.style.display = 'none';
         const chatWin = document.getElementById('chatWindow');
@@ -791,14 +918,14 @@ async function loadHomeDestinations() {
     container.innerHTML = displayList.map(d => `
         <div class="dest-card" onclick="navTo('packages', '${escapeHTML(d.id)}')">
             <div class="dest-img-wrap">
-                <img src="${escapeHTML(d.image_url || 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80')}" alt="${escapeHTML(d.name)}" loading="lazy">
+                <img src="${escapeHTML(d.image_url || 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80')}" alt="Luxury travel experiences in ${escapeHTML(d.name)}" loading="lazy">
                 <span class="dest-tag"><i class="fas fa-sun"></i> ${escapeHTML(d.best_time || 'Best Season')}</span>
             </div>
             <div class="dest-body">
                 <h3>${escapeHTML(d.name)}</h3>
                 <p class="dest-country"><i class="fas fa-map-marker-alt" style="color:var(--gold-500);"></i> ${escapeHTML(d.country || d.region || 'Worldwide')}</p>
                 <div class="dest-footer">
-                    <span>Explore Itineraries</span>
+                    <span>Explore More Itineraries</span>
                     <i class="fas fa-arrow-right"></i>
                 </div>
             </div>
@@ -826,12 +953,12 @@ async function loadHomeBlogs() {
             <img src="${escapeHTML(b.image_url || 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&q=80')}" alt="${escapeHTML(b.title)}" loading="lazy">
             <div class="blog-body">
                 <div class="blog-meta-tag">
-                    <span><i class="fas fa-bookmark"></i> Insider Guide</span>
+                    <span><i class="fas fa-bookmark"></i> Curated Guide</span>
                     <span>${new Date(b.created_at || Date.now()).toLocaleDateString('en-IN', { month:'short', day:'numeric', year:'numeric' })}</span>
                 </div>
                 <h3 class="blog-title">${escapeHTML(b.title)}</h3>
                 <p class="blog-excerpt">${escapeHTML(b.excerpt || '')}</p>
-                <span class="read-story">Read Story <i class="fas fa-arrow-right"></i></span>
+                <span class="read-story">Read Article <i class="fas fa-arrow-right"></i></span>
             </div>
         </article>
     `).join('');
@@ -841,7 +968,7 @@ async function loadHomeTestimonials() {
     const container = document.getElementById('home_testimonials');
     if (!container) return;
     const testimonials = await fetchTestimonials();
-    const displayList = testimonials.slice(0, 3);
+    const displayList = testimonials.slice(0, 4);
 
     container.innerHTML = displayList.map(t => `
         <div class="testimonial-card">
@@ -850,10 +977,10 @@ async function loadHomeTestimonials() {
             </div>
             <p class="testimonial-text">"${escapeHTML(t.message)}"</p>
             <div class="testimonial-author">
-                <img src="${escapeHTML(t.image_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&q=80')}" alt="${escapeHTML(t.name)}" class="testimonial-avatar">
+                <img src="${escapeHTML(t.image_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&q=80')}" alt="Verified Guest ${escapeHTML(t.name)}" class="testimonial-avatar">
                 <div class="testimonial-author-info">
                     <h4>${escapeHTML(t.name)}</h4>
-                    <span>${escapeHTML(t.location || 'Verified Traveler')}</span>
+                    <span style="color:var(--gold-500); font-weight:600; font-size:0.8rem;"><i class="fas fa-map-marker-alt"></i> ${escapeHTML(t.location || 'Verified Traveler')}</span>
                 </div>
             </div>
         </div>

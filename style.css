@@ -854,6 +854,76 @@ body.dark-mode .luxury-badge {
 }
 
 /* ==========================================================================
+   TRUST & ACCREDITATION BADGE STRIP
+   ========================================================================== */
+.trust-badge-strip {
+    background: var(--navy-900);
+    border-bottom: 1px solid rgba(232, 119, 34, 0.25);
+    padding: 16px 0;
+    color: #ffffff;
+    font-size: 0.88rem;
+    position: relative;
+    z-index: 10;
+}
+body.dark-mode .trust-badge-strip {
+    background: var(--navy-950);
+}
+.trust-badge-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+.trust-badge-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #cbd5e1;
+}
+.trust-badge-item i {
+    color: var(--gold-400);
+    font-size: 1.15rem;
+}
+.trust-badge-item strong {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .trust-badge-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        text-align: left;
+    }
+    .trust-badge-item {
+        font-size: 0.78rem;
+    }
+}
+@media (max-width: 480px) {
+    .trust-badge-container {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}
+
+.btn-outline-gold {
+    background: transparent;
+    border: 1.5px solid var(--gold-500);
+    color: var(--gold-600);
+}
+body.dark-mode .btn-outline-gold {
+    color: var(--gold-400);
+}
+.btn-outline-gold:hover {
+    background: var(--gold-gradient);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold);
+}
+
+/* ==========================================================================
    SECTIONS & HEADINGS
    ========================================================================== */
 .section-pad {

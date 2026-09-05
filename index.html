@@ -69,7 +69,7 @@
     <header class="header" id="mainHeader">
         <div class="container header-in">
             <div class="logo-wrap" onclick="navTo('home')">
-                <img src="https://goqwtovltftehautxekh.supabase.co/storage/v1/object/public/package-images/Via%20tours%20&%20travels.png" alt="Via Tours and Travels Logo" onerror="this.style.display='none'">
+                <img src="https://goqwtovltftehautxekh.supabase.co/storage/v1/object/public/package-images/Via%20tours%20&%20travels.png" alt="Via Tours & Travels Logo" onerror="this.style.display='none'">
                 <div class="logo-txt">
                     <strong>Via</strong>
                     <span>Tours & Travels</span>
@@ -118,11 +118,11 @@
              ========================================== -->
         <div id="page-home" class="page-view" style="padding:0;">
             <!-- Hero Section -->
-            <div class="hero">
+            <section class="hero" id="hero-section" aria-label="Hero Overview">
                 <div class="hero-media">
                     <picture>
                         <source srcset="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=85&fm=webp" type="image/webp">
-                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=80" alt="Luxury Travel Destinations">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=80" alt="Pristine white sand beach and turquoise lagoon in the Maldives at luxury sunrise">
                     </picture>
                 </div>
                 <div class="hero-overlay"></div>
@@ -130,7 +130,7 @@
                 <div class="container hero-content">
                     <span class="eyebrow light"><i class="fas fa-crown"></i> Curated Journeys & Unrivaled Luxury</span>
                     <h1>Experience The World in <span class="gold-highlight">Pure Elegance.</span></h1>
-                    <p class="hero-subtitle">Bespoke itineraries, private villas, handpicked 5-star sanctuaries, and 24/7 dedicated travel concierge at your service.</p>
+                    <p class="hero-subtitle">Bespoke itineraries, private overwater villas, handpicked 5-star sanctuaries, and 24/7 dedicated travel concierge at your service.</p>
                     
                     <!-- Search Hub -->
                     <div class="search-hub">
@@ -223,10 +223,32 @@
                         </div>
                     </div>
                 </div>
+            </section>
+
+            <!-- GLOBAL ACCREDITATIONS & LUXURY ALLIANCES STRIP -->
+            <div class="trust-badge-strip">
+                <div class="container trust-badge-container">
+                    <div class="trust-badge-item">
+                        <i class="fas fa-plane-departure"></i>
+                        <span><strong>IATA Accredited</strong> Agent #08392110</span>
+                    </div>
+                    <div class="trust-badge-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span><strong>ASTA Member</strong> American Society of Travel Advisors</span>
+                    </div>
+                    <div class="trust-badge-item">
+                        <i class="fas fa-crown"></i>
+                        <span><strong>Verified Luxury</strong> Tour Operator</span>
+                    </div>
+                    <div class="trust-badge-item">
+                        <i class="fas fa-lock"></i>
+                        <span><strong>100% Financial Protection</strong> &amp; Secure Escrow</span>
+                    </div>
+                </div>
             </div>
 
             <!-- CURATED LUXURY COLLECTIONS -->
-            <div class="container section-pad">
+            <section class="container section-pad" id="collections-section" aria-label="Curated Luxury Themes">
                 <div class="section-heading text-center">
                     <span class="eyebrow"><i class="fas fa-gem"></i> Curated Collections</span>
                     <h2>Signature Luxury Escapes</h2>
@@ -235,7 +257,7 @@
                 
                 <div class="grid-4" id="home_collections">
                     <div class="collection-card" onclick="filterByCollection('Luxury')">
-                        <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800&q=80" alt="Overwater Villas">
+                        <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800&q=80" alt="Couple relaxing in private overwater pool villa at sunset in Maldives">
                         <div class="collection-overlay">
                             <span class="collection-badge">Ultra-Luxury</span>
                             <h3>Overwater Sanctuaries</h3>
@@ -245,17 +267,17 @@
                     </div>
 
                     <div class="collection-card" onclick="filterByCollection('Adventure')">
-                        <img src="https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?w=800&q=80" alt="Alpine Chalets">
+                        <img src="https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?w=800&q=80" alt="Panoramic Glacier Express train crossing snow-capped peaks in Swiss Alps">
                         <div class="collection-overlay">
                             <span class="collection-badge">Alpine Wonders</span>
-                            <h3>Swiss Alps & Chalets</h3>
+                            <h3>Swiss Alps &amp; Chalets</h3>
                             <p>Glacier express routes, private chalets, and scenic peaks of Zermatt & Interlaken.</p>
                             <span class="collection-link">Explore Collection <i class="fas fa-arrow-right"></i></span>
                         </div>
                     </div>
 
                     <div class="collection-card" onclick="filterByCollection('Honeymoon')">
-                        <img src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&q=80" alt="Romantic Honeymoon">
+                        <img src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&q=80" alt="Romantic couple enjoying sunset view from cliffside private suite in Santorini">
                         <div class="collection-overlay">
                             <span class="collection-badge">Romantic Suites</span>
                             <h3>Honeymoon Havens</h3>
@@ -265,19 +287,23 @@
                     </div>
 
                     <div class="collection-card" onclick="filterByCollection('Family')">
-                        <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=80" alt="Desert Luxury">
+                        <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=80" alt="Ultra luxury 5-star desert resort and private pool in Dubai">
                         <div class="collection-overlay">
                             <span class="collection-badge">Arabian Oasis</span>
-                            <h3>Dubai & Desert Glamping</h3>
+                            <h3>Dubai &amp; Desert Glamping</h3>
                             <p>5-star Burj Al Arab luxury, desert oasis resorts, and private yacht charters.</p>
                             <span class="collection-link">Explore Collection <i class="fas fa-arrow-right"></i></span>
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <div style="text-align:center; margin-top:36px;">
+                    <button class="btn btn-outline" onclick="navTo('packages')"><i class="fas fa-compass"></i> Discover All Travel Themes <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </section>
 
             <!-- HANDPICKED DESTINATIONS SHOWCASE -->
-            <div style="background:var(--surface-soft);" class="section-pad">
+            <section style="background:var(--surface-soft);" class="section-pad" id="destinations-section" aria-label="Inspiring Destinations">
                 <div class="container">
                     <div class="section-header-flex">
                         <div>
@@ -291,11 +317,15 @@
                     <div class="grid-4" id="home_destinations">
                         <!-- Populated dynamically with fallback -->
                     </div>
+
+                    <div style="text-align:center; margin-top:36px;">
+                        <button class="btn btn-gold" onclick="navTo('destinations')"><i class="fas fa-globe-americas"></i> Explore Full Global Portfolio <i class="fas fa-arrow-right"></i></button>
+                    </div>
                 </div>
-            </div>
+            </section>
 
             <!-- FEATURED LUXURY PACKAGES -->
-            <div class="container section-pad">
+            <section class="container section-pad" id="packages-section" aria-label="Curated Bespoke Packages">
                 <div class="section-heading text-center">
                     <span class="eyebrow"><i class="fas fa-star"></i> Handcrafted Packages</span>
                     <h2>Featured Bespoke Journeys</h2>
@@ -306,18 +336,19 @@
                     <!-- Populated dynamically with luxury cards -->
                 </div>
 
-                <div style="text-align:center; margin-top:50px;">
-                    <button class="btn btn-navy btn-lg" onclick="navTo('packages')"><i class="fas fa-suitcase-rolling"></i> View All Curated Packages</button>
+                <div style="display:flex; flex-wrap:wrap; gap:16px; justify-content:center; align-items:center; margin-top:45px;">
+                    <button class="btn btn-gold btn-lg" onclick="navTo('packages')"><i class="fas fa-suitcase-rolling"></i> View All Curated Packages</button>
+                    <button class="btn btn-outline btn-lg" onclick="openSampleItineraryModal('Featured Luxury Journeys')"><i class="fas fa-file-pdf"></i> Download Sample Itinerary (PDF)</button>
                 </div>
-            </div>
+            </section>
 
-            <!-- THE VIA VIP DIFFERENCE (WHY CHOOSE US) -->
-            <div class="why-choose-section section-pad">
+            <!-- THE VIA TOURS & TRAVELS VIP DIFFERENCE (WHY CHOOSE US) -->
+            <section class="why-choose-section section-pad" id="why-choose-us-section" aria-label="Why Choose Via Tours & Travels">
                 <div class="container">
                     <div class="section-heading text-center">
-                        <span class="eyebrow light"><i class="fas fa-crown"></i> The Via VIP Standard</span>
+                        <span class="eyebrow light"><i class="fas fa-crown"></i> The Via Tours &amp; Travels Standard</span>
                         <div class="section-divider"></div>
-                        <h2 style="color:#ffffff;">Why Discerning Travelers Choose Via</h2>
+                        <h2 style="color:#ffffff;">Why Discerning Travelers Choose Via Tours &amp; Travels</h2>
                         <p style="color:#cbd5e1;">We don't just book trips; we architect seamless, unforgettable travel memories tailored precisely to your taste.</p>
                     </div>
                     
@@ -327,7 +358,7 @@
                                 <i class="fas fa-user-tie"></i>
                             </div>
                             <h3>Dedicated Concierge</h3>
-                            <p>A single dedicated luxury travel specialist handles your trip from initial sketch to your safe return home.</p>
+                            <p>A single dedicated luxury travel specialist handles your trip from initial sketch to your safe return home, on call 24/7.</p>
                         </div>
 
                         <div class="why-choose-card animate-in">
@@ -335,7 +366,7 @@
                                 <i class="fas fa-hotel"></i>
                             </div>
                             <h3>Handpicked 5-Star Stays</h3>
-                            <p>Exclusive partnerships with world-renowned luxury resort brands, private villas, and heritage boutique lodges.</p>
+                            <p>Exclusive partnerships with world-renowned luxury resort brands (Four Seasons, Soneva, Ritz), private villas, and boutique lodges.</p>
                         </div>
 
                         <div class="why-choose-card animate-in">
@@ -351,15 +382,18 @@
                                 <i class="fas fa-shield-heart"></i>
                             </div>
                             <h3>Flexible &amp; Guaranteed</h3>
-                            <p>Best value guarantee, transparent pricing with no hidden charges, and flexible date change options.</p>
+                            <p>100% Free Date Changes up to 21 Days Before Travel, Guaranteed Best Value with Zero Hidden Fees, and complete pre-departure voucher transparency.</p>
                         </div>
                     </div>
-                </div>
-            </div>
 
+                    <div style="text-align:center; margin-top:40px;">
+                        <button class="btn btn-gold" onclick="navTo('plan-trip')"><i class="fas fa-gem"></i> Experience The Via Tours &amp; Travels Standard</button>
+                    </div>
+                </div>
+            </section>
 
             <!-- HOW WE CRAFT YOUR JOURNEY (JOURNEY STEPS) -->
-            <div class="container section-pad">
+            <section class="container section-pad" id="process-section" aria-label="Our Booking Process">
                 <div class="section-heading text-center">
                     <span class="eyebrow"><i class="fas fa-stream"></i> Simple, Sophisticated Process</span>
                     <h2>How We Craft Your Dream Holiday</h2>
@@ -391,16 +425,20 @@
                         <p>Relax and enjoy every moment knowing your 24/7 personal concierge is only a WhatsApp message away.</p>
                     </div>
                 </div>
-            </div>
+
+                <div style="text-align:center; margin-top:40px;">
+                    <button class="btn btn-gold" onclick="navTo('plan-trip')"><i class="fas fa-paper-plane"></i> Start Step 1: Share Your Vision</button>
+                </div>
+            </section>
 
             <!-- TRAVEL JOURNAL (BLOG POSTS) -->
-            <div style="background:var(--surface-soft);" class="section-pad">
+            <section style="background:var(--surface-soft);" class="section-pad" id="journal-section" aria-label="Travel Journal &amp; Guides">
                 <div class="container">
                     <div class="section-header-flex">
                         <div>
                             <span class="eyebrow"><i class="fas fa-feather-alt"></i> The Via Journal</span>
                             <h2>Inspiration &amp; Insider Guides</h2>
-                            <p style="color:var(--text-muted);">Expert destination tips, packing advice, and curated stories from the world's most breathtaking places.</p>
+                            <p style="color:var(--text-muted);">Expert destination tips, packing checklists, and curated stories from the world's most breathtaking places.</p>
                         </div>
                         <button class="btn btn-outline" onclick="navTo('blog')">View All Stories <i class="fas fa-arrow-right"></i></button>
                     </div>
@@ -408,27 +446,35 @@
                     <div class="grid-3" id="home_blog">
                         <!-- Populated dynamically -->
                     </div>
+
+                    <div style="text-align:center; margin-top:36px;">
+                        <button class="btn btn-outline" onclick="navTo('blog')"><i class="fas fa-book-open"></i> Read All Articles &amp; Travel Checklists <i class="fas fa-arrow-right"></i></button>
+                    </div>
                 </div>
-            </div>
+            </section>
 
             <!-- TESTIMONIALS (WHISPERS OF DELIGHT) -->
-            <div class="container section-pad">
+            <section class="container section-pad" id="testimonials-section" aria-label="Guest Testimonials">
                 <div class="section-heading text-center">
                     <span class="eyebrow"><i class="fas fa-quote-left"></i> Guest Chronicles</span>
                     <h2>What Our Travelers Say</h2>
-                    <p>Real stories from couples, families, and solo adventurers who trusted Via Tours & Travels.</p>
+                    <p>Real stories from couples, families, and solo adventurers who trusted Via Tours &amp; Travels.</p>
                 </div>
                 
                 <div class="grid-3" id="home_testimonials">
                     <!-- Populated dynamically -->
                 </div>
-            </div>
+
+                <div style="text-align:center; margin-top:36px;">
+                    <a href="https://wa.me/919876543210" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Chat with a Senior Travel Specialist Today</a>
+                </div>
+            </section>
 
             <!-- FREQUENTLY ASKED QUESTIONS -->
-            <div style="background:var(--surface-soft);" class="section-pad">
+            <section style="background:var(--surface-soft);" class="section-pad" id="faqs-section" aria-label="Frequently Asked Questions">
                 <div class="container">
                     <div class="section-heading text-center">
-                        <span class="eyebrow"><i class="fas fa-question-circle"></i> Clear & Transparent</span>
+                        <span class="eyebrow"><i class="fas fa-question-circle"></i> Clear &amp; Transparent</span>
                         <h2>Frequently Asked Inquiries</h2>
                         <p>Everything you need to know about our booking process, customization, payments, and visa assistance.</p>
                     </div>
@@ -436,15 +482,19 @@
                     <div class="faq-box" id="home_faqs">
                         <!-- Populated dynamically with accordion -->
                     </div>
+
+                    <div style="text-align:center; margin-top:32px; color:var(--text-muted); font-size:0.95rem;">
+                        <p>Have a custom inquiry not listed here? <a onclick="navTo('contact')" style="color:var(--gold-500); font-weight:600; cursor:pointer;">Contact Our Concierge</a> or <a href="https://wa.me/919876543210" target="_blank" style="color:#25d366; font-weight:600;"><i class="fab fa-whatsapp"></i> WhatsApp Us Directly</a>.</p>
+                    </div>
                 </div>
-            </div>
+            </section>
 
             <!-- GRAND CTA BANNER -->
-            <div class="hero cta-banner">
+            <section class="hero cta-banner" id="cta-section" aria-label="Call to Action Banner">
                 <div class="hero-media">
                     <picture>
                         <source srcset="https://images.unsplash.com/photo-1528127269322-539801943592?w=1600&q=80&fm=webp" type="image/webp">
-                        <img src="https://images.unsplash.com/photo-1528127269322-539801943592?w=1600&q=80" alt="Bespoke Travel Call to Action">
+                        <img src="https://images.unsplash.com/photo-1528127269322-539801943592?w=1600&q=80" alt="Boutique 5-star luxury cruise sailing across turquoise waters of Halong Bay">
                     </picture>
                 </div>
                 <div class="hero-overlay"></div>
@@ -456,10 +506,11 @@
                     
                     <div class="cta-actions">
                         <button class="btn btn-gold btn-lg" onclick="navTo('plan-trip')"><i class="fas fa-compass"></i> Plan My Bespoke Trip</button>
+                        <a href="https://wa.me/919876543210" target="_blank" class="btn btn-whatsapp btn-lg"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
                         <button class="btn btn-glass btn-lg" onclick="toggleChat()"><i class="fas fa-comments"></i> Chat with AI Assistant</button>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
 
         <!-- ==========================================
@@ -878,7 +929,7 @@
                 <!-- Col 1: Brand -->
                 <div class="footer-col">
                     <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
-                        <img src="https://goqwtovltftehautxekh.supabase.co/storage/v1/object/public/package-images/Via%20tours%20&%20travels.png" alt="Via Tours Logo" style="height:55px; border-radius:6px;" onerror="this.src='https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=100&q=80'">
+                        <img src="https://goqwtovltftehautxekh.supabase.co/storage/v1/object/public/package-images/Via%20tours%20&%20travels.png" alt="Via Tours & Travels Logo" style="height:55px; border-radius:6px;" onerror="this.src='https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=100&q=80'">
                         <div class="logo-txt">
                             <strong style="color:#ffffff;">Via</strong>
                             <span>Tours & Travels</span>
@@ -1011,6 +1062,64 @@
                 </div>
 
                 <button type="submit" class="btn btn-gold" style="width:100%;"><i class="fas fa-paper-plane"></i> Get My Custom Quote</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ==========================================
+     SAMPLE ITINERARY DOWNLOAD MODAL (LEAD CAPTURE)
+     ========================================== -->
+<div id="sampleItineraryModal" class="trip-modal-backdrop" aria-hidden="true">
+    <div class="trip-modal" role="dialog" aria-modal="true" aria-labelledby="sampleModalTitle">
+        <button class="trip-modal-close" type="button" onclick="closeSampleItineraryModal()" aria-label="Close download modal">&times;</button>
+        
+        <div class="trip-modal-visual" style="background: linear-gradient(135deg, rgba(6,16,41,0.92), rgba(18,40,84,0.92)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80') center/cover;">
+            <span class="luxury-badge"><i class="fas fa-file-pdf"></i> Complimentary Guide</span>
+            <h3>Download Detailed Sample Itinerary (PDF)</h3>
+            <p>Get an instant preview of our signature bespoke journeys with day-by-day schedules, 5★ resort breakdowns, and expert packing recommendations.</p>
+            <ul>
+                <li><i class="fas fa-check-circle"></i> Complete Day-by-Day Route Map</li>
+                <li><i class="fas fa-check-circle"></i> 5★ Stays &amp; Private Villa Options</li>
+                <li><i class="fas fa-check-circle"></i> Inclusions, Exclusions &amp; Budget Ranges</li>
+                <li><i class="fas fa-check-circle"></i> Destination Visa &amp; Advisory Notes</li>
+            </ul>
+        </div>
+        
+        <div class="trip-modal-form-wrap">
+            <div class="trip-modal-header">
+                <span class="eyebrow"><i class="fas fa-download"></i> Instant PDF Access</span>
+                <h2 id="sampleModalTitle">Get Your Free Sample Itinerary</h2>
+                <p style="color:var(--text-muted); font-size:0.9rem; margin-top:4px;">Enter your details to receive the curated guide immediately.</p>
+            </div>
+            
+            <form id="sampleItineraryForm" onsubmit="handleSampleItineraryDownload(event)">
+                <div class="form-sec">
+                    <label for="sample_name">Your Full Name *</label>
+                    <input type="text" id="sample_name" required placeholder="e.g. Eleanor Vance">
+                </div>
+                
+                <div class="form-sec">
+                    <label for="sample_email">Email Address (PDF sent here) *</label>
+                    <input type="email" id="sample_email" required placeholder="eleanor@example.com">
+                </div>
+
+                <div class="form-sec">
+                    <label for="sample_dest">Destination / Itinerary of Interest</label>
+                    <select id="sample_dest">
+                        <option value="Maldives Overwater Luxury Sanctuary 5★">Maldives — Overwater Sanctuary 5★</option>
+                        <option value="Swiss Alps &amp; Glacier Express Grand Tour">Switzerland — Alpine &amp; Glacier Express Grand Tour</option>
+                        <option value="Bali Luxe Retreat: Private Pool Villas">Bali — Private Pool Villas &amp; Ubud Retreat</option>
+                        <option value="Dubai Ultra Luxury &amp; Desert Oasis">Dubai — 7★ Stays &amp; Desert Glamping</option>
+                        <option value="Vietnam Timeless Charm &amp; Halong Bay Cruise">Vietnam — Value-Driven Luxury Cruise</option>
+                        <option value="Kashmir Paradise: Heritage Houseboat &amp; Gulmarg">Kashmir — Royal Houseboats &amp; Gulmarg</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-gold" style="width:100%; margin-top:10px;" id="btn_sample_download">
+                    <i class="fas fa-file-download"></i> Download Itinerary Guide (PDF)
+                </button>
+                <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin-top:10px;"><i class="fas fa-lock"></i> 100% Privacy Guaranteed. Zero Spam.</p>
             </form>
         </div>
     </div>
